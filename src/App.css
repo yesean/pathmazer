@@ -1,5 +1,6 @@
 .page {
-  height: 90vh;
+  margin: auto;
+  height: 95vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -11,60 +12,121 @@
 }
 
 div.square {
-  border-right: 1px solid grey;
-  border-bottom: 1px solid grey;
-  width: 25px;
-  height: 25px;
+  border: 1px solid #bbb;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  border-radius: 15%;
+}
+
+.square:hover {
+  cursor: cell;
 }
 
 .grid {
   margin: auto;
   display: grid;
-  grid-template-rows: repeat(40, fit-content(2vmin));
-  grid-template-columns: repeat(80, fit-content(2vw));
-  border-top: 1px solid grey;
-  border-left: 1px solid grey;
-}
-
-div.square {
-  background-color: white;
+  width: 100%;
+  height: 100%;
+  max-width: 2000px;
+  max-height: 1000px;
+  grid-template-rows: repeat(40, auto);
+  grid-template-columns: repeat(80, auto);
 }
 
 @keyframes visited {
   0% {
     background-color: yellow;
+    width: 40%;
+    height: 40%;
+    margin: auto;
+    border-radius: 40%;
   }
   25% {
     background-color: orange;
+    margin: auto;
+    border-radius: 30%;
   }
   50% {
     background-color: #0f8;
+    margin: auto;
+    border-radius: 20%;
+  }
+  75% {
+    background-color: #0ff;
+    margin: auto;
+    border-radius: 10%;
   }
   100% {
-    background-color: #0ff;
+    background-color: #5fdded;
+    width: 100%;
+    height: 100%;
+    margin: auto;
   }
 }
 
 div.visited {
-  background-color: #0ff;
+  background-color: #5fdded;
+  border: 1px #ddd solid;
   animation-name: visited;
-  animation-duration: 2s;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes path {
+  0% {
+    margin: auto;
+    width: 75%;
+    height: 75%;
+  }
+  100% {
+    margin: auto;
+    width: 100%;
+    height: 100;
+  }
 }
 
 div.path {
   background-color: yellow;
+  animation-name: path;
+  animation-duration: 0.25s;
+  /* animation-timing-function: linear; */
 }
 
 div.start {
-  background-color: green;
+  background-color: #34d960;
 }
 
 div.end {
-  background-color: red;
+  background-color: #eb5752;
+}
+
+@keyframes wall {
+  0% {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+  }
+  50% {
+    background-color: #333;
+    width: 50%;
+    height: 50%;
+    margin: auto;
+  }
+  100% {
+    background-color: #333;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+  }
 }
 
 div.wall {
-  background-color: #333;
+  animation-name: wall;
+  animation-duration: 0.05s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
 }
 
 div.wPressed:hover {
@@ -80,9 +142,9 @@ div.ePressed:hover {
 }
 
 .buttons {
-  width: 25%;
+  width: 100%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 
 .buttons button {
