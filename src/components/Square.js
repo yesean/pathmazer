@@ -4,7 +4,7 @@ const Square = (props) => {
   return (
     <div
       id={props.id}
-      className='square'
+      className={props.className}
       onMouseDown={props.onMouseDown}
       onMouseUp={props.onMouseUp}
       onMouseOver={props.onMouseOver}

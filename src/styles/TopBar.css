@@ -1,0 +1,11 @@
+.topBar {
+  list-style-type: none;
+}
+
+.topBar li,
+form,
+select,
+button {
+  display: inline;
+  margin: 10px;
+}
