@@ -1,5 +1,4 @@
 import React from 'react';
-// import Select from 'react-select';
 import Select from './Select';
 import './../styles/TopBar.css';
 import Animations from './../services/Animations.js';
@@ -61,10 +60,12 @@ const TopBar = (props) => {
             <input className='mazeButton' type='submit' value='Generate Maze' />
           </form>
         </li>
-        <li className='resetButtonContainer'>
-          <button className='resetButton' onClick={handleAlgorithmSubmit}>
+        <li className='visualizeButtonContainer'>
+          <button className='visualizeButton' onClick={handleAlgorithmSubmit}>
             Visualize
           </button>
+        </li>
+        <li className='resetButtonContainer'>
           <button className='resetButton' onClick={props.resetGrid}>
             Reset
           </button>

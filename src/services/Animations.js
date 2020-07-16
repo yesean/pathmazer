@@ -1,4 +1,3 @@
-// import Grid from './Grid.js';
 import Grid from './../components/Grid';
 import Algorithms from './Algorithms';
 

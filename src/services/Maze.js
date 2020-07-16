@@ -1,9 +1,8 @@
-// import Grid from './Grid';
 import Grid from '../components/Grid';
 
 const generateMaze = (maze, squareRefs, resetGrid) => {
   resetGrid(false);
-  let delay = 10;
+  let delay = 20;
   switch (maze) {
     case 'random':
       randomMaze(squareRefs, delay);
@@ -29,28 +28,20 @@ const randomMaze = (squareRefs, delay) => {
 };
 
 const dfs = (squareRefs, delay) => {
+  let tick = 1;
   const start = 0;
   const visited = new Set([start]);
   squareRefs.forEach((ref) => (ref.current.className = Grid.WALL_SQ));
+  changeSquare(squareRefs, start, Grid.START_SQ, tick++ * delay);
   const path = [start];
-  let tick = 1;
-  let currSquare = start;
-  while (path.length === 1 || currSquare !== start) {
+  // let currSquare = start;
+  while (path.length > 0) {
+    const currSquare = path.pop();
     let moves = [-2, 2, -2 * Grid.WIDTH, 2 * Grid.WIDTH];
-    moves = ((cs, m) => {
-      return m.filter((move) => {
-        const nextMove = cs + move;
-        return (
-          nextMove < Grid.WIDTH * Grid.HEIGHT &&
-          nextMove >= 0 &&
-          Math.abs(
-            Math.floor(nextMove % Grid.WIDTH) - Math.floor(cs % Grid.WIDTH)
-          ) <= 2
-        );
-      });
-    })(currSquare, moves);
+    moves = moves.filter((move) =>
+      Grid.validMove(currSquare, currSquare + move)
+    );
 
-    let needsBacktracking = true;
     while (moves.length > 0) {
       const nextMove =
         currSquare + moves.splice(Math.random() * moves.length, 1)[0];
@@ -60,20 +51,17 @@ const dfs = (squareRefs, delay) => {
         changeSquare(squareRefs, nextMoves[1], Grid.DEFAULT_SQ, tick++ * delay);
         visited.add(nextMove);
         path.push(nextMove);
-        needsBacktracking = false;
-        currSquare = nextMove;
         break;
       }
     }
-    if (needsBacktracking) {
-      currSquare = path.pop();
-    }
   }
-  const end = squareRefs.reduce((max, ref, index) => {
-    const refDist = Grid.dist(index, start);
-    const maxDist = Grid.dist(max, start);
-    return refDist > maxDist ? index : max;
-  }, 0);
+
+  // place end as far away as possible from start
+  const end = squareRefs.reduce(
+    (max, sq, ind) =>
+      Grid.dist(start, ind) < Grid.dist(start, max) ? ind : max,
+    0
+  );
   changeSquare(squareRefs, start, Grid.START_SQ, tick++ * delay);
   changeSquare(squareRefs, end, Grid.END_SQ, tick++ * delay);
 };

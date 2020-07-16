@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './../styles/Grid.css';
 import Square from './Square.js';
-import GridConstants from './../services/GridConstants.js';
 import Animations from './../services/Animations.js';
 
 const WIDTH = 90;
@@ -20,6 +19,13 @@ const VISITED_HEAD_SQ = 'visitedHeadSquare';
 const dist = (start, end) =>
   Math.abs(Math.floor(start / WIDTH) - Math.floor(end / WIDTH)) +
   Math.abs((start % WIDTH) - (end % WIDTH));
+const validMove = (start, end) => {
+  return (
+    end < Grid.WIDTH * Grid.HEIGHT &&
+    end >= 0 &&
+    Math.abs(Math.floor(start % WIDTH) - Math.floor(end % WIDTH)) <= 2
+  );
+};
 
 const Grid = ({
   grid,
@@ -52,26 +58,26 @@ const Grid = ({
   const updateBoard = (id) => {
     if (holdingStart) {
       setLastSquare(squareRefs[id].current.className);
-      squareRefs[id].current.className = GridConstants.START_SQUARE;
+      squareRefs[id].current.className = START_SQ;
       if (finished) {
         Animations.animate(algorithm, squareRefs, false);
       }
     } else if (holdingEnd) {
       setLastSquare(squareRefs[id].current.className);
-      squareRefs[id].current.className = GridConstants.END_SQUARE;
+      squareRefs[id].current.className = END_SQ;
       if (finished) {
         Animations.animate(algorithm, squareRefs, false);
       }
     } else if (
-      squareRefs[id].current.className === GridConstants.START_SQUARE
+      squareRefs[id].current.className === START_SQ
     ) {
       setHoldingStart(true);
-    } else if (squareRefs[id].current.className === GridConstants.END_SQUARE) {
+    } else if (squareRefs[id].current.className === END_SQ) {
       setHoldingEnd(true);
-    } else if (squareRefs[id].current.className === GridConstants.WALL_SQUARE) {
-      squareRefs[id].current.className = GridConstants.DEFAULT_SQUARE;
+    } else if (squareRefs[id].current.className === WALL_SQ) {
+      squareRefs[id].current.className = DEFAULT_SQ;
     } else {
-      squareRefs[id].current.className = GridConstants.WALL_SQUARE;
+      squareRefs[id].current.className = WALL_SQ;
     }
   };
 
@@ -131,5 +137,6 @@ export default {
   VISITED_FINISHED_SQ,
   PATH_FINISHED_SQ,
   VISITED_HEAD_SQ,
-  dist
+  dist,
+  validMove,
 };

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './../styles/App.css';
 import Grid from './Grid.js';
 import TopBar from './TopBar.js';
-// import Gridfrom './../services/Grid.js';
 
 function App() {
   const [grid, setGrid] = useState([]);
@@ -13,9 +12,7 @@ function App() {
   const squareRefs = [];
 
   useEffect(() => {
-    const freshGrid = new Array(Grid.WIDTH * Grid.HEIGHT).fill(
-      Grid.DEFAULT_SQ
-    );
+    const freshGrid = new Array(Grid.WIDTH * Grid.HEIGHT).fill(Grid.DEFAULT_SQ);
     freshGrid[Grid.INITIAL_START] = Grid.START_SQ;
     freshGrid[Grid.INITIAL_END] = Grid.END_SQ;
     setGrid(freshGrid);
