@@ -1,7 +1,7 @@
 const WIDTH = 90;
 const HEIGHT = 45;
 const INITIAL_START = 20 * WIDTH + 20;
-const INITIAL_END = 20 * WIDTH + 60;
+const INITIAL_END = 20 * WIDTH + 70;
 const DEFAULT_SQUARE = 'square';
 const START_SQUARE = 'startSquare';
 const END_SQUARE = 'endSquare';

@@ -40,7 +40,8 @@ const Select = (props) => {
       },
       'cursor': 'pointer',
     }),
-    singleValue: (provided) => ({}),
+    singleValue: (provided) => ({
+    }),
   };
 
   return (

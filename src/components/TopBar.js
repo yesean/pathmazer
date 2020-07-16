@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 // import Select from 'react-select';
 import Select from './Select';
 import './../styles/TopBar.css';
 import Animations from './../services/Animations.js';
 import Maze from './../services/Maze.js';
-import { dijkstra } from '../services/Algorithms';
 
 const TopBar = (props) => {
-  const handleChange = (event) => {
-    props.setAlgorithm(event.target.value);
-  };
-
   const handleAlgorithmSubmit = (event) => {
     event.preventDefault();
     if (Animations.animate(props.algorithm, props.squareRefs, true)) {

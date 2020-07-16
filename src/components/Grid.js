@@ -4,6 +4,23 @@ import Square from './Square.js';
 import GridConstants from './../services/GridConstants.js';
 import Animations from './../services/Animations.js';
 
+const WIDTH = 90;
+const HEIGHT = 45;
+const INITIAL_START = 20 * WIDTH + 20;
+const INITIAL_END = 20 * WIDTH + 70;
+const DEFAULT_SQ = 'square';
+const START_SQ = 'startSquare';
+const END_SQ = 'endSquare';
+const WALL_SQ = 'wallSquare';
+const VISITED_SQ = 'visitedSquare';
+const PATH_SQ = 'pathSquare';
+const VISITED_FINISHED_SQ = 'visitedFinishedSquare';
+const PATH_FINISHED_SQ = 'pathFinishedSquare';
+const VISITED_HEAD_SQ = 'visitedHeadSquare';
+const dist = (start, end) =>
+  Math.abs(Math.floor(start / WIDTH) - Math.floor(end / WIDTH)) +
+  Math.abs((start % WIDTH) - (end % WIDTH));
+
 const Grid = ({
   grid,
   setGrid,
@@ -98,4 +115,21 @@ const Grid = ({
   );
 };
 
-export default Grid;
+// export default Grid;
+export default {
+  Grid,
+  WIDTH,
+  HEIGHT,
+  INITIAL_START,
+  INITIAL_END,
+  DEFAULT_SQ,
+  START_SQ,
+  END_SQ,
+  WALL_SQ,
+  VISITED_SQ,
+  PATH_SQ,
+  VISITED_FINISHED_SQ,
+  PATH_FINISHED_SQ,
+  VISITED_HEAD_SQ,
+  dist
+};

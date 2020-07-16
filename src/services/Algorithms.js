@@ -1,15 +1,16 @@
-import GridConstants from './GridConstants';
+// import Grid from './Grid';
+import Grid from './../components/Grid'
 
 const dijkstra = (squareRefs) => {
   const start = squareRefs.findIndex(
-    (ref) => ref.current.className === GridConstants.START_SQUARE
+    (ref) => ref.current.className === Grid.START_SQ
   );
   const end = squareRefs.findIndex(
-    (ref) => ref.current.className === GridConstants.END_SQUARE
+    (ref) => ref.current.className === Grid.END_SQ
   );
   const prev = {};
   const visited = [];
-  const weights = new Array(GridConstants.WIDTH * GridConstants.HEIGHT).fill(
+  const weights = new Array(Grid.WIDTH * Grid.HEIGHT).fill(
     Number.MAX_SAFE_INTEGER
   );
   weights[start] = 1;
@@ -22,22 +23,22 @@ const dijkstra = (squareRefs) => {
     if (currSquare === end) {
       break;
     }
-    const moves = [-1, 1, -GridConstants.WIDTH, GridConstants.WIDTH];
+    const moves = [-1, 1, -Grid.WIDTH, Grid.WIDTH];
     for (const nextSquare of moves
       .map((move) => currSquare + move)
       .filter(
         (nextSquare) =>
           nextSquare > 0 &&
-          nextSquare < GridConstants.WIDTH * GridConstants.HEIGHT &&
+          nextSquare < Grid.WIDTH * Grid.HEIGHT &&
           Math.abs(
-            (currSquare % GridConstants.WIDTH) -
-              (nextSquare % GridConstants.WIDTH)
+            (currSquare % Grid.WIDTH) -
+              (nextSquare % Grid.WIDTH)
           ) <= 1
       )) {
       let moveWeight = weights[currSquare];
       if (
         document.getElementById(nextSquare).className ===
-        GridConstants.WALL_SQUARE
+        Grid.WALL_SQ
       ) {
         moveWeight = Number.MAX_SAFE_INTEGER;
       } else {
@@ -82,14 +83,14 @@ const dijkstra = (squareRefs) => {
 
 const astar = (squareRefs) => {
   const start = squareRefs.findIndex(
-    (ref) => ref.current.className === GridConstants.START_SQUARE
+    (ref) => ref.current.className === Grid.START_SQ
   );
   const end = squareRefs.findIndex(
-    (ref) => ref.current.className === GridConstants.END_SQUARE
+    (ref) => ref.current.className === Grid.END_SQ
   );
   const prev = {};
   const visited = [];
-  const weights = new Array(GridConstants.WIDTH * GridConstants.HEIGHT).fill(
+  const weights = new Array(Grid.WIDTH * Grid.HEIGHT).fill(
     Number.MAX_SAFE_INTEGER
   );
   weights[start] = 1;
@@ -97,9 +98,9 @@ const astar = (squareRefs) => {
   const heuristic = (start, end) => {
     return (
       Math.abs(
-        Math.floor(start / GridConstants.WIDTH) -
-          Math.floor(end / GridConstants.WIDTH)
-      ) + Math.abs((start % GridConstants.WIDTH) - (end % GridConstants.WIDTH))
+        Math.floor(start / Grid.WIDTH) -
+          Math.floor(end / Grid.WIDTH)
+      ) + Math.abs((start % Grid.WIDTH) - (end % Grid.WIDTH))
     );
   };
 
@@ -111,22 +112,22 @@ const astar = (squareRefs) => {
     if (currSquare === end) {
       break;
     }
-    const moves = [-1, 1, -GridConstants.WIDTH, GridConstants.WIDTH];
+    const moves = [-1, 1, -Grid.WIDTH, Grid.WIDTH];
     for (const nextSquare of moves
       .map((move) => currSquare + move)
       .filter(
         (nextSquare) =>
           nextSquare > 0 &&
-          nextSquare < GridConstants.WIDTH * GridConstants.HEIGHT &&
+          nextSquare < Grid.WIDTH * Grid.HEIGHT &&
           Math.abs(
-            (currSquare % GridConstants.WIDTH) -
-              (nextSquare % GridConstants.WIDTH)
+            (currSquare % Grid.WIDTH) -
+              (nextSquare % Grid.WIDTH)
           ) <= 1
       )) {
       let moveWeight = weights[currSquare];
       if (
         document.getElementById(nextSquare).className ===
-        GridConstants.WALL_SQUARE
+        Grid.WALL_SQ
       ) {
         moveWeight = Number.MAX_SAFE_INTEGER;
       } else {
@@ -194,4 +195,4 @@ const greedy = () => {
   }
 };
 
-export { dijkstra, astar, greedy };
+export default { dijkstra, astar, greedy };
