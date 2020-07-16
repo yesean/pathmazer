@@ -8,6 +8,7 @@ function App() {
   const [grid, setGrid] = useState([]);
   const [finished, setFinished] = useState(false);
   const [algorithm, setAlgorithm] = useState('');
+  const [maze, setMaze] = useState('');
   const [lastSquare, setLastSquare] = useState(GridConstants.DEFAULT_SQUARE);
   const squareRefs = [];
 
@@ -20,7 +21,7 @@ function App() {
     setGrid(freshGrid);
   }, []);
 
-  const resetGrid = () => {
+  const resetGrid = (resetSelects = true) => {
     console.log('resetting grid');
     squareRefs.forEach((ref, index) => {
       ref.current.className =
@@ -32,7 +33,10 @@ function App() {
     });
     setFinished(false);
     setLastSquare(GridConstants.DEFAULT_SQUARE);
-    setAlgorithm('');
+    if (resetSelects) {
+      setAlgorithm('');
+      setMaze('');
+    }
   };
 
   return (
@@ -43,6 +47,8 @@ function App() {
         setFinished={setFinished}
         algorithm={algorithm}
         setAlgorithm={setAlgorithm}
+        maze={maze}
+        setMaze={setMaze}
       />
       <Grid
         grid={grid}

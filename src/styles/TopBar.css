@@ -15,7 +15,8 @@
   padding: 0px 10px;
 }
 
-.algorithmForm {
+.algorithmForm,
+.mazeForm {
   display: flex;
   align-items: center;
 }

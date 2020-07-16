@@ -1,4 +1,4 @@
-const WIDTH = 80;
+const WIDTH = 90;
 const HEIGHT = 45;
 const INITIAL_START = 20 * WIDTH + 20;
 const INITIAL_END = 20 * WIDTH + 60;

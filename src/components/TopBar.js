@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Select, { NonceProvider } from 'react-select';
+// import Select from 'react-select';
+import Select from './Select';
 import './../styles/TopBar.css';
 import Animations from './../services/Animations.js';
 import Maze from './../services/Maze.js';
@@ -10,111 +11,65 @@ const TopBar = (props) => {
     props.setAlgorithm(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleAlgorithmSubmit = (event) => {
     event.preventDefault();
     if (Animations.animate(props.algorithm, props.squareRefs, true)) {
       props.setFinished(true);
     }
   };
 
-  // const algorithms = [
-  //   { value: 'dijkstra', label: 'Dijkstra' },
-  //   { value: 'astar', label: 'A* Search' },
-  // ];
+  const handleMazeSubmit = (event) => {
+    event.preventDefault();
+    Maze.generateMaze(props.maze, props.squareRefs, props.resetGrid);
+  };
 
-  const algorithmMap = {
+  const algorithmsMap = {
     dijkstra: 'Dijkstra',
     astar: 'A* Search',
   };
+  const algorithmsPlaceholder = 'Select Algorithm';
 
-  const algorithms = ['dijkstra', 'astar'];
-
-  const customSelectStyle = {
-    menu: (provided, state) => ({
-      ...provided,
-      // backgroundColor: '#2657c9',
-      backgroundColor: 'black',
-      margin: 'none',
-      border: 'none',
-    }),
-    control: (provided, state) => ({
-      ...provided,
-      'color': state.hasValue || state.menuIsOpen ? '#36e379' : 'white',
-      'backgroundColor':
-        state.hasValue || state.menuIsOpen ? 'black' : '#2657c9',
-      '&:hover': {
-        color: '#36e379',
-        backgroundColor: 'black',
-      },
-      'margin': '10px',
-      'border': 'none',
-      'boxShadow': 'none',
-      'cursor': 'pointer',
-      'width': 165,
-    }),
-    dropdownIndicator: (provided, state) => ({
-      margin: '5px',
-    }),
-    indicatorSeparator: (provided) => ({
-      display: 'none',
-    }),
-    placeholder: (provided, state) => ({}),
-    option: (provided, state) => ({
-      ...provided,
-      'color': 'white',
-      'backgroundColor': 'black',
-      '&:hover': {
-        color: '#36e379',
-      },
-      'cursor': 'pointer',
-    }),
-    singleValue: (provided) => ({
-      color: '#36e379',
-    }),
+  const mazesMap = {
+    random: 'Random',
+    dfs: 'DFS',
   };
+  const mazePlaceholder = 'Select Maze';
 
   return (
     <div className='topBarContainer'>
       <ul className='topBar'>
         <li>
-          <form className='algorithmForm' onSubmit={handleSubmit}>
-            <Select
-              className='algorithmSelect'
-              styles={customSelectStyle}
-              options={algorithms.map((alg) => ({
-                value: alg,
-                label: algorithmMap[alg],
-              }))}
-              value={
-                props.algorithm && {
-                  value: props.algorithm,
-                  label: algorithmMap[props.algorithm],
-                }
-              }
-              onChange={(data) => {
-                props.setAlgorithm(data.value);
-                console.log('alg ', props.algorithm);
-              }}
-              placeholder='Select Algorithm'
-              isSearchable={false}
-              tabSelectsValue={false}
-            />
-            <input
+          {/* <form className='algorithmForm' onSubmit={handleAlgorithmSubmit}> */}
+          <Select
+            option={props.algorithm}
+            options={Object.keys(algorithmsMap)}
+            optionsMap={algorithmsMap}
+            setOption={props.setAlgorithm}
+            placeholder={algorithmsPlaceholder}
+          />
+          {/* <input
               className='visualizeButton'
               type='submit'
               value='Visualize'
-            />
-          </form>
+            /> */}
+          {/* </form> */}
         </li>
         <li className='mazeButtonContainer'>
-          <button
-            className='mazeButton'
-            onClick={() => Maze.generateMaze(props.squareRefs, props.resetGrid)}
-          >
-            Generate Maze
-          </button>
+          <form className='mazeForm' onSubmit={handleMazeSubmit}>
+            <Select
+              option={props.maze}
+              options={Object.keys(mazesMap)}
+              optionsMap={mazesMap}
+              setOption={props.setMaze}
+              placeholder={mazePlaceholder}
+            />
+            <input className='mazeButton' type='submit' value='Generate Maze' />
+          </form>
         </li>
         <li className='resetButtonContainer'>
+          <button className='resetButton' onClick={handleAlgorithmSubmit}>
+            Visualize
+          </button>
           <button className='resetButton' onClick={props.resetGrid}>
             Reset
           </button>
