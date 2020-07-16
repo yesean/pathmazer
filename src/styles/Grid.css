@@ -1,14 +1,13 @@
 .grid {
-  outline: 0.1px solid #ddd;
-  margin: auto;
-  display: grid;
-  width: 100%;
-  height: 100%;
-  max-width: 2000px;
-  max-height: 1000px;
+  margin: 50px auto;
   padding: 0px;
-  grid-template-rows: repeat(40, 1fr);
-  grid-template-columns: repeat(80, 1fr);
+  display: grid;
+  max-width: 2000px;
+  width: 90vw;
+  grid-template-rows: repeat(45, minmax(0, 25px));
+  grid-template-columns: repeat(80, minmax(0, 25px));
+  outline: 1px solid #ddd;
+  border: 1px solid transparent;
 }
 
 .grid:hover {
@@ -16,111 +15,10 @@
 }
 
 .squareContainer {
-  outline: 0.1px solid #ddd;
   width: 100%;
   height: 100%;
   display: flex;
   list-style-type: none;
   justify-content: center;
   user-select: none;
-}
-
-.square,
-.startSquare,
-.endSquare,
-.wallSquare,
-.visitedSquare,
-.pathSquare {
-  border-radius: 10%;
-  width: 95%;
-  height: 95%;
-  margin: auto;
-  user-select: none;
-}
-
-@keyframes visited {
-  0% {
-    background-color: yellow;
-    transform: scale(0.3);
-    margin: auto;
-    border-radius: 50%;
-  }
-  25% {
-    background-color: orange;
-    margin: auto;
-  }
-  50% {
-    background-color: #0f8;
-    margin: auto;
-    transform: scale(1);
-    border-radius: 30%;
-  }
-  75% {
-    background-color: #3f1;
-    margin: auto;
-    transform: scale(1.2);
-    border-radius: 10%;
-  }
-  80% {
-    transform: scale(1);
-  }
-}
-
-.visitedSquare {
-  outline: 0.1px #eee solid;
-  background-color: #0ff;
-  animation-name: visited;
-  animation-duration: 2s;
-  animation-timing-function: ease-out;
-}
-
-@keyframes path {
-  0% {
-    margin: auto;
-    border-radius: 30%;
-    transform: scale(0.85);
-    background-color: #0ff;
-  }
-  75% {
-    margin: auto;
-    transform: scale(1.1);
-  }
-}
-
-.pathSquare {
-  /* outline: 1px white solid; */
-  background-color: yellow;
-  animation-name: path;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-out;
-}
-
-.startSquare {
-  background-color: #34d960;
-}
-
-.endSquare {
-  background-color: #eb5752;
-}
-
-@keyframes wall {
-  0% {
-    background-color: #333;
-    transform: scale(1);
-  }
-  30% {
-    background-color: #333;
-    transform: scale(1.2);
-  }
-  100% {
-    background-color: #333;
-    transform: scale(1);
-  }
-}
-
-.wallSquare {
-  animation-name: wall;
-  animation-duration: 0.3s;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
 }

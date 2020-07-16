@@ -1,11 +1,11 @@
-import GridConstants from './../GridConstants';
+import GridConstants from './GridConstants';
 
-const dijkstra = () => {
-  const start = Number(
-    document.getElementsByClassName(GridConstants.START_SQUARE)[0].id
+const dijkstra = (squareRefs) => {
+  const start = squareRefs.findIndex(
+    (ref) => ref.current.className === GridConstants.START_SQUARE
   );
-  const end = Number(
-    document.getElementsByClassName(GridConstants.END_SQUARE)[0].id
+  const end = squareRefs.findIndex(
+    (ref) => ref.current.className === GridConstants.END_SQUARE
   );
   const prev = {};
   const visited = [];
@@ -80,12 +80,12 @@ const dijkstra = () => {
   return [visited, path];
 };
 
-const astar = () => {
-  const start = Number(
-    document.getElementsByClassName(GridConstants.START_SQUARE)[0].id
+const astar = (squareRefs) => {
+  const start = squareRefs.findIndex(
+    (ref) => ref.current.className === GridConstants.START_SQUARE
   );
-  const end = Number(
-    document.getElementsByClassName(GridConstants.END_SQUARE)[0].id
+  const end = squareRefs.findIndex(
+    (ref) => ref.current.className === GridConstants.END_SQUARE
   );
   const prev = {};
   const visited = [];

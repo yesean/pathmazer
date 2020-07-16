@@ -1,11 +1,53 @@
-.topBar {
-  list-style-type: none;
+.topBarContainer {
+  width: 100%;
+  height: 100%;
+  background-color: #2657c9;
 }
 
-.topBar li,
-form,
-select,
-button {
-  display: inline;
+.topBar {
+  list-style-type: none;
+  margin: auto;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0px 10px;
+}
+
+.algorithmForm {
+  display: flex;
+  align-items: center;
+}
+
+.mazeButton,
+.resetButton,
+.visualizeButton {
+  /* border: 1px solid #2657c9; */
+  border: none;
+  background-color: #2657c9;
+  padding: 10px;
   margin: 10px;
+  font-size: 16px;
+  color: white;
+  font-family: Helvetica;
+  user-select: none;
+  display: inline;
+  white-space: nowrap;
+}
+
+.visualizeButton:hover,
+.mazeButton:hover,
+.resetButton:hover {
+  cursor: pointer;
+  color: #36e379;
+  background-color: black;
+  border-radius: 5px;
+}
+
+.algorithmSelect,
+.visualizeButton,
+.mazeButton,
+.resetButton:focus {
+  outline: none;
 }

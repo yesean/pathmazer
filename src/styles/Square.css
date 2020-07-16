@@ -1,0 +1,128 @@
+.square,
+.startSquare,
+.endSquare,
+.wallSquare,
+.visitedSquare,
+.pathSquare,
+.visitedFinishedSquare,
+.pathFinishedSquare,
+.visitedHeadSquare {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  user-select: none;
+}
+
+.square {
+  outline: 0.1px solid #ddd;
+}
+
+.visitedSquare,
+.visitedFinishedSquare,
+.visitedHeadSquare {
+  outline: 0.1px solid white;
+}
+
+.wallSquare {
+  animation-name: wall;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
+}
+
+@keyframes wall {
+  0% {
+    background-color: #333;
+    transform: scale(1);
+  }
+  50% {
+    background-color: #333;
+    transform: scale(1.2);
+  }
+  100% {
+    background-color: #333;
+    transform: scale(1);
+  }
+}
+
+.visitedSquare {
+  animation-name: visited;
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes visited {
+  0% {
+    outline: none;
+    background-color: #4924ff;
+    transform: scale(0.5);
+    margin: auto;
+    border-radius: 50%;
+  }
+  25% {
+    outline: none;
+    background-color: #4ecde6;
+    margin: auto;
+  }
+  50% {
+    outline: none;
+    background-color: #246dff;
+    margin: auto;
+    border-radius: 50%;
+  }
+  75% {
+    outline: none;
+    margin: auto;
+    transform: scale(1.2);
+    background-color: #24ffb6;
+    border-radius: 10%;
+  }
+  100% {
+    transform: scale(1);
+    outline: 1px solid white;
+    background-color: #24daff;
+  }
+}
+
+.visitedFinishedSquare {
+  background-color: #24daff;
+}
+
+.visitedHeadSquare {
+  background-color: yellow;
+}
+
+.pathSquare {
+  background-color: yellow;
+  animation-name: path;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes path {
+  0% {
+    margin: auto;
+    border-radius: 30%;
+    transform: scale(0.85);
+    background-color: #0ff;
+  }
+  75% {
+    margin: auto;
+    transform: scale(1.1);
+  }
+}
+
+.pathFinishedSquare {
+  background-color: yellow;
+  margin: auto;
+  transform: scale(1);
+}
+
+.startSquare {
+  background-color: #34d960;
+}
+
+.endSquare {
+  background-color: #eb5752;
+}
