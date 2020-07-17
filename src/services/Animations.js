@@ -46,19 +46,29 @@ const animate = (algorithm, squareRefs, shouldAnimate) => {
   for (const square of visited) {
     shouldAnimate
       ? (lastHead = ((prev, sq, delay) => {
+          const prevClassName = squareRefs[sq].current.className;
           setTimeout(() => {
             if (prev) {
-              prev.className = Grid.VISITED_SQ;
+              if (prev.className === Grid.WEIGHT_SQ) {
+                squareRefs[prev.sq].current.className = Grid.VISITED_WEIGHT_SQ;
+              } else {
+                squareRefs[prev.sq].current.className = Grid.VISITED_SQ;
+              }
             }
             squareRefs[sq].current.className = Grid.VISITED_HEAD_SQ;
           }, delay);
-          return squareRefs[sq].current;
+          // return squareRefs[sq].current;
+          return { sq: square, className: prevClassName };
         })(lastHead, square, visitedTick++ * visitedDelay))
       : (squareRefs[square].current.className = Grid.VISITED_FINISHED_SQ);
   }
   setTimeout(() => {
     if (lastHead) {
-      lastHead.className = Grid.VISITED_SQ;
+      if ((lastHead.className = Grid.WEIGHT_SQ)) {
+        lastHead.className = Grid.VISITED_WEIGHT_SQ;
+      } else {
+        lastHead.className = Grid.VISITED_SQ;
+      }
     }
   }, visitedTick * visitedDelay);
 
@@ -67,7 +77,11 @@ const animate = (algorithm, squareRefs, shouldAnimate) => {
   for (const square of path) {
     shouldAnimate
       ? setTimeout(() => {
-          squareRefs[square].current.className = Grid.PATH_SQ;
+          if (squareRefs[square].current.className === Grid.VISITED_WEIGHT_SQ) {
+            squareRefs[square].current.className = Grid.PATH_WEIGHT_SQ;
+          } else {
+            squareRefs[square].current.className = Grid.PATH_SQ;
+          }
         }, visitedTick * visitedDelay + pathTick++ * pathDelay)
       : (squareRefs[square].current.className = Grid.PATH_FINISHED_SQ);
   }

@@ -32,8 +32,11 @@ const dijkstra = (squareRefs) => {
           Math.abs((currSquare % Grid.WIDTH) - (nextSquare % Grid.WIDTH)) <= 1
       )) {
       let moveWeight = weights[currSquare];
-      if (document.getElementById(nextSquare).className === Grid.WALL_SQ) {
+      const elm = squareRefs[nextSquare].current;
+      if (elm.className === Grid.WALL_SQ) {
         moveWeight = Number.MAX_SAFE_INTEGER;
+      } else if (elm.className === Grid.WEIGHT_SQ) {
+        moveWeight += 10;
       } else {
         moveWeight += 1;
       }
@@ -113,8 +116,11 @@ const astar = (squareRefs) => {
           Math.abs((currSquare % Grid.WIDTH) - (nextSquare % Grid.WIDTH)) <= 1
       )) {
       let moveWeight = weights[currSquare];
-      if (document.getElementById(nextSquare).className === Grid.WALL_SQ) {
+      const elm = squareRefs[nextSquare].current;
+      if (elm.className === Grid.WALL_SQ) {
         moveWeight = Number.MAX_SAFE_INTEGER;
+      } else if (elm.className === Grid.WEIGHT_SQ) {
+        moveWeight += 10;
       } else {
         moveWeight += 1;
       }

@@ -2,6 +2,7 @@
 .startSquare,
 .endSquare,
 .wallSquare,
+.weightSquare,
 .visitedSquare,
 .pathSquare,
 .visitedFinishedSquare,
@@ -11,6 +12,19 @@
   height: 100%;
   margin: auto;
   user-select: none;
+}
+
+.square:focus,
+.startSquare:focus,
+.endSquare:focus,
+.wallSquare:focus,
+.weightSquare:focus,
+.visitedSquare:focus,
+.pathSquare:focus,
+.visitedFinishedSquare:focus,
+.pathFinishedSquare:focus,
+.visitedHeadSquare:focus {
+  outline: 0.1px transparent;
 }
 
 .square {
@@ -43,6 +57,35 @@
     background-color: #333;
     transform: scale(1);
   }
+}
+
+.weightSquare {
+  animation-name: weight;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
+}
+
+@keyframes weight {
+  0% {
+    background-color: purple;
+    transform: scale(1);
+  }
+  50% {
+    background-color: purple;
+    transform: scale(1.2);
+  }
+  100% {
+    background-color: purple;
+    transform: scale(1);
+  }
+}
+
+.weightImg {
+  width: 90%;
+  height: 80%;
+  display: block;
+  margin: auto;
 }
 
 .visitedSquare {
@@ -96,6 +139,49 @@
   background-color: yellow;
 }
 
+@keyframes visitedWeight {
+  0% {
+    outline: 1px solid purple;
+    background-color: #4924ff;
+    transform: scale(0.3);
+    margin: auto;
+    border-radius: 50%;
+  }
+  25% {
+    outline: 1px solid purple;
+    background-color: #4ecde6;
+    margin: auto;
+  }
+  50% {
+    outline: 1px solid purple;
+    background-color: #246dff;
+    margin: auto;
+    border-radius: 50%;
+  }
+  75% {
+    outline: 1px solid purple;
+    margin: auto;
+    transform: scale(1.2);
+    background-color: #24ffb6;
+    border-radius: 10%;
+  }
+  99% {
+    outline: 1px solid purple;
+  }
+  100% {
+    outline: 1px solid purple;
+    transform: scale(1);
+    background-color: purple;
+  }
+}
+
+.visitedWeightSquare {
+  animation-name: visitedWeight;
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
 .pathSquare {
   background-color: yellow;
   animation-name: path;
@@ -120,6 +206,14 @@
   background-color: yellow;
   margin: auto;
   transform: scale(1);
+}
+
+.pathWeightSquare {
+  outline: 1px solid purple;
+  background-color: yellow;
+  /* animation-name: path;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out; */
 }
 
 .startSquare {

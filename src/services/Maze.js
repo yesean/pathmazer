@@ -2,7 +2,7 @@ import Grid from '../components/Grid';
 
 const generateMaze = (maze, squareRefs, resetGrid) => {
   resetGrid(false);
-  let delay = 20;
+  let delay = 10;
   switch (maze) {
     case 'random':
       randomMaze(squareRefs, delay);
@@ -37,6 +37,7 @@ const dfs = (squareRefs, delay) => {
   // let currSquare = start;
   while (path.length > 0) {
     const currSquare = path.pop();
+    console.log(path.length);
     let moves = [-2, 2, -2 * Grid.WIDTH, 2 * Grid.WIDTH];
     moves = moves.filter((move) =>
       Grid.validMove(currSquare, currSquare + move)
@@ -51,6 +52,7 @@ const dfs = (squareRefs, delay) => {
         changeSquare(squareRefs, nextMoves[1], Grid.DEFAULT_SQ, tick++ * delay);
         visited.add(nextMove);
         path.push(nextMove);
+        path.push(nextMove);
         break;
       }
     }
@@ -59,7 +61,7 @@ const dfs = (squareRefs, delay) => {
   // place end as far away as possible from start
   const end = squareRefs.reduce(
     (max, sq, ind) =>
-      Grid.dist(start, ind) < Grid.dist(start, max) ? ind : max,
+      Grid.dist(start, ind) > Grid.dist(start, max) ? ind : max,
     0
   );
   changeSquare(squareRefs, start, Grid.START_SQ, tick++ * delay);

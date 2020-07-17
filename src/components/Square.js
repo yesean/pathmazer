@@ -1,5 +1,7 @@
 import React from 'react';
+import Grid from './Grid.js';
 import './../styles/Square.css';
+import weight from './../images/kevin-malone.jpg';
 
 const Square = (props) => {
   props.squareRefs[props.id] = React.useRef(null);
@@ -13,7 +15,12 @@ const Square = (props) => {
       onMouseUp={props.onMouseUp}
       onMouseOver={props.onMouseOver}
       onMouseOut={props.onMouseOut}
-    ></div>
+      onKeyDown={props.onKeyDown}
+      onKeyUp={props.onKeyUp}
+      tabIndex={-1}
+    >
+      {/* {props.isWeight && <img className='weightImg' src={weight} alt='KM' />} */}
+    </div>
   );
 };
 
