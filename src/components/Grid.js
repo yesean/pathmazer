@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './../styles/Grid.css';
 import Square from './Square.js';
 import Animations from './../services/Animations.js';
 
 const WIDTH = 90;
 const HEIGHT = 45;
+const SIZE = WIDTH * HEIGHT;
 const INITIAL_START = 20 * WIDTH + 20;
 const INITIAL_END = 20 * WIDTH + 70;
 const DEFAULT_SQ = 'square';
@@ -29,23 +30,28 @@ const validMove = (start, end) => {
 
 const Grid = ({
   grid,
-  setGrid,
+  resetGrid,
   squareRefs,
-  finished,
+  showPath,
   algorithm,
   lastSquare,
   setLastSquare,
 }) => {
-  const [holdingStart, setHoldingStart] = useState(false);
-  const [holdingEnd, setHoldingEnd] = useState(false);
-  const [mouseDown, setMouseDown] = useState(false);
+  let holdingStart = false;
+  let holdingEnd = false;
+  let mouseDown = false;
 
-  const renderSquare = (id) => {
+  useEffect(() => {
+    resetGrid();
+  }, []);
+
+  const renderSquare = (sq, id) => {
+    console.log('rendering');
     return (
       <Square
         key={id}
         id={id}
-        className={grid[id]}
+        className={sq}
         squareRefs={squareRefs}
         onMouseDown={() => onMouseDown(id)}
         onMouseUp={() => onMouseUp(id)}
@@ -55,44 +61,49 @@ const Grid = ({
     );
   };
 
+  const renderGrid = () => {
+    return grid.map((sq, ind) => renderSquare(sq, ind));
+  };
+
   const updateBoard = (id) => {
     if (holdingStart) {
       setLastSquare(squareRefs[id].current.className);
       squareRefs[id].current.className = START_SQ;
-      if (finished) {
+      if (showPath) {
         Animations.animate(algorithm, squareRefs, false);
       }
     } else if (holdingEnd) {
       setLastSquare(squareRefs[id].current.className);
       squareRefs[id].current.className = END_SQ;
-      if (finished) {
+      if (showPath) {
         Animations.animate(algorithm, squareRefs, false);
       }
-    } else if (
-      squareRefs[id].current.className === START_SQ
-    ) {
-      setHoldingStart(true);
+    } else if (squareRefs[id].current.className === START_SQ) {
+      holdingStart = true;
     } else if (squareRefs[id].current.className === END_SQ) {
-      setHoldingEnd(true);
+      holdingEnd = true;
     } else if (squareRefs[id].current.className === WALL_SQ) {
       squareRefs[id].current.className = DEFAULT_SQ;
     } else {
+      setLastSquare(squareRefs[id].current.className);
       squareRefs[id].current.className = WALL_SQ;
     }
   };
 
   const onMouseUp = (id) => {
+    console.log('mouse up')
     if (holdingStart) {
-      setHoldingStart(false);
+      holdingStart = false;
     } else if (holdingEnd) {
-      setHoldingEnd(false);
+      holdingEnd = false;
     }
-    setMouseDown(false);
+    mouseDown = false;
   };
 
   const onMouseDown = (id) => {
     updateBoard(id);
-    setMouseDown(true);
+    // setMouseDown(true);
+    mouseDown = true;
   };
 
   const onMouseOver = (id) => {
@@ -105,19 +116,21 @@ const Grid = ({
   const onMouseOut = (id) => {
     if (mouseDown) {
       if (holdingStart || holdingEnd) {
+        // console.log('restoring ', lastSquare);
         squareRefs[id].current.className = lastSquare;
       }
     }
   };
 
   return (
-    <ul className='grid'>
-      {grid.map((square, index) => (
-        <li className='squareContainer' key={index}>
-          {renderSquare(index)}
-        </li>
-      ))}
-    </ul>
+    // <ul className='grid'>
+    //   {grid.map((sq, ind) => (
+    //     <li className='squareContainer' key={ind}>
+    //       {renderSquare(sq, ind)}
+    //     </li>
+    //   ))}
+    // </ul>
+    <div className='grid'>{renderGrid()}</div>
   );
 };
 
@@ -126,6 +139,7 @@ export default {
   Grid,
   WIDTH,
   HEIGHT,
+  SIZE,
   INITIAL_START,
   INITIAL_END,
   DEFAULT_SQ,

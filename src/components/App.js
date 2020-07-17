@@ -4,19 +4,17 @@ import Grid from './Grid.js';
 import TopBar from './TopBar.js';
 
 function App() {
-  const [grid, setGrid] = useState([]);
-  const [finished, setFinished] = useState(false);
+  const [grid] = useState(new Array(Grid.SIZE).fill(0));
+  const [showPath, setShowPath] = useState(false);
   const [algorithm, setAlgorithm] = useState('');
   const [maze, setMaze] = useState('');
   const [lastSquare, setLastSquare] = useState(Grid.DEFAULT_SQ);
   const squareRefs = [];
-
-  useEffect(() => {
-    const freshGrid = new Array(Grid.WIDTH * Grid.HEIGHT).fill(Grid.DEFAULT_SQ);
-    freshGrid[Grid.INITIAL_START] = Grid.START_SQ;
-    freshGrid[Grid.INITIAL_END] = Grid.END_SQ;
-    setGrid(freshGrid);
-  }, []);
+  // let lastSquare = Grid.DEFAULT_SQ;
+  // const setLastSquare = (sq) => {
+  //   lastSquare = sq;
+  //   console.log('saving sq ', lastSquare);
+  // };
 
   const resetGrid = (resetSelects = true) => {
     console.log('resetting grid');
@@ -28,7 +26,7 @@ function App() {
           ? Grid.END_SQ
           : Grid.DEFAULT_SQ;
     });
-    setFinished(false);
+    setShowPath(false);
     setLastSquare(Grid.DEFAULT_SQ);
     if (resetSelects) {
       setAlgorithm('');
@@ -41,7 +39,7 @@ function App() {
       <TopBar
         squareRefs={squareRefs}
         resetGrid={resetGrid}
-        setFinished={setFinished}
+        setShowPath={setShowPath}
         algorithm={algorithm}
         setAlgorithm={setAlgorithm}
         maze={maze}
@@ -49,9 +47,10 @@ function App() {
       />
       <Grid.Grid
         grid={grid}
-        setGrid={setGrid}
+        // setGrid={setGrid}
+        resetGrid={resetGrid}
         squareRefs={squareRefs}
-        finished={finished}
+        showPath={showPath}
         algorithm={algorithm}
         lastSquare={lastSquare}
         setLastSquare={setLastSquare}

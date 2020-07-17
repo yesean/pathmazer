@@ -8,7 +8,7 @@ const TopBar = (props) => {
   const handleAlgorithmSubmit = (event) => {
     event.preventDefault();
     if (Animations.animate(props.algorithm, props.squareRefs, true)) {
-      props.setFinished(true);
+      props.setShowPath(true);
     }
   };
 
@@ -31,13 +31,16 @@ const TopBar = (props) => {
 
   return (
     <div className='topBar'>
-      <Select
-        option={props.algorithm}
-        options={Object.keys(algorithmsMap)}
-        optionsMap={algorithmsMap}
-        setOption={props.setAlgorithm}
-        placeholder={algorithmsPlaceholder}
-      />
+      <form className='algorithmForm' onSubmit={handleAlgorithmSubmit}>
+        <Select
+          option={props.algorithm}
+          options={Object.keys(algorithmsMap)}
+          optionsMap={algorithmsMap}
+          setOption={props.setAlgorithm}
+          placeholder={algorithmsPlaceholder}
+        />
+        <input className='visualizeButton' type='submit' value='Visualize' />
+      </form>
       <form className='mazeForm' onSubmit={handleMazeSubmit}>
         <Select
           option={props.maze}
@@ -48,9 +51,9 @@ const TopBar = (props) => {
         />
         <input className='mazeButton' type='submit' value='Generate Maze' />
       </form>
-      <button className='visualizeButton' onClick={handleAlgorithmSubmit}>
+      {/* <button className='visualizeButton' onClick={handleAlgorithmSubmit}>
         Visualize
-      </button>
+      </button> */}
       <button className='resetButton' onClick={props.resetGrid}>
         Reset
       </button>
