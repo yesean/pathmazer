@@ -2,11 +2,10 @@
   margin: 50px auto;
   padding: 0px;
   display: grid;
-  max-width: 90vw;
-  grid-template-rows: repeat(45, minmax(0, 25px));
-  grid-template-columns: repeat(90, minmax(0, 25px));
-  outline: 1px solid #ddd;
-  border: 1px solid transparent;
+  max-width: 98vw;
+  grid-template-rows: repeat(45, 25px);
+  grid-template-columns: repeat(67, minmax(0, 25px));
+  border: 1px solid #ddd;
 }
 
 .grid:hover {

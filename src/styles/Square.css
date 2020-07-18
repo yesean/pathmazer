@@ -4,14 +4,19 @@
 .wallSquare,
 .weightSquare,
 .visitedSquare,
-.pathSquare,
 .visitedFinishedSquare,
+.visitedHeadSquare,
+.visitedWeightSquare,
+.visitedWeightFinishedSquare,
+.pathSquare,
+.pathWeightSquare,
 .pathFinishedSquare,
-.visitedHeadSquare {
+.pathFinishedWeightSquare {
   width: 100%;
   height: 100%;
   margin: auto;
   user-select: none;
+  box-sizing: border-box;
 }
 
 .square:focus,
@@ -20,21 +25,19 @@
 .wallSquare:focus,
 .weightSquare:focus,
 .visitedSquare:focus,
-.pathSquare:focus,
+.visitedWeightSquare:focus,
+.visitedHeadSquare:focus,
 .visitedFinishedSquare:focus,
+.visitedFinishedWeightSquare:focus,
+.pathSquare:focus,
+.pathWeight:focus,
 .pathFinishedSquare:focus,
-.visitedHeadSquare:focus {
-  outline: 0.1px transparent;
+.pathFinishedWeightSquare {
+  outline: none;
 }
 
 .square {
-  outline: 0.1px solid #ddd;
-}
-
-.visitedSquare,
-.visitedFinishedSquare,
-.visitedHeadSquare {
-  outline: 0.1px solid white;
+  border: 0.1px solid #ddd;
 }
 
 .wallSquare {
@@ -56,6 +59,7 @@
   100% {
     background-color: #333;
     transform: scale(1);
+    border-radius: 0%;
   }
 }
 
@@ -68,14 +72,17 @@
 
 @keyframes weight {
   0% {
+    outline: none;
     background-color: purple;
     transform: scale(1);
   }
   50% {
+    outline: none;
     background-color: purple;
     transform: scale(1.2);
   }
   100% {
+    outline: none;
     background-color: purple;
     transform: scale(1);
   }
@@ -97,81 +104,36 @@
 
 @keyframes visited {
   0% {
-    outline: none;
     background-color: #4924ff;
     transform: scale(0.3);
-    margin: auto;
+    border: none;
     border-radius: 50%;
+    margin: auto;
   }
   25% {
-    outline: none;
     background-color: #4ecde6;
     margin: auto;
   }
   50% {
-    outline: none;
     background-color: #246dff;
-    margin: auto;
     border-radius: 50%;
+    margin: auto;
   }
   75% {
-    outline: none;
-    margin: auto;
     transform: scale(1.2);
     background-color: #24ffb6;
-    border-radius: 10%;
+    border: none;
+    border-radius: 0%;
+    margin: auto;
   }
-  99% {
-    outline: none;
+  75.1% {
+    border: 1px solid #eee;
   }
   100% {
     transform: scale(1);
-    outline: 1px solid white;
+    border: 1px solid #eee;
     background-color: #24daff;
-  }
-}
-
-.visitedFinishedSquare {
-  background-color: #24daff;
-}
-
-.visitedHeadSquare {
-  background-color: yellow;
-}
-
-@keyframes visitedWeight {
-  0% {
-    outline: 1px solid purple;
-    background-color: #4924ff;
-    transform: scale(0.3);
     margin: auto;
-    border-radius: 50%;
-  }
-  25% {
-    outline: 1px solid purple;
-    background-color: #4ecde6;
-    margin: auto;
-  }
-  50% {
-    outline: 1px solid purple;
-    background-color: #246dff;
-    margin: auto;
-    border-radius: 50%;
-  }
-  75% {
-    outline: 1px solid purple;
-    margin: auto;
-    transform: scale(1.2);
-    background-color: #24ffb6;
-    border-radius: 10%;
-  }
-  99% {
-    outline: 1px solid purple;
-  }
-  100% {
-    outline: 1px solid purple;
-    transform: scale(1);
-    background-color: purple;
   }
 }
 
@@ -182,38 +144,109 @@
   animation-fill-mode: forwards;
 }
 
-.pathSquare {
+@keyframes visitedWeight {
+  0% {
+    transform: scale(0.3);
+    background-color: #4924ff;
+    border: 3px solid purple;
+    border-radius: 50%;
+    margin: auto;
+  }
+  25% {
+    background-color: #4ecde6;
+    border: 3px solid purple;
+    margin: auto;
+  }
+  50% {
+    background-color: #246dff;
+    border: 3px solid purple;
+    border-radius: 50%;
+    margin: auto;
+  }
+  75% {
+    transform: scale(1.2);
+    background-color: #24ffb6;
+    border: 3px solid purple;
+    border-radius: 0%;
+    margin: auto;
+  }
+  100% {
+    transform: scale(1);
+    background-color: purple;
+    border: none;
+    border-radius: 0%;
+    margin: auto;
+  }
+}
+
+.visitedFinishedSquare {
+  background-color: #24daff;
+  border: 1px solid #eee;
+}
+
+.visitedFinishedWeightSquare {
+  background-color: purple;
+}
+
+.visitedHeadSquare {
   background-color: yellow;
+  border: 1px solid #eee;
+}
+
+.pathSquare {
   animation-name: path;
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
 }
 
 @keyframes path {
   0% {
-    margin: auto;
-    border-radius: 30%;
     transform: scale(0.85);
     background-color: #0ff;
-  }
-  75% {
+    border-radius: 30%;
     margin: auto;
-    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    background-color: yellow;
+    border-radius: 0%;
+    margin: auto;
+  }
+}
+
+.pathWeightSquare {
+  animation-name: pathWeight;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes pathWeight {
+  0% {
+    transform: scale(0.85);
+    background-color: #0ff;
+    border-radius: 30%;
+    margin: auto;
+  }
+  100% {
+    transform: scale(1);
+    background-color: yellow;
+    border: 3px solid purple;
+    border-radius: 0%;
+    margin: auto;
   }
 }
 
 .pathFinishedSquare {
   background-color: yellow;
   margin: auto;
-  transform: scale(1);
 }
 
-.pathWeightSquare {
-  outline: 1px solid purple;
+.pathFinishedWeightSquare {
   background-color: yellow;
-  /* animation-name: path;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-out; */
+  border: 3px solid purple;
+  margin: auto;
 }
 
 .startSquare {

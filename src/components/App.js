@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './../styles/App.css';
 import Grid from './Grid.js';
 import TopBar from './TopBar.js';
@@ -10,11 +10,6 @@ function App() {
   const [maze, setMaze] = useState('');
   const [lastSquare, setLastSquare] = useState(Grid.DEFAULT_SQ);
   const squareRefs = [];
-  // let lastSquare = Grid.DEFAULT_SQ;
-  // const setLastSquare = (sq) => {
-  //   lastSquare = sq;
-  //   console.log('saving sq ', lastSquare);
-  // };
 
   const resetGrid = (resetSelects = true) => {
     console.log('resetting grid');

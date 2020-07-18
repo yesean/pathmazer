@@ -26,6 +26,8 @@ const TopBar = (props) => {
   const mazesMap = {
     random: 'Random',
     dfs: 'DFS',
+    recursiveDivision: 'Recursive Division',
+    kruskal: 'Kruskal',
   };
   const mazePlaceholder = 'Select Maze';
 

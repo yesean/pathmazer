@@ -1,7 +1,7 @@
 import React from 'react';
-import Grid from './Grid.js';
+// import Grid from './Grid.js';
 import './../styles/Square.css';
-import weight from './../images/kevin-malone.jpg';
+// import weight from './../images/kevin-malone.jpg';
 
 const Square = (props) => {
   props.squareRefs[props.id] = React.useRef(null);

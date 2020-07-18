@@ -13,34 +13,54 @@ const Select = (props) => {
     }),
     control: (provided, state) => ({
       ...provided,
-      'color': state.hasValue || state.menuIsOpen ? '#36e379' : 'white',
-      'backgroundColor':
-        state.hasValue || state.menuIsOpen ? 'black' : '#2657c9',
+      color: state.hasValue || state.menuIsOpen ? '#36e379' : 'white',
+      backgroundColor: state.hasValue || state.menuIsOpen ? 'black' : '#2657c9',
       '&:hover': {
         color: '#36e379',
         backgroundColor: 'black',
+        border: 'none',
       },
-      'margin': '0px 10px',
-      'border': 'none',
-      'boxShadow': 'none',
-      'cursor': 'pointer',
-      'width': '160px',
-      'borderRadius': state.menuIsOpen ? '5px 5px 0px 0px' : '5px',
+      userSelect: 'none',
+      margin: '0px 10px',
+      border: state.hasValue || state.menuIsOpen ? 'none' : '1px solid black',
+      boxShadow: 'none',
+      cursor: 'pointer',
+      width: '160px',
+      borderRadius: state.menuIsOpen ? '5px 5px 0px 0px' : '5px',
     }),
     dropdownIndicator: (provided, state) => ({}),
     indicatorSeparator: (provided) => ({}),
     placeholder: (provided, state) => ({}),
     option: (provided, state) => ({
       ...provided,
-      'color': 'white',
-      'backgroundColor': 'black',
+      color: 'white',
+      backgroundColor: 'black',
       '&:hover': {
         color: '#36e379',
         backgroundColor: 'black',
       },
-      'cursor': 'pointer',
+      cursor: 'pointer',
     }),
-    singleValue: (provided) => ({
+    // singleValue: (provided) => ({
+    //   // ...provided,
+    //   // margin: 'auto',
+    // }),
+    singleValue: (provided) => {
+      delete provided['color'];
+      provided = {
+        ...provided,
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        paddingRight: '4px',
+        boxSizing: 'border-box',
+      };
+      return provided;
+    },
+    valueContainer: (provided) => ({
+      ...provided,
+      display: 'flex',
+      alignItems: 'flexEnd',
     }),
   };
 

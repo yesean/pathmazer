@@ -1,34 +1,59 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import './../styles/Grid.css';
 import Square from './Square.js';
 import Animations from './../services/Animations.js';
-import Key from './../services/KeyListener.js';
-import Mouse from './../services/MouseListener.js';
 
-const WIDTH = 90;
+const WIDTH = 67;
 const HEIGHT = 45;
 const SIZE = WIDTH * HEIGHT;
-const INITIAL_START = 20 * WIDTH + 20;
-const INITIAL_END = 20 * WIDTH + 70;
+const INITIAL_START = 22 * WIDTH + 6;
+const INITIAL_END = 22 * WIDTH + 60;
 const DEFAULT_SQ = 'square';
 const START_SQ = 'startSquare';
 const END_SQ = 'endSquare';
 const WALL_SQ = 'wallSquare';
 const WEIGHT_SQ = 'weightSquare';
 const VISITED_SQ = 'visitedSquare';
-const VISITED_FINISHED_SQ = 'visitedFinishedSquare';
-const VISITED_HEAD_SQ = 'visitedHeadSquare';
 const VISITED_WEIGHT_SQ = 'visitedWeightSquare';
+const VISITED_HEAD_SQ = 'visitedHeadSquare';
+const VISITED_FINISHED_SQ = 'visitedFinishedSquare';
+const VISITED_FINISHED_WEIGHT_SQ = 'visitedFinishedWeightSquare';
 const PATH_SQ = 'pathSquare';
-const PATH_FINISHED_SQ = 'pathFinishedSquare';
 const PATH_WEIGHT_SQ = 'pathWeightSquare';
+const PATH_FINISHED_SQ = 'pathFinishedSquare';
+const PATH_FINISHED_WEIGHT_SQ = 'pathFinishedWeightSquare';
+
+const getRow = (sq) => {
+  return Math.floor(sq / WIDTH);
+};
+
+const getCol = (sq) => {
+  return sq % WIDTH;
+};
+
+const getCoor = (sq) => {
+  return [getRow(sq), getCol(sq)];
+};
+
+const getSq = (row, col) => {
+  return row * WIDTH + col;
+};
 
 const dist = (start, end) =>
-  Math.abs(Math.floor(start / WIDTH) - Math.floor(end / WIDTH)) +
-  Math.abs((start % WIDTH) - (end % WIDTH));
+  Math.abs(getRow(start) - getRow(end)) + Math.abs(getCol(start) - getCol(end));
+
 const validMove = (start, end) => {
+  return end < SIZE && end >= 0 && Math.abs(getCol(end) - getCol(start)) <= 2;
+};
+
+const validMazeMove = (start, end) => {
+  const [endRow, endCol] = getCoor(end);
   return (
-    end < SIZE && end >= 0 && Math.abs((start % WIDTH) - (end % WIDTH)) <= 2
+    endRow >= 1 &&
+    endRow <= HEIGHT - 1 &&
+    endCol >= 1 &&
+    endCol < WIDTH - 1 &&
+    validMove(start, end)
   );
 };
 
@@ -170,12 +195,19 @@ export default {
   WALL_SQ,
   WEIGHT_SQ,
   VISITED_SQ,
-  VISITED_FINISHED_SQ,
-  VISITED_HEAD_SQ,
   VISITED_WEIGHT_SQ,
+  VISITED_HEAD_SQ,
+  VISITED_FINISHED_SQ,
+  VISITED_FINISHED_WEIGHT_SQ,
   PATH_SQ,
   PATH_FINISHED_SQ,
   PATH_WEIGHT_SQ,
+  PATH_FINISHED_WEIGHT_SQ,
+  getRow,
+  getCol,
+  getCoor,
+  getSq,
   dist,
   validMove,
+  validMazeMove,
 };
