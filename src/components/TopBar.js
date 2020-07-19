@@ -28,6 +28,7 @@ const TopBar = (props) => {
     dfs: 'DFS',
     recursiveDivision: 'Recursive Division',
     kruskal: 'Kruskal',
+    prim: 'Prim',
   };
   const mazePlaceholder = 'Select Maze';
 

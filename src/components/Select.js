@@ -22,7 +22,7 @@ const Select = (props) => {
       },
       userSelect: 'none',
       margin: '0px 10px',
-      border: state.hasValue || state.menuIsOpen ? 'none' : '1px solid black',
+      border: state.hasValue || state.menuIsOpen ? 'none' : '2px solid black',
       boxShadow: 'none',
       cursor: 'pointer',
       width: '160px',

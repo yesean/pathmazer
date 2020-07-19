@@ -24,7 +24,7 @@ const clearAnimate = (squareRefs) => {
 };
 
 const animate = (algorithm, squareRefs, shouldAnimate) => {
-  let visitedDelay = 8;
+  let visitedDelay = 5;
   let pathDelay = 50;
   let visited, path;
   switch (algorithm) {

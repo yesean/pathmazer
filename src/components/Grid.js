@@ -50,7 +50,7 @@ const validMazeMove = (start, end) => {
   const [endRow, endCol] = getCoor(end);
   return (
     endRow >= 1 &&
-    endRow <= HEIGHT - 1 &&
+    endRow < HEIGHT - 1 &&
     endCol >= 1 &&
     endCol < WIDTH - 1 &&
     validMove(start, end)

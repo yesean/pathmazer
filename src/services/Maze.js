@@ -4,7 +4,7 @@ const generateMaze = (maze, squareRefs, resetGrid) => {
   resetGrid(false);
   resetStartEndPosition(squareRefs);
   console.log('performing maze', maze);
-  let delay = 10;
+  let delay = 5;
   switch (maze) {
     case 'random':
       randomMaze(squareRefs, delay);
@@ -17,6 +17,9 @@ const generateMaze = (maze, squareRefs, resetGrid) => {
       break;
     case 'kruskal':
       kruskal(squareRefs, delay);
+      break;
+    case 'prim':
+      prim(squareRefs, delay);
       break;
     default:
   }
@@ -81,7 +84,19 @@ const getRandomNumberBetween = (start, end) => {
 };
 
 const getRandomElement = (array) => {
-  return array[getRandomNumberBetween(0, array.length - 1)];
+  // return array[getRandomNumberBetween(0, array.length - 1)];
+  return array.splice(getRandomNumberBetween(0, array.length - 1), 1)[0];
+};
+
+const shuffleArray = (array) => {
+  const newArray = [];
+  while (array.length > 0) {
+    newArray.push(
+      // array.splice(getRandomNumberBetween(0, array.length - 1), 1)[0]
+      getRandomElement(array)
+    );
+  }
+  return newArray;
 };
 
 const getClosestEmptyTileFrom = (squareRefs, from) => {
@@ -138,21 +153,20 @@ const generateStartEndPosition = (
 };
 
 const randomMaze = (squareRefs, delay) => {
-  squareRefs.forEach((ref, index) => {
-    const elm = ref.current;
-    if (
-      index !== Grid.INITIAL_START &&
-      index !== Grid.INITIAL_END &&
-      Math.random() < 0.35
-    ) {
-      elm.className = Grid.WALL_SQ;
-    }
-  });
-  generateStartEndPosition(
-    squareRefs,
-    Grid.getSq(1, 1),
-    Grid.getSq(Grid.SIZE - 1, Grid.SIZE - 1)
-  );
+  let tick = 0;
+  tick = drawMazeBorder(squareRefs, tick, delay);
+  setTimeout(() => {
+    squareRefs.forEach((ref, sq) => {
+      if (Grid.validMazeMove(sq, sq) && Math.random() < 0.35) {
+        ref.current.className = Grid.WALL_SQ;
+      }
+    });
+    generateStartEndPosition(
+      squareRefs,
+      Grid.getSq(0, 0),
+      Grid.getSq(Grid.SIZE - 1, Grid.SIZE - 1)
+    );
+  }, tick * delay);
 };
 
 const dfs = (squareRefs, delay) => {
@@ -274,59 +288,99 @@ const divide = (squareRefs, tick, delay, rowRange, colRange) => {
 
 const kruskal = (squareRefs, delay) => {
   let tick = 0;
-  generateWallGrid(squareRefs, tick, delay);
-  // let squares = {};
-  let squares = [];
-  let walls = {};
-  // fill walls and squares
-  for (
-    let i = Grid.getSq(1, 1);
-    i <= Grid.getSq(Grid.HEIGHT - 2, Grid.WIDTH - 2);
-    i++
-  ) {
+  tick = generateWallGrid(squareRefs, tick, delay);
+  let treeSet = {};
+  let wallMap = {};
+  // fill wallMap and treeSet
+  for (let i = 0; i < Grid.SIZE; i++) {
     const [iRow, iCol] = Grid.getCoor(i);
     if (Grid.validMazeMove(i, i)) {
       if (iRow % 2 && iCol % 2) {
-        // squares[i] = new Set([i]);
-        squares[i] = [i];
+        treeSet[i] = new Set([i]);
       } else {
         if (iCol % 2) {
-          walls[i] = [i - Grid.WIDTH, i + Grid.WIDTH];
+          wallMap[i] = [i - Grid.WIDTH, i + Grid.WIDTH];
         } else if (iRow % 2) {
-          walls[i] = [i - 1, i + 1];
+          wallMap[i] = [i - 1, i + 1];
         }
       }
     }
   }
 
-  while (squares.length > 1) {
-    const randomWall = getRandomElement(Object.keys(walls));
-    const [sq1, sq2] = walls[randomWall];
-    console.log(squares.findIndex((s) => s === undefined));
-    console.log(squares.filter((s) => s).find((s) => s.length === 1));
-    if (
-      !squares
-        .filter((s) => s)
-        .find((set) => set.includes(sq1))
-        .includes(sq2)
-    ) {
-      changeSquare(squareRefs, randomWall, Grid.DEFAULT_SQ, tick++ * delay);
-      const sq1Set = squares.splice(
-        squares.filter((s) => s).findIndex((sq) => sq.includes(sq1), 1)
-      )[0];
-      const sq2Set = squares.splice(
-        squares.filter((s) => s).findIndex((sq) => sq.includes(sq2), 1)
-      )[0];
-      console.log(sq2Set);
-      squares = [...squares, [...sq1Set, ...sq2Set]];
-      delete walls[randomWall];
+  for (const [wall, [sq1, sq2]] of shuffleArray(Object.entries(wallMap))) {
+    if (!treeSet[sq1].has(sq2)) {
+      changeSquare(squareRefs, wall, Grid.DEFAULT_SQ, tick++ * delay);
+      const union = new Set([...treeSet[sq1], ...treeSet[sq2]]);
+      treeSet[sq1].forEach((sq) => (treeSet[sq] = union));
+      treeSet[sq2].forEach((sq) => (treeSet[sq] = union));
     }
   }
 
   generateStartEndPosition(
     squareRefs,
     Grid.getSq(1, 1),
-    Grid.getSq(Grid.HEIGHT - 1, Grid.WIDTH - 1)
+    Grid.getSq(Grid.HEIGHT - 1, Grid.WIDTH - 1),
+    tick,
+    delay
+  );
+};
+
+const prim = (squareRefs, delay) => {
+  let tick = 0;
+  tick = generateWallGrid(squareRefs, tick, delay);
+  let neighborSquares = {};
+  let neighborWalls = {};
+  // fill walls
+  for (let i = 0; i < Grid.SIZE; i++) {
+    if (Grid.validMazeMove(i, i)) {
+      const [iRow, iCol] = Grid.getCoor(i);
+      if (iRow % 2 && iCol % 2) {
+        const t = Grid.validMazeMove(i, i - Grid.WIDTH) ? [i - Grid.WIDTH] : [];
+        const r = Grid.validMazeMove(i, i + 1) ? [i + 1] : [];
+        const b = Grid.validMazeMove(i, i + Grid.WIDTH) ? [i + Grid.WIDTH] : [];
+        const l = Grid.validMazeMove(i, i - 1) ? [i - 1] : [];
+        neighborWalls[i] = [...t, ...r, ...b, ...l];
+      } else if (iRow % 2 ^ iCol % 2) {
+        if (iCol % 2) {
+          neighborSquares[i] = [i - Grid.WIDTH, i + Grid.WIDTH];
+        } else if (iRow % 2) {
+          neighborSquares[i] = [i - 1, i + 1];
+        }
+      }
+    }
+  }
+
+  const visitedSquares = new Set([Grid.getSq(1, 1)]);
+  let visitedWalls = [...neighborWalls[Grid.getSq(1, 1)]];
+  console.log(...neighborWalls[Grid.getSq(1, 1)]);
+  while (visitedWalls.length > 0) {
+    const randomWall = getRandomElement(visitedWalls);
+    const [sq1, sq2] = neighborSquares[randomWall];
+    if (sq1 > Grid.SIZE || sq2 > Grid.SIZE) {
+      console.log(sq1, sq2);
+    }
+    if (visitedSquares.has(sq1) ^ visitedSquares.has(sq2)) {
+      if (!visitedSquares.has(sq1)) {
+        visitedSquares.add(sq1);
+        // console.log(sq1);
+        // console.log(neighborWalls[sq1]);
+        visitedWalls = [...visitedWalls, ...neighborWalls[sq1]];
+      } else {
+        visitedSquares.add(sq2);
+        // console.log(sq2);
+        // console.log(neighborWalls[sq2]);
+        visitedWalls = [...visitedWalls, ...neighborWalls[sq2]];
+      }
+      changeSquare(squareRefs, randomWall, Grid.DEFAULT_SQ, tick++ * delay);
+    }
+  }
+
+  generateStartEndPosition(
+    squareRefs,
+    Grid.getSq(1, 1),
+    Grid.getSq(Grid.HEIGHT - 1, Grid.WIDTH - 1),
+    tick,
+    delay
   );
 };
 
