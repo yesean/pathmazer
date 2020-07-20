@@ -5,13 +5,15 @@ import TopBar from './TopBar.js';
 
 function App() {
   const [grid] = useState(new Array(Grid.SIZE).fill(0));
-  const [showPath, setShowPath] = useState(false);
-  const [algorithm, setAlgorithm] = useState('');
-  const [maze, setMaze] = useState('');
   const [lastSquare, setLastSquare] = useState(Grid.DEFAULT_SQ);
+  const [algorithm, setAlgorithm] = useState(null);
+  const [maze, setMaze] = useState(null);
+  const [speed, setSpeed] = useState(null);
+  const [isAnimatingFinished, setIsAnimatingFinished] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const squareRefs = [];
 
-  const resetGrid = (resetSelects = true) => {
+  const resetGrid = (shouldResetSelects = true) => {
     console.log('resetting grid');
     squareRefs.forEach((ref, index) => {
       ref.current.className =
@@ -21,11 +23,12 @@ function App() {
           ? Grid.END_SQ
           : Grid.DEFAULT_SQ;
     });
-    setShowPath(false);
+    setIsAnimatingFinished(false);
     setLastSquare(Grid.DEFAULT_SQ);
-    if (resetSelects) {
-      setAlgorithm('');
-      setMaze('');
+    if (shouldResetSelects) {
+      setAlgorithm(null);
+      setMaze(null);
+      setSpeed(null);
     }
   };
 
@@ -34,18 +37,22 @@ function App() {
       <TopBar
         squareRefs={squareRefs}
         resetGrid={resetGrid}
-        setShowPath={setShowPath}
+        setIsAnimatingFinished={setIsAnimatingFinished}
         algorithm={algorithm}
         setAlgorithm={setAlgorithm}
         maze={maze}
         setMaze={setMaze}
+        speed={speed}
+        setSpeed={setSpeed}
+        isAnimating={isAnimating}
+        setIsAnimating={setIsAnimating}
       />
       <Grid.Grid
         grid={grid}
         // setGrid={setGrid}
         resetGrid={resetGrid}
         squareRefs={squareRefs}
-        showPath={showPath}
+        isAnimatingFinished={isAnimatingFinished}
         algorithm={algorithm}
         lastSquare={lastSquare}
         setLastSquare={setLastSquare}

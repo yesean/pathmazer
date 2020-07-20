@@ -67,7 +67,7 @@ const Grid = ({
   grid,
   resetGrid,
   squareRefs,
-  showPath,
+  isAnimatingFinished,
   algorithm,
   lastSquare,
   setLastSquare,
@@ -108,14 +108,15 @@ const Grid = ({
     if (isHoldingStart) {
       setLastSquare(elm.className);
       elm.className = START_SQ;
-      if (showPath) {
-        Animations.animate(algorithm, squareRefs, false);
+      console.log(isAnimatingFinished);
+      if (isAnimatingFinished) {
+        Animations.animate(algorithm, squareRefs, null, false);
       }
     } else if (isHoldingEnd) {
       setLastSquare(elm.className);
       elm.className = END_SQ;
-      if (showPath) {
-        Animations.animate(algorithm, squareRefs, false);
+      if (isAnimatingFinished) {
+        Animations.animate(algorithm, squareRefs, null, false);
       }
     } else if (elm.className === START_SQ) {
       isHoldingStart = true;

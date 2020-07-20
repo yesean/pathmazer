@@ -7,14 +7,33 @@ import Maze from './../services/Maze.js';
 const TopBar = (props) => {
   const handleAlgorithmSubmit = (event) => {
     event.preventDefault();
-    if (Animations.animate(props.algorithm, props.squareRefs, true)) {
-      props.setShowPath(true);
+    if (!props.isAnimating) {
+      props.setIsAnimating(true);
+      Animations.animate(props.algorithm, props.squareRefs, props.speed, true);
+      // .then((e) => {
+      //   console.log('animating finished')
+      //   props.setIsAnimating(e)
+      //   props.setIsAnimatingFinished(e)
+      // })
+      console.log('animating finished');
+      props.setIsAnimating(false);
+      props.setIsAnimatingFinished(true);
     }
   };
 
-  const handleMazeSubmit = (event) => {
+  const handleMazeSubmit = async (event) => {
     event.preventDefault();
-    Maze.generateMaze(props.maze, props.squareRefs, props.resetGrid);
+    if (!props.isAnimating) {
+      props.setIsAnimating(true);
+      const hasBeenGenerated = await Maze.generateMaze(
+        props.maze,
+        props.squareRefs,
+        props.resetGrid,
+        props.speed
+      );
+      console.log('maze generation finished');
+      props.setIsAnimating(hasBeenGenerated);
+    }
   };
 
   const algorithmsMap = {
@@ -33,8 +52,16 @@ const TopBar = (props) => {
   };
   const mazePlaceholder = 'Select Maze';
 
+  const speedMap = {
+    slow: 'Slow',
+    medium: 'Medium',
+    fast: 'Fast',
+  };
+  const speedPlaceholder = 'Select Speed';
+
   return (
     <div className='topBar'>
+      <h1 className='title'>Path Visualizer</h1>
       <form className='algorithmForm' onSubmit={handleAlgorithmSubmit}>
         <Select
           option={props.algorithm}
@@ -45,6 +72,15 @@ const TopBar = (props) => {
         />
         <input className='visualizeButton' type='submit' value='Visualize' />
       </form>
+      <div className='speedContainer'>
+        <Select
+          option={props.speed}
+          options={Object.keys(speedMap)}
+          optionsMap={speedMap}
+          setOption={props.setSpeed}
+          placeholder={speedPlaceholder}
+        />
+      </div>
       <form className='mazeForm' onSubmit={handleMazeSubmit}>
         <Select
           option={props.maze}
@@ -55,9 +91,6 @@ const TopBar = (props) => {
         />
         <input className='mazeButton' type='submit' value='Generate Maze' />
       </form>
-      {/* <button className='visualizeButton' onClick={handleAlgorithmSubmit}>
-        Visualize
-      </button> */}
       <button className='resetButton' onClick={props.resetGrid}>
         Reset
       </button>

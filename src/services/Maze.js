@@ -1,82 +1,89 @@
 import Grid from '../components/Grid';
 
-const generateMaze = (maze, squareRefs, resetGrid) => {
+const generateMaze = async (maze, squareRefs, resetGrid, speed) => {
+  if (!maze || !speed) {
+    return Promise.resolve(false);
+  }
   resetGrid(false);
   resetStartEndPosition(squareRefs);
   console.log('performing maze', maze);
-  let delay = 5;
-  switch (maze) {
-    case 'random':
-      randomMaze(squareRefs, delay);
+  let delay;
+  switch (speed) {
+    case 'slow':
+      delay = 50;
       break;
-    case 'dfs':
-      dfs(squareRefs, delay);
+    case 'medium':
+      delay = 20;
       break;
-    case 'recursiveDivision':
-      recursiveDivision(squareRefs, delay);
-      break;
-    case 'kruskal':
-      kruskal(squareRefs, delay);
-      break;
-    case 'prim':
-      prim(squareRefs, delay);
+    case 'fast':
+      delay = 0;
       break;
     default:
   }
-};
-
-const changeSquare = (squareRefs, square, squareType, delay) => {
-  if (delay) {
-    setTimeout(
-      () => (squareRefs[square].current.className = squareType),
-      delay
-    );
-  } else {
-    squareRefs[square].current.className = squareType;
+  switch (maze) {
+    case 'random':
+      return await randomMaze(squareRefs, delay);
+    case 'dfs':
+      return await dfs(squareRefs, delay);
+    case 'recursiveDivision':
+      return await recursiveDivision(squareRefs, delay);
+    case 'kruskal':
+      return await kruskal(squareRefs, delay);
+    case 'prim':
+      return await prim(squareRefs, delay);
+    default:
+      return Promise.resolve(false);
   }
 };
 
-const drawRow = (squareRefs, tick, delay, row, colRange) => {
+const changeSquare = (squareRefs, square, squareType) => {
+  squareRefs[square].current.className = squareType;
+};
+
+// const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const wait = (ms) => new Promise((resolve) => resolve());
+
+const drawRow = async (squareRefs, delay, row, colRange) => {
   for (let i = colRange[0]; i <= colRange[1]; i++) {
-    changeSquare(
-      squareRefs,
-      row * Grid.WIDTH + i,
-      Grid.WALL_SQ,
-      tick++ * delay
-    );
+    const sq = row * Grid.WIDTH + i;
+    changeSquare(squareRefs, sq, Grid.WALL_SQ);
+    await wait(delay);
   }
-  return tick;
+  return Promise.resolve('finished');
 };
 
-const drawCol = (squareRefs, tick, delay, col, rowRange) => {
+const drawCol = async (squareRefs, delay, col, rowRange) => {
   for (let i = rowRange[0]; i <= rowRange[1]; i++) {
-    changeSquare(
-      squareRefs,
-      i * Grid.WIDTH + col,
-      Grid.WALL_SQ,
-      tick++ * delay
-    );
+    const sq = i * Grid.WIDTH + col;
+    changeSquare(squareRefs, sq, Grid.WALL_SQ);
+    await wait(delay);
   }
-  return tick;
+  return Promise.resolve('finished');
 };
 
-const drawMazeBorder = (squareRefs, tick, delay) => {
-  drawRow(squareRefs, tick, delay, 0, [0, Grid.WIDTH - 1]);
-  tick = drawRow(squareRefs, tick, delay, Grid.HEIGHT - 1, [0, Grid.WIDTH - 1]);
-  drawCol(squareRefs, tick, delay, 0, [0, Grid.HEIGHT - 1]);
-  tick = drawCol(squareRefs, tick, delay, Grid.WIDTH - 1, [0, Grid.HEIGHT - 1]);
-  return tick;
+const drawMazeBorder = async (squareRefs, delay) => {
+  await Promise.all([
+    drawRow(squareRefs, delay, 0, [0, Grid.WIDTH - 1]),
+    drawRow(squareRefs, delay, Grid.HEIGHT - 1, [0, Grid.WIDTH - 1]),
+  ]);
+  return await Promise.all([
+    drawCol(squareRefs, delay, 0, [0, Grid.HEIGHT - 1]),
+    drawCol(squareRefs, delay, Grid.WIDTH - 1, [0, Grid.HEIGHT - 1]),
+  ]);
 };
 
-const generateWallGrid = (squareRefs, tick, delay) => {
-  let endTick = 0;
-  for (let i = 0; i < Grid.WIDTH; i += 2) {
-    drawCol(squareRefs, tick, delay, i, [0, Grid.HEIGHT - 1]);
-  }
-  for (let i = 0; i < Grid.HEIGHT; i += 2) {
-    endTick = drawRow(squareRefs, tick, delay, i, [0, Grid.WIDTH - 1]);
-  }
-  return endTick;
+const generateWallGrid = async (squareRefs, delay) => {
+  return await (async () => {
+    for (let i = 0; i < Grid.WIDTH; i += 2) {
+      drawCol(squareRefs, delay, i, [0, Grid.HEIGHT - 1]);
+    }
+    for (let i = 0; i < Grid.HEIGHT; i += 2) {
+      if (i === Grid.HEIGHT - 1) {
+        return await drawRow(squareRefs, delay, i, [0, Grid.WIDTH - 1]);
+      }
+      drawRow(squareRefs, delay, i, [0, Grid.WIDTH - 1]);
+    }
+  })();
 };
 
 const getRandomNumberBetween = (start, end) => {
@@ -84,17 +91,13 @@ const getRandomNumberBetween = (start, end) => {
 };
 
 const getRandomElement = (array) => {
-  // return array[getRandomNumberBetween(0, array.length - 1)];
   return array.splice(getRandomNumberBetween(0, array.length - 1), 1)[0];
 };
 
 const shuffleArray = (array) => {
   const newArray = [];
   while (array.length > 0) {
-    newArray.push(
-      // array.splice(getRandomNumberBetween(0, array.length - 1), 1)[0]
-      getRandomElement(array)
-    );
+    newArray.push(getRandomElement(array));
   }
   return newArray;
 };
@@ -136,42 +139,33 @@ const resetStartEndPosition = (squareRefs) => {
   changeSquare(squareRefs, Grid.INITIAL_END, Grid.DEFAULT_SQ, 0);
 };
 
-const generateStartEndPosition = (
-  squareRefs,
-  idealStart,
-  idealEnd,
-  tick,
-  delay
-) => {
-  setTimeout(() => {
-    const start = getClosestEmptyTileFrom(squareRefs, idealStart);
-    const end = getClosestEmptyTileFrom(squareRefs, idealEnd);
-    changeSquare(squareRefs, start, Grid.START_SQ, 0);
-    changeSquare(squareRefs, end, Grid.END_SQ, 0);
-  }, tick++ * delay);
-  return tick;
+const generateStartEndPosition = (squareRefs, idealStart, idealEnd) => {
+  const start = getClosestEmptyTileFrom(squareRefs, idealStart);
+  const end = getClosestEmptyTileFrom(squareRefs, idealEnd);
+  changeSquare(squareRefs, start, Grid.START_SQ, 0);
+  changeSquare(squareRefs, end, Grid.END_SQ, 0);
 };
 
-const randomMaze = (squareRefs, delay) => {
-  let tick = 0;
-  tick = drawMazeBorder(squareRefs, tick, delay);
-  setTimeout(() => {
+const randomMaze = async (squareRefs, delay) => {
+  await drawMazeBorder(squareRefs, delay);
+  await (async () => {
     squareRefs.forEach((ref, sq) => {
       if (Grid.validMazeMove(sq, sq) && Math.random() < 0.35) {
         ref.current.className = Grid.WALL_SQ;
       }
     });
-    generateStartEndPosition(
-      squareRefs,
-      Grid.getSq(0, 0),
-      Grid.getSq(Grid.SIZE - 1, Grid.SIZE - 1)
-    );
-  }, tick * delay);
+    return Promise.resolve('finished');
+  })();
+  generateStartEndPosition(
+    squareRefs,
+    Grid.getSq(0, 0),
+    Grid.getSq(Grid.SIZE - 1, Grid.SIZE - 1)
+  );
+  return Promise.resolve(false);
 };
 
-const dfs = (squareRefs, delay) => {
-  let tick = 1;
-  tick = generateWallGrid(squareRefs, tick, delay);
+const dfs = async (squareRefs, delay) => {
+  await generateWallGrid(squareRefs, delay);
   const start = Grid.getSq(1, 1);
   const visited = new Set([start]);
   const path = [start];
@@ -187,8 +181,10 @@ const dfs = (squareRefs, delay) => {
         currSquare + moves.splice(Math.random() * moves.length, 1)[0];
       const nextMoves = [(currSquare + nextMove) / 2, nextMove];
       if (!visited.has(nextMove)) {
-        changeSquare(squareRefs, nextMoves[0], Grid.DEFAULT_SQ, tick++ * delay);
-        changeSquare(squareRefs, nextMoves[1], Grid.DEFAULT_SQ, tick++ * delay);
+        changeSquare(squareRefs, nextMoves[0], Grid.DEFAULT_SQ);
+        await wait(delay);
+        changeSquare(squareRefs, nextMoves[1], Grid.DEFAULT_SQ);
+        await wait(delay);
         visited.add(nextMove);
         path.push(nextMove);
         path.push(nextMove);
@@ -201,32 +197,23 @@ const dfs = (squareRefs, delay) => {
   generateStartEndPosition(
     squareRefs,
     Grid.getSq(1, 1),
-    Grid.getSq(Grid.SIZE - 1, Grid.SIZE - 1),
-    tick,
-    delay
+    Grid.getSq(Grid.SIZE - 1, Grid.SIZE - 1)
   );
+  return Promise.resolve(false);
 };
 
-const recursiveDivision = (squareRefs, delay) => {
-  let tick = 0;
-  tick = drawMazeBorder(squareRefs, tick, delay);
-  tick = divide(
-    squareRefs,
-    tick,
-    delay,
-    [0, Grid.HEIGHT - 1],
-    [0, Grid.WIDTH - 1]
-  );
+const recursiveDivision = async (squareRefs, delay) => {
+  await drawMazeBorder(squareRefs, delay);
+  await divide(squareRefs, delay, [0, Grid.HEIGHT - 1], [0, Grid.WIDTH - 1]);
   generateStartEndPosition(
     squareRefs,
     Grid.getSq(1, 1),
-    Grid.getSq(Grid.HEIGHT - 1, Grid.WIDTH - 1),
-    tick,
-    delay
+    Grid.getSq(Grid.HEIGHT - 1, Grid.WIDTH - 1)
   );
+  return Promise.resolve(false);
 };
 
-const divide = (squareRefs, tick, delay, rowRange, colRange) => {
+const divide = async (squareRefs, delay, rowRange, colRange) => {
   const [possibleRows, possibleRowHoles] = [[], []];
   const [possibleCols, possibleColHoles] = [[], []];
   for (let i = rowRange[0] + 1; i < rowRange[1]; i++) {
@@ -245,50 +232,33 @@ const divide = (squareRefs, tick, delay, rowRange, colRange) => {
   }
 
   if (possibleRows.length === 0 || possibleCols.length === 0) {
-    return tick;
+    return;
   } else {
     if (possibleRows.length >= possibleCols.length) {
       const randomRow = getRandomElement(possibleRows);
-      tick = drawRow(squareRefs, tick, delay, randomRow, colRange);
+      await drawRow(squareRefs, delay, randomRow, colRange);
       const randomColHole = getRandomElement(possibleColHoles);
       const randomHole = randomRow * Grid.WIDTH + randomColHole;
-      changeSquare(squareRefs, randomHole, Grid.DEFAULT_SQ, tick++ * delay);
-      tick = divide(
-        squareRefs,
-        tick,
-        delay,
-        [rowRange[0], randomRow],
-        colRange
-      );
-      tick = divide(
-        squareRefs,
-        tick,
-        delay,
-        [randomRow, rowRange[1]],
-        colRange
-      );
+      changeSquare(squareRefs, randomHole, Grid.DEFAULT_SQ);
+      await wait(delay);
+      await divide(squareRefs, delay, [rowRange[0], randomRow], colRange);
+      await divide(squareRefs, delay, [randomRow, rowRange[1]], colRange);
     } else {
       let randomCol = getRandomElement(possibleCols);
-      tick = drawCol(squareRefs, tick, delay, randomCol, rowRange);
+      await drawCol(squareRefs, delay, randomCol, rowRange);
       const randomRowHole = getRandomElement(possibleRowHoles);
       const randomHole = randomRowHole * Grid.WIDTH + randomCol;
-      changeSquare(squareRefs, randomHole, Grid.DEFAULT_SQ, tick++ * delay);
-      tick = divide(squareRefs, tick, delay, rowRange, [
-        colRange[0],
-        randomCol,
-      ]);
-      tick = divide(squareRefs, tick, delay, rowRange, [
-        randomCol,
-        colRange[1],
-      ]);
+      await changeSquare(squareRefs, randomHole, Grid.DEFAULT_SQ);
+      await wait(delay);
+      await divide(squareRefs, delay, rowRange, [colRange[0], randomCol]);
+      await divide(squareRefs, delay, rowRange, [randomCol, colRange[1]]);
     }
-    return tick;
+    return;
   }
 };
 
-const kruskal = (squareRefs, delay) => {
-  let tick = 0;
-  tick = generateWallGrid(squareRefs, tick, delay);
+const kruskal = async (squareRefs, delay) => {
+  await generateWallGrid(squareRefs, delay);
   let treeSet = {};
   let wallMap = {};
   // fill wallMap and treeSet
@@ -309,7 +279,8 @@ const kruskal = (squareRefs, delay) => {
 
   for (const [wall, [sq1, sq2]] of shuffleArray(Object.entries(wallMap))) {
     if (!treeSet[sq1].has(sq2)) {
-      changeSquare(squareRefs, wall, Grid.DEFAULT_SQ, tick++ * delay);
+      changeSquare(squareRefs, wall, Grid.DEFAULT_SQ);
+      await wait(delay);
       const union = new Set([...treeSet[sq1], ...treeSet[sq2]]);
       treeSet[sq1].forEach((sq) => (treeSet[sq] = union));
       treeSet[sq2].forEach((sq) => (treeSet[sq] = union));
@@ -319,15 +290,13 @@ const kruskal = (squareRefs, delay) => {
   generateStartEndPosition(
     squareRefs,
     Grid.getSq(1, 1),
-    Grid.getSq(Grid.HEIGHT - 1, Grid.WIDTH - 1),
-    tick,
-    delay
+    Grid.getSq(Grid.HEIGHT - 1, Grid.WIDTH - 1)
   );
+  return Promise.resolve(false);
 };
 
-const prim = (squareRefs, delay) => {
-  let tick = 0;
-  tick = generateWallGrid(squareRefs, tick, delay);
+const prim = async (squareRefs, delay) => {
+  await generateWallGrid(squareRefs, delay);
   let neighborSquares = {};
   let neighborWalls = {};
   // fill walls
@@ -371,17 +340,17 @@ const prim = (squareRefs, delay) => {
         // console.log(neighborWalls[sq2]);
         visitedWalls = [...visitedWalls, ...neighborWalls[sq2]];
       }
-      changeSquare(squareRefs, randomWall, Grid.DEFAULT_SQ, tick++ * delay);
+      changeSquare(squareRefs, randomWall, Grid.DEFAULT_SQ);
+      await wait(delay);
     }
   }
 
   generateStartEndPosition(
     squareRefs,
     Grid.getSq(1, 1),
-    Grid.getSq(Grid.HEIGHT - 1, Grid.WIDTH - 1),
-    tick,
-    delay
+    Grid.getSq(Grid.HEIGHT - 1, Grid.WIDTH - 1)
   );
+  return Promise.resolve(false);
 };
 
 export default { generateMaze };

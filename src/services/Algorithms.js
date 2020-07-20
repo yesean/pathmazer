@@ -205,7 +205,6 @@ const greedy = (squareRefs) => {
       }
     }
   }
-  console.log('visited', visited, 'weights', weights, 'prev', prev);
 
   // retrace path
   const path = [];
@@ -217,7 +216,6 @@ const greedy = (squareRefs) => {
     }
     path.unshift(currSquare);
     currSquare = prev[currSquare];
-    console.log('benis');
   }
   return [visited, path];
 };
