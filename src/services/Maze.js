@@ -16,7 +16,7 @@ const generateMaze = async (maze, squareRefs, resetGrid, speed) => {
       delay = 20;
       break;
     case 'fast':
-      delay = 5;
+      delay = 0;
       break;
     default:
   }

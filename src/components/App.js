@@ -8,7 +8,7 @@ function App() {
   const [lastSquare, setLastSquare] = useState(Grid.DEFAULT_SQ);
   const [algorithm, setAlgorithm] = useState(null);
   const [maze, setMaze] = useState(null);
-  const [speed, setSpeed] = useState(null);
+  const [speed, setSpeed] = useState('fast');
   const [isAnimatingFinished, setIsAnimatingFinished] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const squareRefs = [];

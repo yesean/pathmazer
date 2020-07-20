@@ -55,6 +55,14 @@ const animate = async (algorithm, squareRefs, speed, shouldAnimate) => {
       clearAnimate(squareRefs);
       [visited, path] = Algorithms.greedy(squareRefs);
       break;
+    case 'dfs':
+      clearAnimate(squareRefs);
+      [visited, path] = Algorithms.dfs(squareRefs);
+      break;
+    case 'bfs':
+      clearAnimate(squareRefs);
+      [visited, path] = Algorithms.bfs(squareRefs);
+      break;
     default:
       return Promise.resolve(false);
   }

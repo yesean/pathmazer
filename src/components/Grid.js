@@ -75,7 +75,7 @@ const Grid = ({
   // const [isWeight, setIsWeight] = useState(new Array(SIZE).fill(false));
 
   useEffect(() => {
-    resetGrid();
+    resetGrid(false);
   }, []);
 
   const renderSquare = (sq, id) => {
