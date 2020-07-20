@@ -5,24 +5,26 @@ import Animations from './../services/Animations.js';
 import Maze from './../services/Maze.js';
 
 const TopBar = (props) => {
-  const handleAlgorithmSubmit = (event) => {
+  const handleAlgorithmSubmit = async (event) => {
     event.preventDefault();
+    console.log(props.isAnimating);
     if (!props.isAnimating) {
       props.setIsAnimating(true);
-      Animations.animate(props.algorithm, props.squareRefs, props.speed, true);
-      // .then((e) => {
-      //   console.log('animating finished')
-      //   props.setIsAnimating(e)
-      //   props.setIsAnimatingFinished(e)
-      // })
-      console.log('animating finished');
-      props.setIsAnimating(false);
-      props.setIsAnimatingFinished(true);
+      const isAnimating = await Animations.animate(
+        props.algorithm,
+        props.squareRefs,
+        props.speed,
+        true
+      );
+      console.log('animating finished:', isAnimating);
+      props.setIsAnimating(isAnimating);
+      props.setIsAnimatingFinished(isAnimating);
     }
   };
 
   const handleMazeSubmit = async (event) => {
     event.preventDefault();
+    console.log('isAnimating:', props.isAnimating);
     if (!props.isAnimating) {
       props.setIsAnimating(true);
       const hasBeenGenerated = await Maze.generateMaze(
@@ -31,8 +33,15 @@ const TopBar = (props) => {
         props.resetGrid,
         props.speed
       );
-      console.log('maze generation finished');
+      console.log('hasBeenGenerated:', hasBeenGenerated);
       props.setIsAnimating(hasBeenGenerated);
+    }
+  };
+
+  const handleResetClick = (e) => {
+    if (!props.isAnimating) {
+      e.preventDefault();
+      props.resetGrid();
     }
   };
 
@@ -72,7 +81,13 @@ const TopBar = (props) => {
           setOption={props.setAlgorithm}
           placeholder={algorithmsPlaceholder}
         />
-        <input className='visualizeButton' type='submit' value='Visualize' />
+        <input
+          className={
+            props.isAnimating ? 'topBarButtonWhileAnimating' : 'topBarButton'
+          }
+          type='submit'
+          value='Visualize'
+        />
       </form>
       <div className='speedContainer'>
         <Select
@@ -91,9 +106,20 @@ const TopBar = (props) => {
           setOption={props.setMaze}
           placeholder={mazePlaceholder}
         />
-        <input className='mazeButton' type='submit' value='Generate Maze' />
+        <input
+          className={
+            props.isAnimating ? 'topBarButtonWhileAnimating' : 'topBarButton'
+          }
+          type='submit'
+          value='Generate Maze'
+        />
       </form>
-      <button className='resetButton' onClick={props.resetGrid}>
+      <button
+        className={
+          (props.isAnimating ? 'topBarButtonWhileAnimating' : 'topBarButton') +
+          ' resetButton'
+        }
+        onClick={handleResetClick}>
         Reset
       </button>
     </div>

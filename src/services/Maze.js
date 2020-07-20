@@ -10,10 +10,10 @@ const generateMaze = async (maze, squareRefs, resetGrid, speed) => {
   let delay;
   switch (speed) {
     case 'slow':
-      delay = 50;
+      delay = 100;
       break;
     case 'medium':
-      delay = 20;
+      delay = 50;
       break;
     case 'fast':
       delay = 0;

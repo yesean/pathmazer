@@ -24,7 +24,7 @@ const clearAnimate = (squareRefs) => {
 };
 
 const animate = async (algorithm, squareRefs, speed, shouldAnimate) => {
-  let pathDelay = 50;
+  let pathDelay = 30;
   let visitedDelay;
   if (shouldAnimate) {
     switch (speed) {
@@ -35,7 +35,7 @@ const animate = async (algorithm, squareRefs, speed, shouldAnimate) => {
         visitedDelay = 50;
         break;
       case 'fast':
-        visitedDelay = 5;
+        visitedDelay = 0;
         break;
       default:
         return Promise.resolve(false);
@@ -119,7 +119,7 @@ const animate = async (algorithm, squareRefs, speed, shouldAnimate) => {
       changeSquare(squareRefs, square, squareType);
     }
   }
-  return Promise.resolve(true);
+  return Promise.resolve(false);
 };
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

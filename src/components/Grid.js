@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './../styles/Grid.css';
 import Square from './Square.js';
 import Animations from './../services/Animations.js';
+import { isInaccessible } from '@testing-library/react';
 
 const WIDTH = 67;
 const HEIGHT = 45;
@@ -67,6 +68,7 @@ const Grid = ({
   grid,
   resetGrid,
   squareRefs,
+  isAnimating,
   isAnimatingFinished,
   algorithm,
   lastSquare,
@@ -104,38 +106,41 @@ const Grid = ({
   };
 
   const updateBoard = (id) => {
-    const elm = squareRefs[id].current;
-    if (isHoldingStart) {
-      setLastSquare(elm.className);
-      elm.className = START_SQ;
-      console.log(isAnimatingFinished);
-      if (isAnimatingFinished) {
-        Animations.animate(algorithm, squareRefs, null, false);
-      }
-    } else if (isHoldingEnd) {
-      setLastSquare(elm.className);
-      elm.className = END_SQ;
-      if (isAnimatingFinished) {
-        Animations.animate(algorithm, squareRefs, null, false);
-      }
-    } else if (elm.className === START_SQ) {
-      isHoldingStart = true;
-    } else if (elm.className === END_SQ) {
-      isHoldingEnd = true;
-    } else if (isWDown) {
-      console.log('w is down');
-      // elm.className = elm.className === WEIGHT_SQ ? DEFAULT_SQ : WEIGHT_SQ;
-      if (elm.className === WEIGHT_SQ) {
+    console.log('isAnimating:', isAnimating);
+    if (!isAnimating) {
+      const elm = squareRefs[id].current;
+      if (isHoldingStart) {
+        setLastSquare(elm.className);
+        elm.className = START_SQ;
+        console.log(isAnimatingFinished);
+        if (isAnimatingFinished) {
+          Animations.animate(algorithm, squareRefs, null, false);
+        }
+      } else if (isHoldingEnd) {
+        setLastSquare(elm.className);
+        elm.className = END_SQ;
+        if (isAnimatingFinished) {
+          Animations.animate(algorithm, squareRefs, null, false);
+        }
+      } else if (elm.className === START_SQ) {
+        isHoldingStart = true;
+      } else if (elm.className === END_SQ) {
+        isHoldingEnd = true;
+      } else if (isWDown) {
+        console.log('w is down');
+        // elm.className = elm.className === WEIGHT_SQ ? DEFAULT_SQ : WEIGHT_SQ;
+        if (elm.className === WEIGHT_SQ) {
+          elm.className = DEFAULT_SQ;
+          // isWeight[id] = false;
+        } else {
+          elm.className = WEIGHT_SQ;
+          // isWeight[id] = true;
+        }
+      } else if (elm.className === WALL_SQ) {
         elm.className = DEFAULT_SQ;
-        // isWeight[id] = false;
       } else {
-        elm.className = WEIGHT_SQ;
-        // isWeight[id] = true;
+        elm.className = WALL_SQ;
       }
-    } else if (elm.className === WALL_SQ) {
-      elm.className = DEFAULT_SQ;
-    } else {
-      elm.className = WALL_SQ;
     }
   };
 

@@ -9,8 +9,8 @@ function App() {
   const [algorithm, setAlgorithm] = useState(null);
   const [maze, setMaze] = useState(null);
   const [speed, setSpeed] = useState('fast');
-  const [isAnimatingFinished, setIsAnimatingFinished] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isAnimatingFinished, setIsAnimatingFinished] = useState(false);
   const squareRefs = [];
 
   const resetGrid = (shouldResetSelects = true) => {
@@ -52,6 +52,7 @@ function App() {
         // setGrid={setGrid}
         resetGrid={resetGrid}
         squareRefs={squareRefs}
+        isAnimating={isAnimating}
         isAnimatingFinished={isAnimatingFinished}
         algorithm={algorithm}
         lastSquare={lastSquare}

@@ -17,11 +17,11 @@ const Square = (props) => {
       onMouseOut={props.onMouseOut}
       onKeyDown={props.onKeyDown}
       onKeyUp={props.onKeyUp}
-      tabIndex={-1}
-    >
+      tabIndex={-1}>
       {/* {props.isWeight && <img className='weightImg' src={weight} alt='KM' />} */}
     </div>
   );
 };
 
-export default React.memo(Square);
+// export default React.memo(Square);
+export default Square;
