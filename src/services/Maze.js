@@ -16,7 +16,7 @@ const generateMaze = async (maze, squareRefs, resetGrid, speed) => {
       delay = 20;
       break;
     case 'fast':
-      delay = 0;
+      delay = 5;
       break;
     default:
   }
@@ -40,8 +40,7 @@ const changeSquare = (squareRefs, square, squareType) => {
   squareRefs[square].current.className = squareType;
 };
 
-// const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-const wait = (ms) => new Promise((resolve) => resolve());
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const drawRow = async (squareRefs, delay, row, colRange) => {
   for (let i = colRange[0]; i <= colRange[1]; i++) {
