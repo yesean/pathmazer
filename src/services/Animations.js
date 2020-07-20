@@ -36,6 +36,10 @@ const animate = (algorithm, squareRefs, shouldAnimate) => {
       clearAnimate(squareRefs);
       [visited, path] = Algorithms.astar(squareRefs);
       break;
+    case 'greedy':
+      clearAnimate(squareRefs);
+      [visited, path] = Algorithms.greedy(squareRefs);
+      break;
     default:
       return false;
   }

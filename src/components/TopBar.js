@@ -20,6 +20,7 @@ const TopBar = (props) => {
   const algorithmsMap = {
     dijkstra: 'Dijkstra',
     astar: 'A* Search',
+    greedy: 'Greedy BFS',
   };
   const algorithmsPlaceholder = 'Select Algorithm';
 

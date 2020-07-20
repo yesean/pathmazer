@@ -25,12 +25,7 @@ const dijkstra = (squareRefs) => {
     const moves = [-1, 1, -Grid.WIDTH, Grid.WIDTH];
     for (const nextSquare of moves
       .map((move) => currSquare + move)
-      .filter(
-        (nextSquare) =>
-          nextSquare > 0 &&
-          nextSquare < Grid.WIDTH * Grid.HEIGHT &&
-          Math.abs((currSquare % Grid.WIDTH) - (nextSquare % Grid.WIDTH)) <= 1
-      )) {
+      .filter((nextSquare) => Grid.validMove(currSquare, nextSquare))) {
       let moveWeight = weights[currSquare];
       const elm = squareRefs[nextSquare].current;
       if (elm.className === Grid.WALL_SQ) {
@@ -109,12 +104,7 @@ const astar = (squareRefs) => {
     const moves = [-1, 1, -Grid.WIDTH, Grid.WIDTH];
     for (const nextSquare of moves
       .map((move) => currSquare + move)
-      .filter(
-        (nextSquare) =>
-          nextSquare > 0 &&
-          nextSquare < Grid.WIDTH * Grid.HEIGHT &&
-          Math.abs((currSquare % Grid.WIDTH) - (nextSquare % Grid.WIDTH)) <= 1
-      )) {
+      .filter((nextSquare) => Grid.validMove(currSquare, nextSquare))) {
       let moveWeight = weights[currSquare];
       const elm = squareRefs[nextSquare].current;
       if (elm.className === Grid.WALL_SQ) {
@@ -165,25 +155,71 @@ const astar = (squareRefs) => {
   return [visited, path];
 };
 
-const greedy = () => {
-  let start = document.getElementsByClassName('start')[0];
-  let end = document.getElementsByClassName('end')[0];
-  if (start !== undefined && end !== undefined) {
-    start = Number(start.id);
-    end = Number(end.id);
-    let visited = [];
-    let prev = [];
+const greedy = (squareRefs) => {
+  const start = squareRefs.findIndex(
+    (ref) => ref.current.className === Grid.START_SQ
+  );
+  const end = squareRefs.findIndex(
+    (ref) => ref.current.className === Grid.END_SQ
+  );
+  const prev = {};
+  const visited = [];
+  const weights = { start: 1 };
 
-    // retrace path
-    let path = [];
-    let currSquare = end;
-    while (currSquare) {
-      path.unshift(currSquare);
-      currSquare = prev[currSquare];
+  const pq = [start];
+  while (pq.length > 0) {
+    console.log('running greedy bfs');
+    const currSquare = pq.shift();
+    visited.push(currSquare);
+    if (currSquare === end) {
+      break;
     }
+    const moves = [-1, 1, -Grid.WIDTH, Grid.WIDTH];
+    for (const nextSquare of moves
+      .map((move) => currSquare + move)
+      .filter((nextSquare) => Grid.validMove(currSquare, nextSquare))) {
+      let moveWeight = Grid.dist(nextSquare, end);
+      const elm = squareRefs[nextSquare].current;
+      // add weight for mountains and weights
+      if (elm.className === Grid.WALL_SQ) {
+        moveWeight = Number.MAX_SAFE_INTEGER;
+      } else if (elm.className === Grid.WEIGHT_SQ) {
+        moveWeight += 10;
+      }
 
-    return [visited, prev];
+      // insert into priority queue
+      if (!pq.includes(nextSquare)) {
+        weights[nextSquare] = moveWeight;
+        prev[nextSquare] = currSquare;
+        let inserted = false;
+        for (let i = 0; i < pq.length; i++) {
+          if (moveWeight < weights[pq[i]]) {
+            pq.splice(i, 0, nextSquare);
+            inserted = true;
+            break;
+          }
+        }
+        if (!inserted) {
+          pq.push(nextSquare);
+        }
+      }
+    }
   }
+  console.log('visited', visited, 'weights', weights, 'prev', prev);
+
+  // retrace path
+  const path = [];
+  let currSquare = end;
+  let count = 0;
+  while (currSquare) {
+    if (count++ > Grid.SIZE) {
+      break;
+    }
+    path.unshift(currSquare);
+    currSquare = prev[currSquare];
+    console.log('benis');
+  }
+  return [visited, path];
 };
 
 export default { dijkstra, astar, greedy };
