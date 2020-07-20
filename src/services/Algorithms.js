@@ -188,7 +188,7 @@ const greedy = (squareRefs) => {
       }
 
       // insert into priority queue
-      if (!pq.includes(nextSquare)) {
+      if (!pq.includes(nextSquare) && !visited.includes(nextSquare)) {
         weights[nextSquare] = moveWeight;
         prev[nextSquare] = currSquare;
         let inserted = false;
