@@ -73,55 +73,68 @@ const TopBar = (props) => {
   return (
     <div className='topBar'>
       <h1 className='title'>Path Visualizer</h1>
-      <form className='algorithmForm' onSubmit={handleAlgorithmSubmit}>
-        <Select
-          option={props.algorithm}
-          options={Object.keys(algorithmsMap)}
-          optionsMap={algorithmsMap}
-          setOption={props.setAlgorithm}
-          placeholder={algorithmsPlaceholder}
-        />
-        <input
-          className={
-            props.isAnimating ? 'topBarButtonWhileAnimating' : 'topBarButton'
-          }
-          type='submit'
-          value='Visualize'
-        />
-      </form>
-      <div className='speedContainer'>
-        <Select
-          option={props.speed}
-          options={Object.keys(speedMap)}
-          optionsMap={speedMap}
-          setOption={props.setSpeed}
-          placeholder={speedPlaceholder}
-        />
+      <div className='optionsContainer'>
+        <div className='formContainer'>
+          <form className='algorithmForm' onSubmit={handleAlgorithmSubmit}>
+            <Select
+              option={props.algorithm}
+              options={Object.keys(algorithmsMap)}
+              optionsMap={algorithmsMap}
+              setOption={props.setAlgorithm}
+              placeholder={algorithmsPlaceholder}
+            />
+            <input
+              className={
+                props.isAnimating
+                  ? 'topBarButtonWhileAnimating'
+                  : 'topBarButton'
+              }
+              type='submit'
+              value='Visualize'
+            />
+          </form>
+        </div>
+        <div className='formContainer'>
+          <form className='mazeForm' onSubmit={handleMazeSubmit}>
+            <Select
+              option={props.maze}
+              options={Object.keys(mazesMap)}
+              optionsMap={mazesMap}
+              setOption={props.setMaze}
+              placeholder={mazePlaceholder}
+            />
+            <input
+              className={
+                props.isAnimating
+                  ? 'topBarButtonWhileAnimating'
+                  : 'topBarButton'
+              }
+              type='submit'
+              value='Generate Maze'
+            />
+          </form>
+        </div>
+        <div className='speedContainer'>
+          <Select
+            option={props.speed}
+            options={Object.keys(speedMap)}
+            optionsMap={speedMap}
+            setOption={props.setSpeed}
+            placeholder={speedPlaceholder}
+          />
+        </div>
+        <div className='resetButtonContainer'>
+          <button
+            className={
+              (props.isAnimating
+                ? 'topBarButtonWhileAnimating'
+                : 'topBarButton') + ' resetButton'
+            }
+            onClick={handleResetClick}>
+            Reset
+          </button>
+        </div>
       </div>
-      <form className='mazeForm' onSubmit={handleMazeSubmit}>
-        <Select
-          option={props.maze}
-          options={Object.keys(mazesMap)}
-          optionsMap={mazesMap}
-          setOption={props.setMaze}
-          placeholder={mazePlaceholder}
-        />
-        <input
-          className={
-            props.isAnimating ? 'topBarButtonWhileAnimating' : 'topBarButton'
-          }
-          type='submit'
-          value='Generate Maze'
-        />
-      </form>
-      <button
-        className={
-          (props.isAnimating ? 'topBarButtonWhileAnimating' : 'topBarButton') +
-          ' resetButton'
-        }
-        onClick={handleResetClick}>
-        Reset
-      </button>
     </div>
   );
 };

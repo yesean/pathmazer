@@ -6,7 +6,8 @@ const Select = (props) => {
   const customSelectStyle = {
     menu: (provided, state) => ({
       ...provided,
-      backgroundColor: 'rgb(244, 162, 97)',
+      // backgroundColor: 'rgb(244, 162, 97)',
+      backgroundColor: 'rgb(17, 138, 178)',
       border: 'none',
       width: '160px',
       margin: '0px',
@@ -15,20 +16,24 @@ const Select = (props) => {
     container: (provided, state) => ({
       ...provided,
       height: '40px',
-      margin: '0px 10px',
       display: 'flex',
       alignItems: 'center',
+      margin: 'auto 5px auto 20px',
     }),
     control: (provided, state) => ({
       ...provided,
-      color: state.hasValue || state.menuIsOpen ? 'rgb(38, 70, 83)' : 'white',
+      // color: state.hasValue || state.menuIsOpen ? 'rgb(38, 70, 83)' : 'white',
+      color: 'white',
       backgroundColor:
         state.hasValue || state.menuIsOpen
-          ? 'rgb(244, 162, 97)'
+          ? // ? 'rgb(244, 162, 97)'
+            'rgb(17, 138, 178)'
           : 'transparent',
       '&:hover': {
-        backgroundColor: 'rgb(244, 162, 97)',
-        color: 'rgb(38, 70, 83)',
+        // backgroundColor: 'rgb(244, 162, 97)',
+        // color: 'rgb(38, 70, 83)',
+        backgroundColor: 'rgb(17, 138, 178)',
+        color: 'white',
         border: 'none',
       },
       height: '100%',
@@ -47,11 +52,15 @@ const Select = (props) => {
     placeholder: (provided, state) => ({}),
     option: (provided, state) => ({
       ...provided,
-      color: 'rgb(38, 70, 83)',
-      backgroundColor: 'rgb(244, 162, 97)',
+      // color: 'rgb(38, 70, 83)',
+      // backgroundColor: 'rgb(244, 162, 97)',
+      color: 'white',
+      backgroundColor: 'rgb(17, 138, 178)',
       '&:hover': {
-        color: 'white',
-        backgroundColor: 'rgb(42, 157, 143)',
+        // color: 'white',
+        // backgroundColor: 'rgb(42, 157, 143)',
+        color: 'rgb(38, 70, 83)',
+        backgroundColor: 'rgb(233, 196, 106)',
       },
       cursor: 'pointer',
       fontFamily: 'Roboto, sans-serif',
