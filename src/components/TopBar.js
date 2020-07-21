@@ -18,7 +18,7 @@ const TopBar = (props) => {
       );
       console.log('animating finished:', isAnimating);
       props.setIsAnimating(isAnimating);
-      props.setIsAnimatingFinished(isAnimating);
+      props.setIsAnimatingFinished(!isAnimating);
     }
   };
 
@@ -52,7 +52,7 @@ const TopBar = (props) => {
     dfs: 'DFS',
     bfs: 'BFS',
   };
-  const algorithmsPlaceholder = 'Select Algorithm';
+  const algorithmsPlaceholder = 'Algorithm';
 
   const mazesMap = {
     random: 'Random',
@@ -61,14 +61,14 @@ const TopBar = (props) => {
     kruskal: 'Kruskal',
     prim: 'Prim',
   };
-  const mazePlaceholder = 'Select Maze';
+  const mazePlaceholder = 'Maze';
 
   const speedMap = {
     slow: 'Slow',
     medium: 'Medium',
     fast: 'Fast',
   };
-  const speedPlaceholder = 'Select Speed';
+  const speedPlaceholder = 'Speed';
 
   return (
     <div className='topBar'>

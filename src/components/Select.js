@@ -6,7 +6,7 @@ const Select = (props) => {
   const customSelectStyle = {
     menu: (provided, state) => ({
       ...provided,
-      backgroundColor: 'black',
+      backgroundColor: 'rgb(244, 162, 97)',
       border: 'none',
       width: '160px',
       margin: '0px',
@@ -21,59 +21,58 @@ const Select = (props) => {
     }),
     control: (provided, state) => ({
       ...provided,
-      color: state.hasValue || state.menuIsOpen ? '#36e379' : 'white',
+      color: state.hasValue || state.menuIsOpen ? 'rgb(38, 70, 83)' : 'white',
       backgroundColor:
         state.hasValue || state.menuIsOpen
-          ? 'rgb(233, 196, 106)'
+          ? 'rgb(244, 162, 97)'
           : 'transparent',
       '&:hover': {
-        color: '#36e379',
-        backgroundColor: 'black',
+        backgroundColor: 'rgb(244, 162, 97)',
+        color: 'rgb(38, 70, 83)',
         border: 'none',
       },
       height: '100%',
       userSelect: 'none',
-      border: state.hasValue || state.menuIsOpen ? 'none' : '2px solid black',
+      border: 'none',
       boxShadow: 'none',
       cursor: 'pointer',
       width: '160px',
       borderRadius: state.menuIsOpen ? '5px 5px 0px 0px' : '5px',
-      fontWeight: 300,
       fontFamily: 'Roboto, sans-serif',
+      fontWeight: 300,
+      fontSize: '20px',
     }),
     dropdownIndicator: (provided, state) => ({}),
     indicatorSeparator: (provided) => ({}),
     placeholder: (provided, state) => ({}),
     option: (provided, state) => ({
       ...provided,
-      color: 'white',
-      backgroundColor: 'black',
+      color: 'rgb(38, 70, 83)',
+      backgroundColor: 'rgb(244, 162, 97)',
       '&:hover': {
-        color: '#36e379',
-        backgroundColor: 'black',
+        color: 'white',
+        backgroundColor: 'rgb(42, 157, 143)',
       },
       cursor: 'pointer',
+      fontFamily: 'Roboto, sans-serif',
+      fontWeight: 300,
     }),
-    // singleValue: (provided) => ({
-    //   // ...provided,
-    //   // margin: 'auto',
-    // }),
-    singleValue: (provided) => {
-      delete provided['color'];
-      provided = {
-        ...provided,
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        paddingRight: '4px',
-        boxSizing: 'border-box',
-      };
-      return provided;
-    },
+    singleValue: (provided) => ({
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      paddingRight: '4px',
+      boxSizing: 'border-box',
+      maxWidth: '100%',
+      width: '100%',
+    }),
     valueContainer: (provided) => ({
       ...provided,
       display: 'flex',
-      alignItems: 'flexEnd',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'flex-start',
+      height: '100%',
     }),
   };
 

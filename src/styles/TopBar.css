@@ -21,6 +21,7 @@
 .algorithmForm,
 .mazeForm {
   display: inline-flex;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -28,14 +29,13 @@
 .title,
 .topBarButton,
 .topBarButtonWhileAnimating {
-  border: 0px solid black;
+  border: 0px;
   margin: 20px 0px;
   margin-top: 20px;
   margin-bottom: 20px;
   height: 40px;
-  font-size: 16px;
-  color: rgb(250, 243, 221);
   font-family: 'Roboto', sans-serif;
+  font-size: 20px;
   user-select: none;
   white-space: nowrap;
   border-radius: 5px;
@@ -49,14 +49,23 @@
   font-size: 30px;
   font-weight: 1000;
   color: rgb(42, 157, 143);
+  background-color: transparent;
   margin: 0px;
   margin-left: 10px;
 }
 
+.topBarButton {
+  font-weight: 350;
+  font-size: 20px;
+  color: rgb(38, 70, 83);
+  /* background-color: rgb(244, 162, 97); */
+  background-color: rgb(233, 196, 106);
+}
+
 .topBarButton:hover {
   cursor: pointer;
-  color: #36e379;
-  background-color: black;
+  color: white;
+  background-color: rgb(42, 157, 143);
 }
 
 .topBarButton:focus,
@@ -64,17 +73,16 @@
   outline: none;
 }
 
-.topBarButtonWhileAnimating {
-  background-color: rgb(255, 166, 158);
-}
-
 .resetButton {
-  margin-right: 50px;
+  margin-right: 30px;
 }
 
-.topBarButton {
-  font-weight: 350;
-  font-size: 20px;
-  background-color: rgb(42, 157, 143);
-  color: white;
+.resetButton:hover {
+  background-color: rgb(231, 111, 81);
+}
+
+.topBarButtonWhileAnimating,
+.topBarButtonWhileAnimating:hover {
+  background-color: rgb(255, 166, 158);
+  color: rgb(38, 70, 83);
 }

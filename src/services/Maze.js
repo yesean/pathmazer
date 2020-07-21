@@ -16,7 +16,7 @@ const generateMaze = async (maze, squareRefs, resetGrid, speed) => {
       delay = 50;
       break;
     case 'fast':
-      delay = 0;
+      delay = 1;
       break;
     default:
   }
@@ -40,7 +40,8 @@ const changeSquare = (squareRefs, square, squareType) => {
   squareRefs[square].current.className = squareType;
 };
 
-const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const wait = (ms) =>
+  ms ? new Promise((resolve) => setTimeout(resolve, ms)) : ms;
 
 const drawRow = async (squareRefs, delay, row, colRange) => {
   for (let i = colRange[0]; i <= colRange[1]; i++) {
@@ -71,16 +72,16 @@ const drawMazeBorder = async (squareRefs, delay) => {
   ]);
 };
 
-const generateWallGrid = async (squareRefs, delay) => {
+const generateWallGrid = async (squareRefs) => {
   return await (async () => {
     for (let i = 0; i < Grid.WIDTH; i += 2) {
-      drawCol(squareRefs, delay, i, [0, Grid.HEIGHT - 1]);
+      drawCol(squareRefs, 0, i, [0, Grid.HEIGHT - 1]);
     }
     for (let i = 0; i < Grid.HEIGHT; i += 2) {
       if (i === Grid.HEIGHT - 1) {
-        return await drawRow(squareRefs, delay, i, [0, Grid.WIDTH - 1]);
+        return await drawRow(squareRefs, 0, i, [0, Grid.WIDTH - 1]);
       }
-      drawRow(squareRefs, delay, i, [0, Grid.WIDTH - 1]);
+      drawRow(squareRefs, 0, i, [0, Grid.WIDTH - 1]);
     }
   })();
 };
@@ -248,7 +249,6 @@ const divide = async (squareRefs, delay, rowRange, colRange) => {
       const randomRowHole = getRandomElement(possibleRowHoles);
       const randomHole = randomRowHole * Grid.WIDTH + randomCol;
       await changeSquare(squareRefs, randomHole, Grid.DEFAULT_SQ);
-      await wait(delay);
       await divide(squareRefs, delay, rowRange, [colRange[0], randomCol]);
       await divide(squareRefs, delay, rowRange, [randomCol, colRange[1]]);
     }
