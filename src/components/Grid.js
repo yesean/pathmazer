@@ -60,13 +60,15 @@ const validMazeMove = (start, end) => {
 const Grid = ({
   grid,
   setGrid,
+  startIsCovering,
+  setStartIsCovering,
+  endIsCovering,
+  setEndIsCovering,
   resetGrid,
   squareRefs,
   isAnimating,
   isAnimatingFinished,
   algorithm,
-  lastSquare,
-  setLastSquare,
 }) => {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isHoldingStart, setIsHoldingStart] = useState(false);
@@ -82,7 +84,7 @@ const Grid = ({
         key={id}
         id={id}
         className={sq}
-        squareRefs={squareRefs}
+        // squareRefs={squareRefs}
         onMouseDown={() => onMouseDown(id)}
         onMouseUp={() => onMouseUp(id)}
         onMouseOver={() => onMouseOver(id)}
@@ -99,26 +101,36 @@ const Grid = ({
   useEffect(() => {
     if (isMouseDown && !isAnimating) {
       const nextGrid = [...grid];
-      if (isHoldingStart) {
-        nextGrid[startSq] = DEFAULT_SQ;
+      if (
+        isHoldingStart &&
+        mouseOver !== startSq &&
+        grid[mouseOver] !== END_SQ
+      ) {
+        nextGrid[startSq] = startIsCovering;
+        setStartIsCovering(grid[mouseOver]);
         nextGrid[mouseOver] = START_SQ;
         setStartSq(mouseOver);
         if (isAnimatingFinished) {
           Animations.animate(algorithm, nextGrid, setGrid, 'none', false);
           return;
         }
-      } else if (isHoldingEnd) {
-        nextGrid[endSq] = DEFAULT_SQ;
+      } else if (
+        isHoldingEnd &&
+        mouseOver !== endSq &&
+        grid[mouseOver] !== START_SQ
+      ) {
+        nextGrid[endSq] = endIsCovering;
+        setEndIsCovering(grid[mouseOver]);
         nextGrid[mouseOver] = END_SQ;
         setEndSq(mouseOver);
         if (isAnimatingFinished) {
           Animations.animate(algorithm, nextGrid, setGrid, 'none', false);
           return;
         }
-      } else if (isWDown) {
+      } else if (isWDown && mouseOver !== startSq && mouseOver !== endSq) {
         nextGrid[mouseOver] =
           grid[mouseOver] === WEIGHT_SQ ? DEFAULT_SQ : WEIGHT_SQ;
-      } else {
+      } else if (mouseOver !== startSq && mouseOver !== endSq) {
         nextGrid[mouseOver] =
           grid[mouseOver] === WALL_SQ ? DEFAULT_SQ : WALL_SQ;
       }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './../styles/App.css';
 import Grid from './Grid.js';
 import TopBar from './TopBar.js';
@@ -9,13 +9,13 @@ function App() {
   initialGrid[Grid.INITIAL_END] = Grid.END_SQ;
 
   const [grid, setGrid] = useState(initialGrid);
-  const [lastSquare, setLastSquare] = useState(Grid.DEFAULT_SQ);
+  const [startIsCovering, setStartIsCovering] = useState(Grid.DEFAULT_SQ);
+  const [endIsCovering, setEndIsCovering] = useState(Grid.DEFAULT_SQ);
   const [algorithm, setAlgorithm] = useState(null);
   const [maze, setMaze] = useState(null);
   const [speed, setSpeed] = useState('fast');
   const [isAnimating, setIsAnimating] = useState(false);
   const [isAnimatingFinished, setIsAnimatingFinished] = useState(false);
-  const squareRefs = [];
 
   const resetGrid = (shouldResetSelects = true) => {
     console.log('resetting grid');
@@ -24,7 +24,8 @@ function App() {
     nextGrid[Grid.INITIAL_END] = Grid.END_SQ;
     setGrid(nextGrid);
     setIsAnimatingFinished(false);
-    setLastSquare(Grid.DEFAULT_SQ);
+    setStartIsCovering(Grid.DEFAULT_SQ);
+    setEndIsCovering(Grid.DEFAULT_SQ);
     if (shouldResetSelects) {
       setAlgorithm(null);
       setMaze(null);
@@ -35,7 +36,6 @@ function App() {
   return (
     <div className='page'>
       <TopBar
-        squareRefs={squareRefs}
         grid={grid}
         setGrid={setGrid}
         resetGrid={resetGrid}
@@ -52,13 +52,14 @@ function App() {
       <Grid.Grid
         grid={grid}
         setGrid={setGrid}
+        startIsCovering={startIsCovering}
+        setStartIsCovering={setStartIsCovering}
+        endIsCovering={endIsCovering}
+        setEndIsCovering={setEndIsCovering}
         resetGrid={resetGrid}
-        squareRefs={squareRefs}
         isAnimating={isAnimating}
         isAnimatingFinished={isAnimatingFinished}
         algorithm={algorithm}
-        lastSquare={lastSquare}
-        setLastSquare={setLastSquare}
       />
     </div>
   );

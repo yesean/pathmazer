@@ -5,13 +5,10 @@ import weight from './../images/weight.svg';
 import Grid from './Grid';
 
 const Square = (props) => {
-  props.squareRefs[props.id] = React.useRef(null);
-
   return (
     <div
       id={props.id}
       className={props.className}
-      ref={props.squareRefs[props.id]}
       onMouseDown={props.onMouseDown}
       onMouseUp={props.onMouseUp}
       onMouseOver={props.onMouseOver}
