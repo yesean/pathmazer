@@ -37,6 +37,7 @@ function App() {
       <TopBar
         squareRefs={squareRefs}
         resetGrid={resetGrid}
+        setIsAnimating={setIsAnimating}
         setIsAnimatingFinished={setIsAnimatingFinished}
         algorithm={algorithm}
         setAlgorithm={setAlgorithm}
@@ -45,7 +46,6 @@ function App() {
         speed={speed}
         setSpeed={setSpeed}
         isAnimating={isAnimating}
-        setIsAnimating={setIsAnimating}
       />
       <Grid.Grid
         grid={grid}

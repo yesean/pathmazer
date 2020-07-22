@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import './../styles/Grid.css';
 import Square from './Square.js';
 import Animations from './../services/Animations.js';
-import { isInaccessible } from '@testing-library/react';
 
 const WIDTH = 67;
 const HEIGHT = 45;

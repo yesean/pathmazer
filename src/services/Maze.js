@@ -118,22 +118,6 @@ const getClosestEmptyTileFrom = (squareRefs, from) => {
   }, -1);
 };
 
-const getFarthestEmptyTileFrom = (from, squareRefs) => {
-  return squareRefs.reduce((closest, ref, sq) => {
-    if (ref.current.className === Grid.DEFAULT_SQ) {
-      if (closest === -1) {
-        return sq;
-      } else {
-        const closestDist = Grid.dist(from, closest);
-        const refDist = Grid.dist(from, sq);
-        return refDist > closestDist ? sq : closest;
-      }
-    } else {
-      return closest;
-    }
-  }, -1);
-};
-
 const resetStartEndPosition = (squareRefs) => {
   changeSquare(squareRefs, Grid.INITIAL_START, Grid.DEFAULT_SQ, 0);
   changeSquare(squareRefs, Grid.INITIAL_END, Grid.DEFAULT_SQ, 0);

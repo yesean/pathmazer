@@ -6,65 +6,60 @@ const Select = (props) => {
   const customSelectStyle = {
     menu: (provided, state) => ({
       ...provided,
-      // backgroundColor: 'rgb(244, 162, 97)',
       backgroundColor: 'rgb(17, 138, 178)',
-      border: 'none',
       width: '160px',
-      margin: '0px',
+      border: 'none',
       borderRadius: '0px 0px 5px 5px',
+      margin: '0px',
     }),
     container: (provided, state) => ({
       ...provided,
       height: '40px',
+      margin: 'auto 10px',
       display: 'flex',
       alignItems: 'center',
-      margin: 'auto 5px auto 20px',
     }),
     control: (provided, state) => ({
       ...provided,
-      // color: state.hasValue || state.menuIsOpen ? 'rgb(38, 70, 83)' : 'white',
+      width: '160px',
+      height: '100%',
+      border: 'none',
+      borderRadius: state.menuIsOpen ? '5px 5px 0px 0px' : '5px',
+      boxShadow: 'none',
+      fontFamily: 'Roboto, sans-serif',
+      fontWeight: 300,
+      fontSize: '20px',
+      cursor: 'pointer',
+      userSelect: 'none',
+
       color: 'white',
       backgroundColor:
         state.hasValue || state.menuIsOpen
-          ? // ? 'rgb(244, 162, 97)'
-            'rgb(17, 138, 178)'
+          ? 'rgb(17, 138, 178)'
           : 'transparent',
       '&:hover': {
-        // backgroundColor: 'rgb(244, 162, 97)',
-        // color: 'rgb(38, 70, 83)',
         backgroundColor: 'rgb(17, 138, 178)',
         color: 'white',
         border: 'none',
       },
-      height: '100%',
-      userSelect: 'none',
-      border: 'none',
-      boxShadow: 'none',
-      cursor: 'pointer',
-      width: '160px',
-      borderRadius: state.menuIsOpen ? '5px 5px 0px 0px' : '5px',
-      fontFamily: 'Roboto, sans-serif',
-      fontWeight: 300,
-      fontSize: '20px',
     }),
-    dropdownIndicator: (provided, state) => ({}),
+    dropdownIndicator: (provided, state) => ({
+      margin: '3px',
+    }),
     indicatorSeparator: (provided) => ({}),
     placeholder: (provided, state) => ({}),
     option: (provided, state) => ({
       ...provided,
-      // color: 'rgb(38, 70, 83)',
-      // backgroundColor: 'rgb(244, 162, 97)',
-      color: 'white',
-      backgroundColor: 'rgb(17, 138, 178)',
-      '&:hover': {
-        // color: 'white',
-        // backgroundColor: 'rgb(42, 157, 143)',
-        color: 'rgb(38, 70, 83)',
-        backgroundColor: 'rgb(233, 196, 106)',
-      },
       cursor: 'pointer',
       fontFamily: 'Roboto, sans-serif',
       fontWeight: 300,
+
+      color: 'white',
+      backgroundColor: 'rgb(17, 138, 178)',
+      '&:hover': {
+        color: 'rgb(38, 70, 83)',
+        backgroundColor: 'rgb(233, 196, 106)',
+      },
     }),
     singleValue: (provided) => ({
       whiteSpace: 'nowrap',
@@ -77,10 +72,9 @@ const Select = (props) => {
     }),
     valueContainer: (provided) => ({
       ...provided,
-      display: 'flex',
+      display: 'inline-flex',
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'flex-start',
       height: '100%',
     }),
   };
@@ -98,7 +92,7 @@ const Select = (props) => {
           label: props.optionsMap[props.option],
         }
       }
-      onChange={(data) => props.setOption(data.value)}
+      onChange={(data) => props.onChange(data.value)}
       placeholder={props.placeholder}
       isSearchable={false}
       tabSelectsValue={false}

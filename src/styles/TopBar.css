@@ -13,25 +13,36 @@
   flex-wrap: wrap;
 }
 
+.title {
+  font-family: 'Mulish', sans-serif;
+  font-size: 30px;
+  font-weight: 1000;
+  color: rgb(173, 232, 244);
+  background-color: transparent;
+  margin: 10px auto;
+}
+
 .optionsContainer {
   display: flex;
   justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
   width: 80%;
   margin: auto;
 }
 
-.algorithmForm,
-.mazeForm,
-.speedContainer {
+.topBarItemContainer {
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
-  align-items: center;
   flex-wrap: nowrap;
-  margin: 10px;
-  margin: auto;
+  margin: 10px auto;
+}
+
+.algorithmForm {
+  display: inline-flex;
+  flex-wrap: nowrap;
 }
 
 .topBarButton,
@@ -43,47 +54,19 @@
   font-size: 20px;
   font-weight: 300;
   user-select: none;
-}
-
-.title {
-  font-family: 'Mulish', sans-serif;
-  font-size: 30px;
-  font-weight: 1000;
-  color: rgb(173, 232, 244);
-  background-color: transparent;
-  margin: 10px auto;
-}
-
-.topBarButton {
-  font-weight: 350;
-  font-size: 20px;
-  color: rgb(38, 70, 83);
-  /* background-color: rgb(244, 162, 97); */
-  background-color: rgb(233, 196, 106);
   margin-left: 10px;
   margin-right: 10px;
 }
 
+.topBarButton {
+  color: rgb(38, 70, 83);
+  background-color: rgb(233, 196, 106);
+}
+
 .topBarButton:hover {
   cursor: pointer;
-  color: white;
   background-color: rgb(42, 157, 143);
-  /* background-color: rgb(100, 223, 223); */
-}
-
-.topBarButton:focus,
-.topBarButtonWhileAnimating:focus {
-  outline: none;
-}
-
-.resetButton {
-}
-
-.resetButtonContainer,
-.formContainer {
-  display: flex;
-  justify-content: center;
-  margin: 10px auto;
+  color: white;
 }
 
 .resetButton:hover {
@@ -92,7 +75,11 @@
 
 .topBarButtonWhileAnimating,
 .topBarButtonWhileAnimating:hover {
-  /* background-color: rgb(255, 166, 158); */
   background-color: rgb(233, 196, 106);
   color: rgb(38, 70, 83);
+}
+
+.topBarButton:focus,
+.topBarButtonWhileAnimating:focus {
+  outline: none;
 }
