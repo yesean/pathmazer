@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './../styles/Grid.css';
 import Square from './Square.js';
 import Animations from './../services/Animations.js';
@@ -57,14 +57,9 @@ const validMazeMove = (start, end) => {
   );
 };
 
-let isHoldingStart = false;
-let isHoldingEnd = false;
-let isMouseDown = false;
-let isWDown = false;
-// let isWeight = new Array(SIZE).fill(false);
-
 const Grid = ({
   grid,
+  setGrid,
   resetGrid,
   squareRefs,
   isAnimating,
@@ -73,16 +68,15 @@ const Grid = ({
   lastSquare,
   setLastSquare,
 }) => {
-  // const [isWeight, setIsWeight] = useState(new Array(SIZE).fill(false));
-
-  useEffect(() => {
-    resetGrid(false);
-  }, []);
+  const [isMouseDown, setIsMouseDown] = useState(false);
+  const [isHoldingStart, setIsHoldingStart] = useState(false);
+  const [isHoldingEnd, setIsHoldingEnd] = useState(false);
+  const [startSq, setStartSq] = useState(INITIAL_START);
+  const [endSq, setEndSq] = useState(INITIAL_END);
+  const [isWDown, setIsWDown] = useState(false);
+  const [mouseOver, setMouseOver] = useState(-1);
 
   const renderSquare = (sq, id) => {
-    if (id === 0) {
-      console.log('rendering');
-    }
     return (
       <Square
         key={id}
@@ -92,10 +86,8 @@ const Grid = ({
         onMouseDown={() => onMouseDown(id)}
         onMouseUp={() => onMouseUp(id)}
         onMouseOver={() => onMouseOver(id)}
-        onMouseOut={() => onMouseOut(id)}
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
-        // isWeight={isWeight[id]}
       />
     );
   };
@@ -104,83 +96,67 @@ const Grid = ({
     return grid.map((sq, ind) => renderSquare(sq, ind));
   };
 
-  const updateBoard = (id) => {
-    console.log('isAnimating:', isAnimating);
-    if (!isAnimating) {
-      const elm = squareRefs[id].current;
+  useEffect(() => {
+    if (isMouseDown && !isAnimating) {
+      const nextGrid = [...grid];
       if (isHoldingStart) {
-        setLastSquare(elm.className);
-        elm.className = START_SQ;
-        console.log(isAnimatingFinished);
+        nextGrid[startSq] = DEFAULT_SQ;
+        nextGrid[mouseOver] = START_SQ;
+        setStartSq(mouseOver);
         if (isAnimatingFinished) {
-          Animations.animate(algorithm, squareRefs, null, false);
+          Animations.animate(algorithm, nextGrid, setGrid, 'none', false);
+          return;
         }
       } else if (isHoldingEnd) {
-        setLastSquare(elm.className);
-        elm.className = END_SQ;
+        nextGrid[endSq] = DEFAULT_SQ;
+        nextGrid[mouseOver] = END_SQ;
+        setEndSq(mouseOver);
         if (isAnimatingFinished) {
-          Animations.animate(algorithm, squareRefs, null, false);
+          Animations.animate(algorithm, nextGrid, setGrid, 'none', false);
+          return;
         }
-      } else if (elm.className === START_SQ) {
-        isHoldingStart = true;
-      } else if (elm.className === END_SQ) {
-        isHoldingEnd = true;
       } else if (isWDown) {
-        console.log('w is down');
-        // elm.className = elm.className === WEIGHT_SQ ? DEFAULT_SQ : WEIGHT_SQ;
-        if (elm.className === WEIGHT_SQ) {
-          elm.className = DEFAULT_SQ;
-          // isWeight[id] = false;
-        } else {
-          elm.className = WEIGHT_SQ;
-          // isWeight[id] = true;
-        }
-      } else if (elm.className === WALL_SQ) {
-        elm.className = DEFAULT_SQ;
+        nextGrid[mouseOver] =
+          grid[mouseOver] === WEIGHT_SQ ? DEFAULT_SQ : WEIGHT_SQ;
       } else {
-        elm.className = WALL_SQ;
+        nextGrid[mouseOver] =
+          grid[mouseOver] === WALL_SQ ? DEFAULT_SQ : WALL_SQ;
       }
+      setGrid(nextGrid);
     }
-  };
+  }, [isMouseDown, mouseOver]);
 
   const onMouseUp = (id) => {
     if (isHoldingStart) {
-      isHoldingStart = false;
+      setIsHoldingStart(false);
     } else if (isHoldingEnd) {
-      isHoldingEnd = false;
+      setIsHoldingEnd(false);
     }
-    isMouseDown = false;
+    setIsMouseDown(false);
   };
 
   const onMouseDown = (id) => {
-    updateBoard(id);
-    isMouseDown = true;
+    if (id === startSq) {
+      setIsHoldingStart(true);
+    } else if (id === endSq) {
+      setIsHoldingEnd(true);
+    }
+    setIsMouseDown(true);
   };
 
   const onMouseOver = (id) => {
-    // for dragging
-    if (isMouseDown) {
-      updateBoard(id);
-    }
-  };
-
-  const onMouseOut = (id) => {
-    if (isMouseDown) {
-      if (isHoldingStart || isHoldingEnd) {
-        squareRefs[id].current.className = lastSquare;
-      }
-    }
+    setMouseOver(id);
   };
 
   const onKeyDown = (e) => {
     if (e.key === 'w') {
-      isWDown = true;
+      setIsWDown(true);
     }
   };
 
   const onKeyUp = (e) => {
     if (e.key === 'w') {
-      isWDown = false;
+      setIsWDown(false);
     }
   };
 

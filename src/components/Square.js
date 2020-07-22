@@ -1,7 +1,8 @@
 import React from 'react';
 // import Grid from './Grid.js';
 import './../styles/Square.css';
-// import weight from './../images/kevin-malone.jpg';
+import weight from './../images/weight.svg';
+import Grid from './Grid';
 
 const Square = (props) => {
   props.squareRefs[props.id] = React.useRef(null);
@@ -14,14 +15,27 @@ const Square = (props) => {
       onMouseDown={props.onMouseDown}
       onMouseUp={props.onMouseUp}
       onMouseOver={props.onMouseOver}
-      onMouseOut={props.onMouseOut}
       onKeyDown={props.onKeyDown}
       onKeyUp={props.onKeyUp}
       tabIndex={-1}>
-      {/* {props.isWeight && <img className='weightImg' src={weight} alt='KM' />} */}
+      {(props.className === Grid.WEIGHT_SQ ||
+        props.className === Grid.VISITED_WEIGHT_SQ ||
+        props.className === Grid.VISITED_FINISHED_WEIGHT_SQ ||
+        props.className === Grid.PATH_WEIGHT_SQ ||
+        props.className === Grid.PATH_FINISHED_WEIGHT_SQ) && (
+        <img
+          src={weight}
+          className='weightImg'
+          draggable='false'
+          alt='weight'
+        />
+      )}
     </div>
   );
 };
 
-// export default React.memo(Square);
-export default Square;
+const areEqual = (old, next) => {
+  return old.className === next.className;
+};
+
+export default React.memo(Square, areEqual);

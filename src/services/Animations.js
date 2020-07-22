@@ -1,33 +1,34 @@
 import Grid from './../components/Grid';
 import Algorithms from './Algorithms';
 
-const clearAnimate = (squareRefs) => {
-  for (let i = 0; i < Grid.WIDTH * Grid.HEIGHT; i++) {
-    const elm = squareRefs[i].current;
-    if (
-      elm.className === Grid.VISITED_SQ ||
-      elm.className === Grid.VISITED_FINISHED_SQ ||
-      elm.className === Grid.PATH_SQ ||
-      elm.className === Grid.PATH_FINISHED_SQ
-    ) {
-      elm.className = Grid.DEFAULT_SQ;
+const clearAnimate = (grid, setGrid) => {
+  const nextGrid = grid.map((sq) => {
+    if (sq === Grid.START_SQ || sq === Grid.END_SQ || sq === Grid.WALL_SQ) {
+      return sq;
     } else if (
-      elm.className === Grid.WEIGHT_SQ ||
-      elm.className === Grid.VISITED_WEIGHT_SQ ||
-      elm.className === Grid.VISITED_FINISHED_WEIGHT_SQ ||
-      elm.className === Grid.PATH_WEIGHT_SQ ||
-      elm.className === Grid.PATH_FINISHED_WEIGHT_SQ
+      sq === Grid.WEIGHT_SQ ||
+      sq === Grid.VISITED_WEIGHT_SQ ||
+      sq === Grid.VISITED_FINISHED_WEIGHT_SQ ||
+      sq === Grid.PATH_WEIGHT_SQ ||
+      sq === Grid.PATH_FINISHED_WEIGHT_SQ
     ) {
-      elm.className = Grid.WEIGHT_SQ;
+      return Grid.WEIGHT_SQ;
+    } else {
+      return Grid.DEFAULT_SQ;
     }
-  }
+  });
+  setGrid(nextGrid);
+  console.log(nextGrid);
+  return nextGrid;
 };
 
-const animate = async (algorithm, squareRefs, speed, shouldAnimate) => {
+const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
   let pathDelay = 30;
   let visitedDelay;
-  if (shouldAnimate) {
+  if (shouldDelay) {
     switch (speed) {
+      case 'none':
+        break;
       case 'slow':
         visitedDelay = 100;
         break;
@@ -41,82 +42,84 @@ const animate = async (algorithm, squareRefs, speed, shouldAnimate) => {
         return Promise.resolve(false);
     }
   }
+  console.log('speed', speed);
   let visited, path;
   switch (algorithm) {
     case 'dijkstra':
-      clearAnimate(squareRefs);
-      [visited, path] = Algorithms.dijkstra(squareRefs);
+      grid = clearAnimate(grid, setGrid);
+      [visited, path] = Algorithms.dijkstra(grid);
       break;
     case 'astar':
-      clearAnimate(squareRefs);
-      [visited, path] = Algorithms.astar(squareRefs);
+      grid = clearAnimate(grid, setGrid);
+      [visited, path] = Algorithms.astar(grid);
       break;
     case 'greedy':
-      clearAnimate(squareRefs);
-      [visited, path] = Algorithms.greedy(squareRefs);
+      grid = clearAnimate(grid, setGrid);
+      [visited, path] = Algorithms.greedy(grid);
       break;
     case 'dfs':
-      clearAnimate(squareRefs);
-      [visited, path] = Algorithms.dfs(squareRefs);
+      grid = clearAnimate(grid, setGrid);
+      [visited, path] = Algorithms.dfs(grid);
       break;
     case 'bfs':
-      clearAnimate(squareRefs);
-      [visited, path] = Algorithms.bfs(squareRefs);
+      grid = clearAnimate(grid, setGrid);
+      [visited, path] = Algorithms.bfs(grid);
       break;
     default:
       return Promise.resolve(false);
   }
 
-  const start = squareRefs.findIndex(
-    (ref) => ref.current.className === Grid.START_SQ
-  );
-  const end = squareRefs.findIndex(
-    (ref) => ref.current.className === Grid.END_SQ
-  );
+  const start = grid.findIndex((sq) => sq === Grid.START_SQ);
+  const end = grid.findIndex((sq) => sq === Grid.END_SQ);
   visited = visited.filter((square) => square !== start && square !== end);
   path = path.filter((square) => square !== start && square !== end);
 
   // animate visited
   let prevSquare = undefined;
   for (const square of visited) {
-    const elm = squareRefs[square].current;
-    if (shouldAnimate) {
+    if (shouldDelay) {
       if (prevSquare) {
-        changeSquare(squareRefs, prevSquare.ind, prevSquare.squareType);
+        grid = changeSquare(
+          grid,
+          setGrid,
+          prevSquare.ind,
+          prevSquare.squareType
+        );
       }
       const squareType =
-        elm.className === Grid.WEIGHT_SQ
+        grid[square] === Grid.WEIGHT_SQ
           ? Grid.VISITED_WEIGHT_SQ
           : Grid.VISITED_SQ;
-      changeSquare(squareRefs, square, Grid.VISITED_HEAD_SQ);
+      grid = changeSquare(grid, setGrid, square, Grid.VISITED_HEAD_SQ);
       prevSquare = { ind: square, squareType: squareType };
       await wait(visitedDelay);
     } else {
       const squareType =
-        elm.className === Grid.WEIGHT_SQ
+        grid[square] === Grid.WEIGHT_SQ
           ? Grid.VISITED_FINISHED_WEIGHT_SQ
           : Grid.VISITED_FINISHED_SQ;
-      changeSquare(squareRefs, square, squareType);
+      grid = changeSquare(grid, setGrid, square, squareType);
     }
   }
-  if (shouldAnimate) {
-    changeSquare(squareRefs, prevSquare.ind, prevSquare.squareType);
+  if (shouldDelay) {
+    grid = changeSquare(grid, setGrid, prevSquare.ind, prevSquare.squareType);
   }
 
   // animate path
   for (const square of path) {
-    const elm = squareRefs[square].current;
-    if (shouldAnimate) {
+    if (shouldDelay) {
       const squareType =
-        elm.className === Grid.WEIGHT_SQ ? Grid.PATH_WEIGHT_SQ : Grid.PATH_SQ;
-      changeSquare(squareRefs, square, squareType);
+        grid[square] === Grid.VISITED_WEIGHT_SQ
+          ? Grid.PATH_WEIGHT_SQ
+          : Grid.PATH_SQ;
+      grid = changeSquare(grid, setGrid, square, squareType);
       await wait(pathDelay);
     } else {
       const squareType =
-        elm.className === Grid.VISITED_FINISHED_WEIGHT_SQ
+        grid[square] === Grid.VISITED_FINISHED_WEIGHT_SQ
           ? Grid.PATH_FINISHED_WEIGHT_SQ
           : Grid.PATH_FINISHED_SQ;
-      changeSquare(squareRefs, square, squareType);
+      grid = changeSquare(grid, setGrid, square, squareType);
     }
   }
   return Promise.resolve(false);
@@ -124,8 +127,11 @@ const animate = async (algorithm, squareRefs, speed, shouldAnimate) => {
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const changeSquare = (squareRefs, square, squareType) => {
-  squareRefs[square].current.className = squareType;
+const changeSquare = (grid, setGrid, square, squareType) => {
+  const nextGrid = [...grid];
+  nextGrid[square] = squareType;
+  setGrid(nextGrid);
+  return nextGrid;
 };
 
 export default { animate };

@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './../styles/App.css';
 import Grid from './Grid.js';
 import TopBar from './TopBar.js';
 
 function App() {
-  const [grid] = useState(new Array(Grid.SIZE).fill(0));
+  const initialGrid = new Array(Grid.SIZE).fill(Grid.DEFAULT_SQ);
+  initialGrid[Grid.INITIAL_START] = Grid.START_SQ;
+  initialGrid[Grid.INITIAL_END] = Grid.END_SQ;
+
+  const [grid, setGrid] = useState(initialGrid);
   const [lastSquare, setLastSquare] = useState(Grid.DEFAULT_SQ);
   const [algorithm, setAlgorithm] = useState(null);
   const [maze, setMaze] = useState(null);
@@ -15,14 +19,10 @@ function App() {
 
   const resetGrid = (shouldResetSelects = true) => {
     console.log('resetting grid');
-    squareRefs.forEach((ref, index) => {
-      ref.current.className =
-        index === Grid.INITIAL_START
-          ? Grid.START_SQ
-          : index === Grid.INITIAL_END
-          ? Grid.END_SQ
-          : Grid.DEFAULT_SQ;
-    });
+    const nextGrid = new Array(Grid.SIZE).fill(Grid.DEFAULT_SQ);
+    nextGrid[Grid.INITIAL_START] = Grid.START_SQ;
+    nextGrid[Grid.INITIAL_END] = Grid.END_SQ;
+    setGrid(nextGrid);
     setIsAnimatingFinished(false);
     setLastSquare(Grid.DEFAULT_SQ);
     if (shouldResetSelects) {
@@ -36,6 +36,8 @@ function App() {
     <div className='page'>
       <TopBar
         squareRefs={squareRefs}
+        grid={grid}
+        setGrid={setGrid}
         resetGrid={resetGrid}
         setIsAnimating={setIsAnimating}
         setIsAnimatingFinished={setIsAnimatingFinished}
@@ -49,7 +51,7 @@ function App() {
       />
       <Grid.Grid
         grid={grid}
-        // setGrid={setGrid}
+        setGrid={setGrid}
         resetGrid={resetGrid}
         squareRefs={squareRefs}
         isAnimating={isAnimating}

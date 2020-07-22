@@ -7,6 +7,8 @@ import Maze from './../services/Maze.js';
 const TopBar = (props) => {
   const {
     squareRefs,
+    grid,
+    setGrid,
     resetGrid,
     setIsAnimating,
     setIsAnimatingFinished,
@@ -20,16 +22,15 @@ const TopBar = (props) => {
   } = props;
   const handleAlgorithmSubmit = async (event) => {
     event.preventDefault();
-    console.log(isAnimating);
     if (!isAnimating) {
       setIsAnimating(true);
       const isAnimating = await Animations.animate(
         algorithm,
-        squareRefs,
+        grid,
+        setGrid,
         speed,
         true
       );
-      console.log('animating finished:', isAnimating);
       setIsAnimating(isAnimating);
       setIsAnimatingFinished(!isAnimating);
     }
@@ -43,9 +44,12 @@ const TopBar = (props) => {
     setMaze(maze);
   };
 
+  const onSpeedChange = (speed) => {
+    setSpeed(speed);
+  };
+
   useEffect(() => {
     (async () => {
-      console.log('isAnimating:', isAnimating);
       if (!isAnimating) {
         setIsAnimating(true);
         const hasBeenGenerated = await Maze.generateMaze(
@@ -54,7 +58,6 @@ const TopBar = (props) => {
           resetGrid,
           speed
         );
-        console.log('hasBeenGenerated:', hasBeenGenerated);
         setIsAnimating(hasBeenGenerated);
       }
     })();
@@ -97,7 +100,6 @@ const TopBar = (props) => {
       <h1 className='title'>Path Visualizer</h1>
       <div className='optionsContainer'>
         <div className='topBarItemContainer'>
-          {/* <form className='algorithmForm' onSubmit={handleAlgorithmSubmit}> */}
           <Select
             option={algorithm}
             onChange={onAlgorithmChange}
@@ -105,14 +107,6 @@ const TopBar = (props) => {
             optionsMap={algorithmsMap}
             placeholder={algorithmsPlaceholder}
           />
-          {/* <input
-              className={
-                isAnimating ? 'topBarButtonWhileAnimating' : 'topBarButton'
-              }
-              type='submit'
-              value='Visualize'
-            /> */}
-          {/* </form> */}
         </div>
         <div className='topBarItemContainer'>
           <Select
@@ -126,9 +120,9 @@ const TopBar = (props) => {
         <div className='topBarItemContainer'>
           <Select
             option={speed}
+            onChange={onSpeedChange}
             options={Object.keys(speedMap)}
             optionsMap={speedMap}
-            setOption={setSpeed}
             placeholder={speedPlaceholder}
           />
         </div>
@@ -140,8 +134,6 @@ const TopBar = (props) => {
             onClick={handleAlgorithmSubmit}>
             Visualize
           </button>
-        {/* </div>
-        <div className='topBarItemContainer'> */}
           <button
             className={
               (isAnimating ? 'topBarButtonWhileAnimating' : 'topBarButton') +
