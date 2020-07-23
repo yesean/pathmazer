@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/path-visualizer/static/css/main.22a3623b.chunk.css",
+    "main.js": "/path-visualizer/static/js/main.4687b570.chunk.js",
+    "main.js.map": "/path-visualizer/static/js/main.4687b570.chunk.js.map",
+    "runtime-main.js": "/path-visualizer/static/js/runtime-main.41e1d70e.js",
+    "runtime-main.js.map": "/path-visualizer/static/js/runtime-main.41e1d70e.js.map",
+    "static/js/2.5206a03f.chunk.js": "/path-visualizer/static/js/2.5206a03f.chunk.js",
+    "static/js/2.5206a03f.chunk.js.map": "/path-visualizer/static/js/2.5206a03f.chunk.js.map",
+    "index.html": "/path-visualizer/index.html",
+    "precache-manifest.927622bf1bbc0fd4ee7aa186422ede2c.js": "/path-visualizer/precache-manifest.927622bf1bbc0fd4ee7aa186422ede2c.js",
+    "service-worker.js": "/path-visualizer/service-worker.js",
+    "static/css/main.22a3623b.chunk.css.map": "/path-visualizer/static/css/main.22a3623b.chunk.css.map",
+    "static/js/2.5206a03f.chunk.js.LICENSE.txt": "/path-visualizer/static/js/2.5206a03f.chunk.js.LICENSE.txt",
+    "static/media/end.svg": "/path-visualizer/static/media/end.93326d55.svg",
+    "static/media/start.svg": "/path-visualizer/static/media/start.ff2b9671.svg",
+    "static/media/weight.svg": "/path-visualizer/static/media/weight.f8a5f7dd.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.41e1d70e.js",
+    "static/js/2.5206a03f.chunk.js",
+    "static/css/main.22a3623b.chunk.css",
+    "static/js/main.4687b570.chunk.js"
+  ]
+}
