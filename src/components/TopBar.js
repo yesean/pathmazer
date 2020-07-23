@@ -3,6 +3,7 @@ import Select from './Select';
 import './../styles/TopBar.css';
 import Animations from './../services/Animations.js';
 import Maze from './../services/Maze.js';
+import Grid from './Grid';
 
 const TopBar = (props) => {
   const {
@@ -19,7 +20,31 @@ const TopBar = (props) => {
     speed,
     setSpeed,
     isAnimating,
+    setStartSq,
+    setEndSq,
   } = props;
+
+  useEffect(() => {
+    (async () => {
+      if (!isAnimating) {
+        setIsAnimating(true);
+        const promise = await Maze.generateMaze(
+          maze,
+          grid,
+          setGrid,
+          resetGrid,
+          speed
+        );
+        setIsAnimating(promise.finished);
+        const start = promise.grid.findIndex((sq) => sq === Grid.START_SQ);
+        const end = promise.grid.findIndex((sq) => sq === Grid.END_SQ);
+        console.log(start, end);
+        setStartSq(start);
+        setEndSq(end);
+      }
+    })();
+  }, [maze]);
+
   const handleAlgorithmSubmit = async (event) => {
     event.preventDefault();
     if (!isAnimating) {
@@ -47,21 +72,6 @@ const TopBar = (props) => {
   const onSpeedChange = (speed) => {
     setSpeed(speed);
   };
-
-  useEffect(() => {
-    (async () => {
-      if (!isAnimating) {
-        setIsAnimating(true);
-        const hasBeenGenerated = await Maze.generateMaze(
-          maze,
-          squareRefs,
-          resetGrid,
-          speed
-        );
-        setIsAnimating(hasBeenGenerated);
-      }
-    })();
-  }, [maze]);
 
   const handleResetClick = (e) => {
     if (!isAnimating) {

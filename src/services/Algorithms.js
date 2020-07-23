@@ -25,7 +25,7 @@ const dijkstra = (grid) => {
       // const elm = squareRefs[nextSquare].current;
       // if (grid[nextSquare] === Grid.WALL_SQ) {
       if (grid[nextSquare] === Grid.WALL_SQ) {
-        moveWeight = Number.MAX_SAFE_INTEGER;
+        continue;
       } else if (grid[nextSquare] === Grid.WEIGHT_SQ) {
         moveWeight += 10;
       } else {
@@ -98,7 +98,7 @@ const astar = (grid) => {
       .filter((nextSquare) => Grid.validMove(currSquare, nextSquare))) {
       let moveWeight = weights[currSquare];
       if (grid[nextSquare] === Grid.WALL_SQ) {
-        moveWeight = Number.MAX_SAFE_INTEGER;
+        continue;
       } else if (grid[nextSquare] === Grid.WEIGHT_SQ) {
         moveWeight += 10;
       } else {
@@ -168,7 +168,7 @@ const greedy = (grid, setGrid) => {
       let moveWeight = Grid.dist(nextSquare, end);
       // add weight for mountains and weights
       if (grid[nextSquare] === Grid.WALL_SQ) {
-        moveWeight = Number.MAX_SAFE_INTEGER;
+        continue;
       } else if (grid[nextSquare] === Grid.WEIGHT_SQ) {
         moveWeight += 10;
       }

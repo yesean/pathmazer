@@ -36,8 +36,7 @@
   outline: none;
 }
 
-.square,
-.weightSquare {
+.square {
   border: 0.1px solid #ddd;
 }
 
@@ -144,41 +143,6 @@
   animation-fill-mode: forwards;
 }
 
-@keyframes visitedWeight {
-  0% {
-    transform: scale(0.3);
-    background-color: rgb(255, 203, 242);
-    border: 3px solid rgb(105, 48, 195);
-    border-radius: 50%;
-    margin: auto;
-  }
-  25% {
-    background-color: rgb(236, 188, 253);
-    border: 3px solid rgb(105, 48, 195);
-    margin: auto;
-  }
-  50% {
-    background-color: rgb(222, 170, 255);
-    border: 3px solid rgb(105, 48, 195);
-    border-radius: 50%;
-    margin: auto;
-  }
-  75% {
-    transform: scale(1.2);
-    background-color: rgb(208, 209, 255);
-    border: 3px solid rgb(105, 48, 195);
-    border-radius: 0%;
-    margin: auto;
-  }
-  100% {
-    transform: scale(1);
-    background-color: rgb(105, 48, 195);
-    border: 3px solid rgb(105, 48, 195);
-    border-radius: 0%;
-    margin: auto;
-  }
-}
-
 .visitedFinishedSquare {
   background-color: rgb(86, 207, 225);
   border: 1px solid rgb(173, 232, 244);
@@ -187,7 +151,6 @@
 .visitedFinishedWeightSquare {
   background-color: rgb(86, 207, 225);
   border: 1px solid rgb(173, 232, 244);
-  /* background-color: rgb(105, 48, 195); */
 }
 
 .visitedHeadSquare {
@@ -224,30 +187,9 @@
   animation-fill-mode: forwards;
 }
 
-@keyframes pathWeight {
-  0% {
-    transform: scale(0.85);
-    background-color: #0ff;
-    border-radius: 30%;
-    margin: auto;
-  }
-  100% {
-    transform: scale(1);
-    background-color: yellow;
-    border: 3px solid purple;
-    border-radius: 0%;
-    margin: auto;
-  }
-}
-
-.pathFinishedSquare {
-  background-color: yellow;
-  margin: auto;
-}
-
+.pathFinishedSquare,
 .pathFinishedWeightSquare {
   background-color: yellow;
-  /* border: 3px solid rgb(105, 48, 195); */
   margin: auto;
 }
 

@@ -16,16 +16,17 @@ function App() {
   const [speed, setSpeed] = useState('fast');
   const [isAnimating, setIsAnimating] = useState(false);
   const [isAnimatingFinished, setIsAnimatingFinished] = useState(false);
+  const [startSq, setStartSq] = useState(Grid.INITIAL_START);
+  const [endSq, setEndSq] = useState(Grid.INITIAL_END);
 
   const resetGrid = (shouldResetSelects = true) => {
     console.log('resetting grid');
-    const nextGrid = new Array(Grid.SIZE).fill(Grid.DEFAULT_SQ);
-    nextGrid[Grid.INITIAL_START] = Grid.START_SQ;
-    nextGrid[Grid.INITIAL_END] = Grid.END_SQ;
-    setGrid(nextGrid);
+    setGrid(initialGrid);
     setIsAnimatingFinished(false);
     setStartIsCovering(Grid.DEFAULT_SQ);
     setEndIsCovering(Grid.DEFAULT_SQ);
+    setStartSq(Grid.INITIAL_START);
+    setEndSq(Grid.INITIAL_END);
     if (shouldResetSelects) {
       setAlgorithm(null);
       setMaze(null);
@@ -48,6 +49,8 @@ function App() {
         speed={speed}
         setSpeed={setSpeed}
         isAnimating={isAnimating}
+        setStartSq={setStartSq}
+        setEndSq={setEndSq}
       />
       <Grid.Grid
         grid={grid}
@@ -60,6 +63,10 @@ function App() {
         isAnimating={isAnimating}
         isAnimatingFinished={isAnimatingFinished}
         algorithm={algorithm}
+        startSq={startSq}
+        endSq={endSq}
+        setStartSq={setStartSq}
+        setEndSq={setEndSq}
       />
     </div>
   );

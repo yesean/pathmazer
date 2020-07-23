@@ -65,38 +65,22 @@ const Grid = ({
   endIsCovering,
   setEndIsCovering,
   resetGrid,
-  squareRefs,
   isAnimating,
   isAnimatingFinished,
   algorithm,
+  // startSq,
+  // endSq,
+  // setStartSq,
+  // setEndSq,
 }) => {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isHoldingStart, setIsHoldingStart] = useState(false);
   const [isHoldingEnd, setIsHoldingEnd] = useState(false);
-  const [startSq, setStartSq] = useState(INITIAL_START);
-  const [endSq, setEndSq] = useState(INITIAL_END);
   const [isWDown, setIsWDown] = useState(false);
   const [mouseOver, setMouseOver] = useState(-1);
 
-  const renderSquare = (sq, id) => {
-    return (
-      <Square
-        key={id}
-        id={id}
-        className={sq}
-        // squareRefs={squareRefs}
-        onMouseDown={() => onMouseDown(id)}
-        onMouseUp={() => onMouseUp(id)}
-        onMouseOver={() => onMouseOver(id)}
-        onKeyDown={onKeyDown}
-        onKeyUp={onKeyUp}
-      />
-    );
-  };
-
-  const renderGrid = () => {
-    return grid.map((sq, ind) => renderSquare(sq, ind));
-  };
+  const startSq = grid.findIndex((sq) => sq === START_SQ);
+  const endSq = grid.findIndex((sq) => sq === END_SQ);
 
   useEffect(() => {
     if (isMouseDown && !isAnimating) {
@@ -109,7 +93,7 @@ const Grid = ({
         nextGrid[startSq] = startIsCovering;
         setStartIsCovering(grid[mouseOver]);
         nextGrid[mouseOver] = START_SQ;
-        setStartSq(mouseOver);
+        // setStartSq(mouseOver);
         if (isAnimatingFinished) {
           Animations.animate(algorithm, nextGrid, setGrid, 'none', false);
           return;
@@ -122,7 +106,7 @@ const Grid = ({
         nextGrid[endSq] = endIsCovering;
         setEndIsCovering(grid[mouseOver]);
         nextGrid[mouseOver] = END_SQ;
-        setEndSq(mouseOver);
+        // setEndSq(mouseOver);
         if (isAnimatingFinished) {
           Animations.animate(algorithm, nextGrid, setGrid, 'none', false);
           return;
@@ -148,6 +132,8 @@ const Grid = ({
   };
 
   const onMouseDown = (id) => {
+    console.log('omd', startSq, endSq);
+    console.log('omd', grid[startSq]);
     if (id === startSq) {
       setIsHoldingStart(true);
     } else if (id === endSq) {
@@ -172,7 +158,30 @@ const Grid = ({
     }
   };
 
-  return <div className='grid'>{renderGrid()}</div>;
+  const renderSquare = (sq, id) => {
+    return (
+      <Square
+        key={id}
+        id={id}
+        className={sq}
+        onMouseDown={() => onMouseDown(id)}
+        onMouseUp={() => onMouseUp(id)}
+        onMouseOver={() => onMouseOver(id)}
+        onKeyDown={onKeyDown}
+        onKeyUp={onKeyUp}
+      />
+    );
+  };
+
+  const renderGrid = (s, e) => {
+    return grid.map((sq, ind) => renderSquare(sq, ind));
+  };
+
+  return (
+    <div>
+      <p>{`${startSq} ${endSq}`}</p> <div className='grid'>{renderGrid()}</div>
+    </div>
+  );
 };
 
 export default {

@@ -18,7 +18,6 @@ const clearAnimate = (grid, setGrid) => {
     }
   });
   setGrid(nextGrid);
-  console.log(nextGrid);
   return nextGrid;
 };
 

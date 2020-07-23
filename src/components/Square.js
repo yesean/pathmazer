@@ -31,8 +31,4 @@ const Square = (props) => {
   );
 };
 
-const areEqual = (old, next) => {
-  return old.className === next.className;
-};
-
-export default React.memo(Square, areEqual);
+export default React.memo(Square);
