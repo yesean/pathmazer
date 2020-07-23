@@ -10,6 +10,7 @@
 .visitedWeightFinishedSquare,
 .pathSquare,
 .pathWeightSquare,
+.pathHeadSquare,
 .pathFinishedSquare,
 .pathFinishedWeightSquare {
   width: 100%;
@@ -17,6 +18,9 @@
   margin: auto;
   user-select: none;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .square:focus,
@@ -30,21 +34,26 @@
 .visitedFinishedSquare:focus,
 .visitedFinishedWeightSquare:focus,
 .pathSquare:focus,
-.pathWeight:focus,
+.pathWeightSquare:focus,
+.pathHeadSquare:focus,
 .pathFinishedSquare:focus,
 .pathFinishedWeightSquare {
   outline: none;
 }
 
-.square {
-  border: 0.1px solid #ddd;
+.weightImg,
+.startImg,
+.endImg {
+  width: 70%;
+  height: 70%;
+  user-select: none;
+  display: block;
 }
 
-.wallSquare {
-  animation-name: wall;
-  animation-duration: 0.3s;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
+.square,
+.startSquare,
+.endSquare {
+  border: 0.1px solid #ddd;
 }
 
 @keyframes wall {
@@ -63,14 +72,11 @@
   }
 }
 
-.weightSquare {
-  animation-name: weight;
+.wallSquare {
+  animation-name: wall;
   animation-duration: 0.3s;
   animation-fill-mode: forwards;
   animation-timing-function: ease-out;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 @keyframes weight {
@@ -91,18 +97,11 @@
   }
 }
 
-.weightImg {
-  width: 70%;
-  height: 70%;
-  user-select: none;
-  display: block;
-}
-
-.visitedSquare {
-  animation-name: visited;
-  animation-duration: 2s;
-  animation-timing-function: ease-out;
+.weightSquare {
+  animation-name: weight;
+  animation-duration: 0.3s;
   animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
 }
 
 @keyframes visited {
@@ -140,6 +139,7 @@
   }
 }
 
+.visitedSquare,
 .visitedWeightSquare {
   animation-name: visited;
   animation-duration: 2s;
@@ -147,11 +147,7 @@
   animation-fill-mode: forwards;
 }
 
-.visitedFinishedSquare {
-  background-color: rgb(86, 207, 225);
-  border: 1px solid rgb(173, 232, 244);
-}
-
+.visitedFinishedSquare,
 .visitedFinishedWeightSquare {
   background-color: rgb(86, 207, 225);
   border: 1px solid rgb(173, 232, 244);
@@ -162,17 +158,10 @@
   border: 1px solid #eee;
 }
 
-.pathSquare {
-  animation-name: path;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
-}
-
 @keyframes path {
   0% {
-    transform: scale(0.85);
-    background-color: rgb(72, 191, 227);
+    transform: scale(0.65);
+    background-color: rgb(255, 255, 63);
     border-radius: 30%;
     margin: auto;
   }
@@ -184,7 +173,9 @@
   }
 }
 
-.pathWeightSquare {
+.pathSquare,
+.pathWeightSquare,
+.pathHeadSquare {
   animation-name: path;
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
@@ -195,12 +186,4 @@
 .pathFinishedWeightSquare {
   background-color: yellow;
   margin: auto;
-}
-
-.startSquare {
-  background-color: rgb(6, 214, 160);
-}
-
-.endSquare {
-  background-color: rgb(239, 71, 111);
 }

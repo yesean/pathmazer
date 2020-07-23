@@ -20,6 +20,7 @@ const VISITED_FINISHED_SQ = 'visitedFinishedSquare';
 const VISITED_FINISHED_WEIGHT_SQ = 'visitedFinishedWeightSquare';
 const PATH_SQ = 'pathSquare';
 const PATH_WEIGHT_SQ = 'pathWeightSquare';
+const PATH_HEAD_SQ = 'pathHeadSquare';
 const PATH_FINISHED_SQ = 'pathFinishedSquare';
 const PATH_FINISHED_WEIGHT_SQ = 'pathFinishedWeightSquare';
 
@@ -68,10 +69,6 @@ const Grid = ({
   isAnimating,
   isAnimatingFinished,
   algorithm,
-  // startSq,
-  // endSq,
-  // setStartSq,
-  // setEndSq,
 }) => {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isHoldingStart, setIsHoldingStart] = useState(false);
@@ -198,8 +195,9 @@ export default {
   VISITED_FINISHED_SQ,
   VISITED_FINISHED_WEIGHT_SQ,
   PATH_SQ,
-  PATH_FINISHED_SQ,
   PATH_WEIGHT_SQ,
+  PATH_HEAD_SQ,
+  PATH_FINISHED_SQ,
   PATH_FINISHED_WEIGHT_SQ,
   getRow,
   getCol,

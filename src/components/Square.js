@@ -2,6 +2,8 @@ import React from 'react';
 // import Grid from './Grid.js';
 import './../styles/Square.css';
 import weight from './../images/weight.svg';
+import start from './../images/start.svg';
+import end from './../images/end.svg';
 import Grid from './Grid';
 
 const Square = (props) => {
@@ -26,6 +28,13 @@ const Square = (props) => {
           draggable='false'
           alt='weight'
         />
+      )}
+      {(props.className === Grid.START_SQ ||
+        props.className === Grid.PATH_HEAD_SQ) && (
+        <img src={start} className='startImg' draggable='false' alt='start' />
+      )}
+      {props.className === Grid.END_SQ && (
+        <img src={end} className='endImg' draggable='false' alt='end' />
       )}
     </div>
   );

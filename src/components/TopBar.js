@@ -27,18 +27,14 @@ const TopBar = (props) => {
     (async () => {
       if (!isAnimating) {
         setIsAnimating(true);
-        const promise = await Maze.generateMaze(
-          maze,
-          grid,
-          setGrid,
-          resetGrid,
-        );
+        const promise = await Maze.generateMaze(maze, grid, setGrid, resetGrid);
         setIsAnimating(promise.finished);
         const start = promise.grid.findIndex((sq) => sq === Grid.START_SQ);
         const end = promise.grid.findIndex((sq) => sq === Grid.END_SQ);
         console.log(start, end);
         setStartSq(start);
         setEndSq(end);
+        setIsAnimatingFinished(false);
       }
     })();
   }, [maze]);

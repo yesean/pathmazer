@@ -74,7 +74,7 @@ const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
   path = path.filter((square) => square !== start && square !== end);
 
   // animate visited
-  let prevSquare = undefined;
+  let prevSquare = null;
   for (const square of visited) {
     if (shouldDelay) {
       if (prevSquare) {
@@ -105,13 +105,23 @@ const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
   }
 
   // animate path
+  prevSquare = null;
   for (const square of path) {
     if (shouldDelay) {
+      if (prevSquare) {
+        grid = changeSquare(
+          grid,
+          setGrid,
+          prevSquare.ind,
+          prevSquare.squareType
+        );
+      }
       const squareType =
         grid[square] === Grid.VISITED_WEIGHT_SQ
           ? Grid.PATH_WEIGHT_SQ
           : Grid.PATH_SQ;
-      grid = changeSquare(grid, setGrid, square, squareType);
+      grid = changeSquare(grid, setGrid, square, Grid.PATH_HEAD_SQ);
+      prevSquare = { ind: square, squareType: squareType };
       await wait(pathDelay);
     } else {
       const squareType =
