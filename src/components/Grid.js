@@ -177,11 +177,7 @@ const Grid = ({
     return grid.map((sq, ind) => renderSquare(sq, ind));
   };
 
-  return (
-    <div>
-      <p>{`${startSq} ${endSq}`}</p> <div className='grid'>{renderGrid()}</div>
-    </div>
-  );
+  return <div className='grid'>{renderGrid()}</div>;
 };
 
 export default {

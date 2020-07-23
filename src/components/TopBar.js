@@ -7,7 +7,6 @@ import Grid from './Grid';
 
 const TopBar = (props) => {
   const {
-    squareRefs,
     grid,
     setGrid,
     resetGrid,
@@ -33,7 +32,6 @@ const TopBar = (props) => {
           grid,
           setGrid,
           resetGrid,
-          speed
         );
         setIsAnimating(promise.finished);
         const start = promise.grid.findIndex((sq) => sq === Grid.START_SQ);

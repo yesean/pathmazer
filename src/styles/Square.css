@@ -69,20 +69,25 @@
   animation-fill-mode: forwards;
   animation-timing-function: ease-out;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes weight {
   0% {
     outline: none;
     transform: scale(1);
+    border: 0.1px solid #ddd;
   }
   50% {
     outline: none;
     transform: scale(1.2);
+    border: 0.1px solid #ddd;
   }
   100% {
     outline: none;
     transform: scale(1);
+    border: 0.1px solid #ddd;
   }
 }
 
@@ -91,7 +96,6 @@
   height: 70%;
   user-select: none;
   display: block;
-  margin: auto;
 }
 
 .visitedSquare {
