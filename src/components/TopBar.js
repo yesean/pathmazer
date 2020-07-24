@@ -113,20 +113,20 @@ const TopBar = (props) => {
         </div>
         <div className='topBarItemContainer'>
           <Select
-            option={maze}
-            onChange={onMazeChange}
-            options={Object.keys(mazesMap)}
-            optionsMap={mazesMap}
-            placeholder={mazePlaceholder}
-          />
-        </div>
-        <div className='topBarItemContainer'>
-          <Select
             option={speed}
             onChange={onSpeedChange}
             options={Object.keys(speedMap)}
             optionsMap={speedMap}
             placeholder={speedPlaceholder}
+          />
+        </div>
+        <div className='topBarItemContainer'>
+          <Select
+            option={maze}
+            onChange={onMazeChange}
+            options={Object.keys(mazesMap)}
+            optionsMap={mazesMap}
+            placeholder={mazePlaceholder}
           />
         </div>
         <div className='topBarItemContainer'>
