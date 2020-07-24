@@ -1,0 +1,46 @@
+.legendContainer {
+  margin: 15px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.legend {
+  width: 25px;
+  height: 25px;
+  margin: 5px;
+  display: flex;
+}
+
+.legendImg {
+  width: 85%;
+  height: 85%;
+  margin: auto;
+}
+
+.legendText {
+  line-height: 25px;
+  height: 25px;
+  margin: auto 5px;
+  user-select: none;
+}
+
+.StartLegend {
+  background-color: rgb(6, 214, 160, 0.9);
+}
+
+.EndLegend {
+  background-color: rgb(255, 107, 107);
+}
+
+.WallLegend {
+  background-color: rgb(38, 70, 83);
+}
+
+.VisitedLegend {
+  background-color: rgb(86, 207, 225);
+}
+
+.PathLegend {
+  background-color: rgb(255, 255, 63);
+}

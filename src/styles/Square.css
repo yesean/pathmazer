@@ -55,11 +55,11 @@
 }
 
 .startSquare {
-  background-color: rgb(6, 214, 160);
+  background-color: rgb(6, 214, 160, 0.9);
 }
 
 .endSquare {
-  background-color: rgb(239, 71, 111);
+  background-color: rgb(255, 107, 107);
 }
 
 @keyframes wall {
@@ -191,6 +191,6 @@
 
 .pathFinishedSquare,
 .pathFinishedWeightSquare {
-  background-color: yellow;
+  background-color: rgb(255, 255, 63);
   margin: auto;
 }

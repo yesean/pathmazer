@@ -59,24 +59,24 @@
 }
 
 .topBarButton {
-  color: rgb(38, 70, 83);
-  background-color: rgb(233, 196, 106);
+  background-color: rgb(17, 138, 178);
+  color: white;
 }
 
 .topBarButton:hover {
   cursor: pointer;
-  background-color: rgb(42, 157, 143);
-  color: white;
+  background-color: rgb(6, 214, 160, 0.9);
+  color: rgb(38, 70, 83);
 }
 
 .resetButton:hover {
-  background-color: rgb(231, 111, 81);
+  background-color: rgb(255, 107, 107);
 }
 
 .topBarButtonWhileAnimating,
 .topBarButtonWhileAnimating:hover {
-  background-color: rgb(233, 196, 106);
-  color: rgb(38, 70, 83);
+  background-color: rgb(17, 138, 178);
+  color: white;
 }
 
 .topBarButton:focus,
