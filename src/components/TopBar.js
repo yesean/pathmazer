@@ -23,21 +23,6 @@ const TopBar = (props) => {
     setEndSq,
   } = props;
 
-  useEffect(() => {
-    (async () => {
-      if (!isAnimating) {
-        setIsAnimating(true);
-        const promise = await Maze.generateMaze(maze, grid, setGrid, resetGrid);
-        setIsAnimating(promise.finished);
-        const start = promise.grid.findIndex((sq) => sq === Grid.START_SQ);
-        const end = promise.grid.findIndex((sq) => sq === Grid.END_SQ);
-        setStartSq(start);
-        setEndSq(end);
-        setIsAnimatingFinished(false);
-      }
-    })();
-  }, [maze]);
-
   const handleAlgorithmSubmit = async (event) => {
     event.preventDefault();
     if (!isAnimating) {
@@ -54,12 +39,26 @@ const TopBar = (props) => {
     }
   };
 
+  const handleMazeSubmit = async (maze) => {
+    if (!isAnimating) {
+      setIsAnimating(true);
+      const promise = await Maze.generateMaze(maze, grid, setGrid, resetGrid);
+      setIsAnimating(promise.finished);
+      const start = promise.grid.findIndex((sq) => sq === Grid.START_SQ);
+      const end = promise.grid.findIndex((sq) => sq === Grid.END_SQ);
+      setStartSq(start);
+      setEndSq(end);
+      setIsAnimatingFinished(false);
+    }
+  };
+
   const onAlgorithmChange = (alg) => {
     setAlgorithm(alg);
   };
 
   const onMazeChange = (maze) => {
     setMaze(maze);
+    handleMazeSubmit(maze);
   };
 
   const onSpeedChange = (speed) => {

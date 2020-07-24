@@ -117,36 +117,46 @@ const Grid = ({
   }, [isMouseDown, mouseOver]);
 
   const onMouseUp = (id) => {
-    if (isHoldingStart) {
-      setIsHoldingStart(false);
-    } else if (isHoldingEnd) {
-      setIsHoldingEnd(false);
+    if (!isAnimating) {
+      if (isHoldingStart) {
+        setIsHoldingStart(false);
+      } else if (isHoldingEnd) {
+        setIsHoldingEnd(false);
+      }
+      setIsMouseDown(false);
     }
-    setIsMouseDown(false);
   };
 
   const onMouseDown = (id) => {
-    if (id === startSq) {
-      setIsHoldingStart(true);
-    } else if (id === endSq) {
-      setIsHoldingEnd(true);
+    if (!isAnimating) {
+      if (id === startSq) {
+        setIsHoldingStart(true);
+      } else if (id === endSq) {
+        setIsHoldingEnd(true);
+      }
+      setIsMouseDown(true);
     }
-    setIsMouseDown(true);
   };
 
   const onMouseOver = (id) => {
-    setMouseOver(id);
+    if (!isAnimating) {
+      setMouseOver(id);
+    }
   };
 
   const onKeyDown = (e) => {
-    if (e.key === 'w') {
-      setIsWDown(true);
+    if (!isAnimating) {
+      if (e.key === 'w') {
+        setIsWDown(true);
+      }
     }
   };
 
   const onKeyUp = (e) => {
-    if (e.key === 'w') {
-      setIsWDown(false);
+    if (!isAnimating) {
+      if (e.key === 'w') {
+        setIsWDown(false);
+      }
     }
   };
 

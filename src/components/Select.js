@@ -99,6 +99,7 @@ const Select = (props) => {
         }
       }
       onChange={(data) => props.onChange(data.value)}
+      // onInputChange={(data) => props.onChange(data)}
       placeholder={props.placeholder}
       isSearchable={false}
       tabSelectsValue={false}
