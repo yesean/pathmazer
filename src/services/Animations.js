@@ -124,11 +124,20 @@ const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
       prevSquare = { ind: square, squareType: squareType };
       await wait(pathDelay);
     } else {
+      if (prevSquare) {
+        grid = changeSquare(
+          grid,
+          setGrid,
+          prevSquare.ind,
+          prevSquare.squareType
+        );
+      }
       const squareType =
         grid[square] === Grid.VISITED_FINISHED_WEIGHT_SQ
           ? Grid.PATH_FINISHED_WEIGHT_SQ
           : Grid.PATH_FINISHED_SQ;
-      grid = changeSquare(grid, setGrid, square, squareType);
+      grid = changeSquare(grid, setGrid, square, Grid.PATH_HEAD_SQ);
+      prevSquare = { ind: square, squareType: squareType };
     }
   }
   return Promise.resolve(false);

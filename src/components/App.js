@@ -19,7 +19,7 @@ function App() {
   const [startSq, setStartSq] = useState(Grid.INITIAL_START);
   const [endSq, setEndSq] = useState(Grid.INITIAL_END);
 
-  const resetGrid = (shouldResetSelects = true) => {
+  const resetGrid = () => {
     console.log('resetting grid');
     setGrid(initialGrid);
     setIsAnimatingFinished(false);
@@ -27,11 +27,9 @@ function App() {
     setEndIsCovering(Grid.DEFAULT_SQ);
     setStartSq(Grid.INITIAL_START);
     setEndSq(Grid.INITIAL_END);
-    if (shouldResetSelects) {
-      setAlgorithm(null);
-      setMaze(null);
-      setSpeed(null);
-    }
+    setAlgorithm(null);
+    setMaze(null);
+    setSpeed('fast');
   };
 
   return (

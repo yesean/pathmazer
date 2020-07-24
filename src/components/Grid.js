@@ -65,7 +65,6 @@ const Grid = ({
   setStartIsCovering,
   endIsCovering,
   setEndIsCovering,
-  resetGrid,
   isAnimating,
   isAnimatingFinished,
   algorithm,
@@ -90,7 +89,6 @@ const Grid = ({
         nextGrid[startSq] = startIsCovering;
         setStartIsCovering(grid[mouseOver]);
         nextGrid[mouseOver] = START_SQ;
-        // setStartSq(mouseOver);
         if (isAnimatingFinished) {
           Animations.animate(algorithm, nextGrid, setGrid, 'none', false);
           return;
@@ -103,7 +101,6 @@ const Grid = ({
         nextGrid[endSq] = endIsCovering;
         setEndIsCovering(grid[mouseOver]);
         nextGrid[mouseOver] = END_SQ;
-        // setEndSq(mouseOver);
         if (isAnimatingFinished) {
           Animations.animate(algorithm, nextGrid, setGrid, 'none', false);
           return;
@@ -129,8 +126,6 @@ const Grid = ({
   };
 
   const onMouseDown = (id) => {
-    console.log('omd', startSq, endSq);
-    console.log('omd', grid[startSq]);
     if (id === startSq) {
       setIsHoldingStart(true);
     } else if (id === endSq) {
@@ -170,7 +165,7 @@ const Grid = ({
     );
   };
 
-  const renderGrid = (s, e) => {
+  const renderGrid = () => {
     return grid.map((sq, ind) => renderSquare(sq, ind));
   };
 
