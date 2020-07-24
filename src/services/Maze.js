@@ -7,7 +7,7 @@ const generateMaze = async (maze, grid, setGrid, resetGrid, speed) => {
   grid = new Array(Grid.SIZE).fill(Grid.DEFAULT_SQ);
   setGrid(grid);
 
-  let delay = 10;
+  let delay = 20;
   switch (maze) {
     case 'random':
       return await randomMaze(grid, setGrid, 0, delay);

@@ -36,10 +36,10 @@ const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
         visitedDelay = 50;
         break;
       case 'medium':
-        visitedDelay = 30;
+        visitedDelay = 35;
         break;
       case 'fast':
-        visitedDelay = 15;
+        visitedDelay = 25;
         break;
       default:
     }
