@@ -44,8 +44,8 @@
 .weightImg,
 .startImg,
 .endImg {
-  width: 70%;
-  height: 70%;
+  width: 95%;
+  height: 95%;
   user-select: none;
   display: block;
 }
@@ -54,6 +54,14 @@
 .startSquare,
 .endSquare {
   border: 0.1px solid #ddd;
+}
+
+.startSquare {
+  background-color: rgb(6, 214, 160);
+}
+
+.endSquare {
+  background-color: rgb(239, 71, 111);
 }
 
 @keyframes wall {
@@ -81,19 +89,20 @@
 
 @keyframes weight {
   0% {
-    outline: none;
     transform: scale(1);
-    border: 0.1px solid #ddd;
+    margin: auto;
   }
   50% {
-    outline: none;
     transform: scale(1.2);
-    border: 0.1px solid #ddd;
+    margin: auto;
+  }
+  99% {
+    border: none;
+    margin: auto;
   }
   100% {
-    outline: none;
-    transform: scale(1);
     border: 0.1px solid #ddd;
+    margin: auto;
   }
 }
 
@@ -174,12 +183,15 @@
 }
 
 .pathSquare,
-.pathWeightSquare,
-.pathHeadSquare {
+.pathWeightSquare {
   animation-name: path;
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
+}
+
+.pathHeadSquare {
+  background-color: rgb(6, 214, 160);
 }
 
 .pathFinishedSquare,
