@@ -13,7 +13,7 @@ function App() {
   const [endIsCovering, setEndIsCovering] = useState(Grid.DEFAULT_SQ);
   const [algorithm, setAlgorithm] = useState(null);
   const [maze, setMaze] = useState(null);
-  const [speed, setSpeed] = useState('fast');
+  const [speed, setSpeed] = useState('medium');
   const [isAnimating, setIsAnimating] = useState(false);
   const [isAnimatingFinished, setIsAnimatingFinished] = useState(false);
   const [startSq, setStartSq] = useState(Grid.INITIAL_START);
@@ -29,7 +29,7 @@ function App() {
     setEndSq(Grid.INITIAL_END);
     setAlgorithm(null);
     setMaze(null);
-    setSpeed('fast');
+    setSpeed('medium');
   };
 
   return (

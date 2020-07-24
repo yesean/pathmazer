@@ -22,7 +22,11 @@ const clearAnimate = (grid, setGrid) => {
 };
 
 const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
-  let pathDelay = 30;
+  if (!algorithm || !speed) {
+    return Promise.resolve({ isAnimating: false, isAnimatingFinished: false });
+  }
+
+  let pathDelay = 50;
   let visitedDelay;
   if (shouldDelay) {
     switch (speed) {
@@ -38,34 +42,28 @@ const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
         visitedDelay = 15;
         break;
       default:
-        return Promise.resolve(false);
     }
   }
-  console.log('speed', speed);
+
+  grid = clearAnimate(grid, setGrid);
   let visited, path;
   switch (algorithm) {
     case 'dijkstra':
-      grid = clearAnimate(grid, setGrid);
       [visited, path] = Algorithms.dijkstra(grid);
       break;
     case 'astar':
-      grid = clearAnimate(grid, setGrid);
       [visited, path] = Algorithms.astar(grid);
       break;
     case 'greedy':
-      grid = clearAnimate(grid, setGrid);
       [visited, path] = Algorithms.greedy(grid);
       break;
     case 'dfs':
-      grid = clearAnimate(grid, setGrid);
       [visited, path] = Algorithms.dfs(grid);
       break;
     case 'bfs':
-      grid = clearAnimate(grid, setGrid);
       [visited, path] = Algorithms.bfs(grid);
       break;
     default:
-      return Promise.resolve(false);
   }
 
   const start = grid.findIndex((sq) => sq === Grid.START_SQ);
@@ -91,15 +89,8 @@ const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
         grid[square] === Grid.WEIGHT_SQ
           ? Grid.VISITED_WEIGHT_SQ
           : Grid.VISITED_SQ;
-      grid = changeSquare(
-        grid,
-        setGrid,
-        square,
-        Grid.VISITED_HEAD_SQ,
-        (tick += visitedDelay)
-      );
+      grid = changeSquare(grid, setGrid, square, Grid.VISITED_HEAD_SQ, tick);
       prevSquare = { ind: square, squareType: squareType };
-      // await wait(visitedDelay);
     } else {
       const squareType =
         grid[square] === Grid.WEIGHT_SQ
@@ -108,13 +99,13 @@ const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
       grid = changeSquare(grid, setGrid, square, squareType);
     }
   }
-  if (shouldDelay) {
+  if (shouldDelay && prevSquare) {
     grid = changeSquare(
       grid,
       setGrid,
       prevSquare.ind,
       prevSquare.squareType,
-      (tick += visitedDelay)
+      tick
     );
   }
 
@@ -135,15 +126,8 @@ const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
         grid[square] === Grid.VISITED_WEIGHT_SQ
           ? Grid.PATH_WEIGHT_SQ
           : Grid.PATH_SQ;
-      grid = changeSquare(
-        grid,
-        setGrid,
-        square,
-        Grid.PATH_HEAD_SQ,
-        (tick += pathDelay)
-      );
+      grid = changeSquare(grid, setGrid, square, Grid.PATH_HEAD_SQ, tick);
       prevSquare = { ind: square, squareType: squareType };
-      // await wait(pathDelay);
     } else {
       if (prevSquare) {
         grid = changeSquare(
@@ -161,17 +145,11 @@ const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
       prevSquare = { ind: square, squareType: squareType };
     }
   }
-  return Promise.resolve(false);
+  await wait(tick);
+  return Promise.resolve({ isAnimating: false, isAnimatingFinished: true });
 };
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-// const changeSquare = (grid, setGrid, square, squareType) => {
-//   const nextGrid = [...grid];
-//   nextGrid[square] = squareType;
-//   setGrid(nextGrid);
-//   return nextGrid;
-// };
 
 const changeSquare = (grid, setGrid, square, squareType, delay) => {
   const nextGrid = [...grid];

@@ -11,7 +11,6 @@ const dijkstra = (grid) => {
 
   const pq = [start];
   while (pq.length > 0) {
-    console.log('running dijkstras');
     const currSquare = pq.shift();
     visited.push(currSquare);
     if (currSquare === end) {
@@ -21,9 +20,8 @@ const dijkstra = (grid) => {
     for (const nextSquare of moves
       .map((move) => currSquare + move)
       .filter((nextSquare) => Grid.validMove(currSquare, nextSquare))) {
+      // ignore mountains and decentivize weights
       let moveWeight = weights[currSquare];
-      // const elm = squareRefs[nextSquare].current;
-      // if (grid[nextSquare] === Grid.WALL_SQ) {
       if (grid[nextSquare] === Grid.WALL_SQ) {
         continue;
       } else if (grid[nextSquare] === Grid.WEIGHT_SQ) {
@@ -86,7 +84,6 @@ const astar = (grid) => {
 
   const pq = [start];
   while (pq.length > 0) {
-    console.log('running astar');
     const currSquare = pq.shift();
     visited.push(currSquare);
     if (currSquare === end) {
@@ -96,6 +93,7 @@ const astar = (grid) => {
     for (const nextSquare of moves
       .map((move) => currSquare + move)
       .filter((nextSquare) => Grid.validMove(currSquare, nextSquare))) {
+      // ignore mountains and decentivize weights
       let moveWeight = weights[currSquare];
       if (grid[nextSquare] === Grid.WALL_SQ) {
         continue;
@@ -145,7 +143,7 @@ const astar = (grid) => {
   return [visited, path];
 };
 
-const greedy = (grid, setGrid) => {
+const greedy = (grid) => {
   const start = grid.findIndex((sq) => sq === Grid.START_SQ);
   const end = grid.findIndex((sq) => sq === Grid.END_SQ);
 
@@ -155,7 +153,6 @@ const greedy = (grid, setGrid) => {
 
   const pq = [start];
   while (pq.length > 0) {
-    console.log('running greedy bfs');
     const currSquare = pq.shift();
     visited.push(currSquare);
     if (currSquare === end) {
@@ -165,8 +162,8 @@ const greedy = (grid, setGrid) => {
     for (const nextSquare of moves
       .map((move) => currSquare + move)
       .filter((nextSquare) => Grid.validMove(currSquare, nextSquare))) {
+      // ignore mountains and decentivize weights
       let moveWeight = Grid.dist(nextSquare, end);
-      // add weight for mountains and weights
       if (grid[nextSquare] === Grid.WALL_SQ) {
         continue;
       } else if (grid[nextSquare] === Grid.WEIGHT_SQ) {
@@ -225,7 +222,7 @@ const dfs = (grid) => {
     for (const nextSquare of moves
       .map((move) => currSquare + move)
       .filter((nextSquare) => Grid.validMove(currSquare, nextSquare))) {
-      // add weight for mountains and weights
+      // ignore mountains
       if (grid[nextSquare] === Grid.WALL_SQ) {
         continue;
       }
@@ -271,7 +268,7 @@ const bfs = (grid) => {
     for (const nextSquare of moves
       .map((move) => currSquare + move)
       .filter((nextSquare) => Grid.validMove(currSquare, nextSquare))) {
-      // add weight for mountains and weights
+      // ignore mountains
       if (grid[nextSquare] === Grid.WALL_SQ) {
         continue;
       }

@@ -31,7 +31,6 @@ const TopBar = (props) => {
         setIsAnimating(promise.finished);
         const start = promise.grid.findIndex((sq) => sq === Grid.START_SQ);
         const end = promise.grid.findIndex((sq) => sq === Grid.END_SQ);
-        console.log(start, end);
         setStartSq(start);
         setEndSq(end);
         setIsAnimatingFinished(false);
@@ -43,15 +42,15 @@ const TopBar = (props) => {
     event.preventDefault();
     if (!isAnimating) {
       setIsAnimating(true);
-      const isAnimating = await Animations.animate(
+      const promise = await Animations.animate(
         algorithm,
         grid,
         setGrid,
         speed,
         true
       );
-      setIsAnimating(isAnimating);
-      setIsAnimatingFinished(!isAnimating);
+      setIsAnimating(promise.isAnimating);
+      setIsAnimatingFinished(promise.isAnimatingFinished);
     }
   };
 
