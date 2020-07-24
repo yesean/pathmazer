@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Select from './Select';
 import './../styles/TopBar.css';
 import Animations from './../services/Animations.js';

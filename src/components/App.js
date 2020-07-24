@@ -17,7 +17,7 @@ function App() {
   const [endIsCovering, setEndIsCovering] = useState(Grid.DEFAULT_SQ);
   const [algorithm, setAlgorithm] = useState(null);
   const [maze, setMaze] = useState(null);
-  const [speed, setSpeed] = useState('medium');
+  const [speed, setSpeed] = useState('fast');
   const [isAnimating, setIsAnimating] = useState(false);
   const [isAnimatingFinished, setIsAnimatingFinished] = useState(false);
   const [startSq, setStartSq] = useState(Grid.INITIAL_START);
@@ -57,7 +57,7 @@ function App() {
     setEndSq(Grid.INITIAL_END);
     setAlgorithm(null);
     setMaze(null);
-    setSpeed('medium');
+    setSpeed('fast');
   };
 
   return (
@@ -80,7 +80,7 @@ function App() {
       />
       <div className='legendsContainer'>
         {legends.map((legend) => (
-          <Legend name={legend.name} img={legend.img} />
+          <Legend key={legend.name} name={legend.name} img={legend.img} />
         ))}
       </div>
       <Grid.Grid
