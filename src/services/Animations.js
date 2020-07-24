@@ -29,10 +29,10 @@ const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
       case 'none':
         break;
       case 'slow':
-        visitedDelay = 100;
+        visitedDelay = 50;
         break;
       case 'medium':
-        visitedDelay = 50;
+        visitedDelay = 20;
         break;
       case 'fast':
         visitedDelay = 0;
@@ -151,5 +151,18 @@ const changeSquare = (grid, setGrid, square, squareType) => {
   setGrid(nextGrid);
   return nextGrid;
 };
+
+// const changeSquare = (grid, setGrid, square, squareType, delay) => {
+//   const nextGrid = [...grid];
+//   nextGrid[square] = squareType;
+//   if (delay) {
+//     setTimeout(() => {
+//       setGrid(nextGrid);
+//     }, delay);
+//   } else {
+//     setGrid(nextGrid);
+//   }
+//   return nextGrid;
+// };
 
 export default { animate };

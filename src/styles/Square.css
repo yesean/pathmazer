@@ -50,9 +50,9 @@
   display: block;
 }
 
-.square,
-.startSquare,
-.endSquare {
+.square {
+  /* .startSquare,
+.endSquare { */
   border: 0.1px solid #ddd;
 }
 

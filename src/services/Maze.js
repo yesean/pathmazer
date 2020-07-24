@@ -7,7 +7,7 @@ const generateMaze = async (maze, grid, setGrid, resetGrid, speed) => {
   grid = new Array(Grid.SIZE).fill(Grid.DEFAULT_SQ);
   setGrid(grid);
   console.log('performing maze', maze);
-  let delay = 1;
+  let delay = 0;
 
   switch (maze) {
     case 'random':
@@ -31,8 +31,7 @@ const changeSquare = (grid, setGrid, square, squareType) => {
   return nextGrid;
 };
 
-const wait = (ms) =>
-  ms ? new Promise((resolve) => setTimeout(resolve, ms)) : ms;
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const drawRow = async (grid, setGrid, delay, row, colRange) => {
   for (let i = colRange[0]; i <= colRange[1]; i++) {
@@ -61,7 +60,7 @@ const drawMazeBorder = async (grid, setGrid, delay) => {
       Grid.getSq(Grid.HEIGHT - 1, i),
       Grid.WALL_SQ
     );
-    // await wait(delay);
+    await wait(delay);
   }
   for (let i = 1; i < Grid.HEIGHT - 1; i++) {
     grid = changeSquare(grid, setGrid, Grid.getSq(i, 0), Grid.WALL_SQ);
@@ -71,7 +70,7 @@ const drawMazeBorder = async (grid, setGrid, delay) => {
       Grid.getSq(i, Grid.WIDTH - 1),
       Grid.WALL_SQ
     );
-    // await wait(delay);
+    await wait(delay);
   }
   return Promise.resolve(grid);
 };
