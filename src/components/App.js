@@ -33,10 +33,38 @@ function App() {
 
   useEffect(() => {
     const updateDimensions = () => {
+      const topBarHeight = document.getElementsByClassName('topBar')[0]
+        .offsetHeight;
+      const legendsHeight = document.getElementsByClassName(
+        'legendsContainer'
+      )[0].offsetHeight;
+      const gridMargin = 20;
+      GridConstants.update(
+        Math.floor((window.innerWidth - 25) / 25),
+        Math.floor(
+          (window.innerHeight - topBarHeight - legendsHeight - gridMargin) / 25
+        )
+      );
+      resetGrid();
+    };
+    updateDimensions();
+  }, []);
+
+  useEffect(() => {
+    const updateDimensions = () => {
       if (!isAnimating) {
+        const topBarHeight = document.getElementsByClassName('topBar')[0]
+          .offsetHeight;
+        const legendsHeight = document.getElementsByClassName(
+          'legendsContainer'
+        )[0].offsetHeight;
+        const gridMargin = 20;
         GridConstants.update(
           Math.floor((window.innerWidth - 25) / 25),
-          Math.floor((window.innerHeight - 150) / 25)
+          Math.floor(
+            (window.innerHeight - topBarHeight - legendsHeight - gridMargin) /
+              25
+          )
         );
         resetGrid();
       }
