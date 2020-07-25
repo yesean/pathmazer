@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './../styles/Grid.css';
 import Square from './Square.js';
 import Animations from './../services/Animations.js';
 import GridConstants from './../services/GridConstants.js';
+import './../styles/Grid.css';
 
 const Grid = ({
   grid,
@@ -151,7 +151,6 @@ const Grid = ({
   };
 
   const renderGrid = () => {
-    console.log(grid[GridConstants.INITIAL_START]);
     return grid.map((sqType, sq) => renderSquare(sqType, sq));
   };
 

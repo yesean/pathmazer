@@ -1,9 +1,9 @@
 import React from 'react';
 import Select from './Select';
-import './../styles/TopBar.css';
 import Animations from './../services/Animations.js';
 import Maze from './../services/Maze.js';
 import GridConstants from './../services/GridConstants.js';
+import './../styles/TopBar.css';
 
 const TopBar = ({
   grid,

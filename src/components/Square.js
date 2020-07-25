@@ -1,9 +1,10 @@
 import React from 'react';
+import GridConstants from './../services/GridConstants.js';
 import './../styles/Square.css';
+
 import weight from './../images/weight.svg';
 import start from './../images/start.svg';
 import end from './../images/end.svg';
-import GridConstants from './../services/GridConstants.js'
 
 const Square = (props) => {
   return (

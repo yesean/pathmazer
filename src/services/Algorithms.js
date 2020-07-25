@@ -19,7 +19,9 @@ const dijkstra = (grid) => {
     const moves = [-1, 1, -GridConstants.WIDTH, GridConstants.WIDTH];
     for (const nextSquare of moves
       .map((move) => currSquare + move)
-      .filter((nextSquare) => GridConstants.validMove(currSquare, nextSquare))) {
+      .filter((nextSquare) =>
+        GridConstants.validMove(currSquare, nextSquare)
+      )) {
       // ignore mountains and decentivize weights
       let moveWeight = weights[currSquare];
       if (grid[nextSquare] === GridConstants.WALL_SQ) {
@@ -77,8 +79,10 @@ const astar = (grid) => {
 
   const heuristic = (start, end) => {
     return (
-      Math.abs(Math.floor(start / GridConstants.WIDTH) - Math.floor(end / GridConstants.WIDTH)) +
-      Math.abs((start % GridConstants.WIDTH) - (end % GridConstants.WIDTH))
+      Math.abs(
+        Math.floor(start / GridConstants.WIDTH) -
+          Math.floor(end / GridConstants.WIDTH)
+      ) + Math.abs((start % GridConstants.WIDTH) - (end % GridConstants.WIDTH))
     );
   };
 
@@ -92,7 +96,9 @@ const astar = (grid) => {
     const moves = [-1, 1, -GridConstants.WIDTH, GridConstants.WIDTH];
     for (const nextSquare of moves
       .map((move) => currSquare + move)
-      .filter((nextSquare) => GridConstants.validMove(currSquare, nextSquare))) {
+      .filter((nextSquare) =>
+        GridConstants.validMove(currSquare, nextSquare)
+      )) {
       // ignore mountains and decentivize weights
       let moveWeight = weights[currSquare];
       if (grid[nextSquare] === GridConstants.WALL_SQ) {
@@ -161,7 +167,9 @@ const greedy = (grid) => {
     const moves = [-1, 1, -GridConstants.WIDTH, GridConstants.WIDTH];
     for (const nextSquare of moves
       .map((move) => currSquare + move)
-      .filter((nextSquare) => GridConstants.validMove(currSquare, nextSquare))) {
+      .filter((nextSquare) =>
+        GridConstants.validMove(currSquare, nextSquare)
+      )) {
       // ignore mountains and decentivize weights
       let moveWeight = GridConstants.dist(nextSquare, end);
       if (grid[nextSquare] === GridConstants.WALL_SQ) {
@@ -212,7 +220,6 @@ const dfs = (grid) => {
 
   const stack = [start];
   while (stack.length > 0) {
-    console.log('running dfs');
     const currSquare = stack.pop();
     visited.push(currSquare);
     if (currSquare === end) {
@@ -221,7 +228,9 @@ const dfs = (grid) => {
     const moves = [-1, 1, -GridConstants.WIDTH, GridConstants.WIDTH];
     for (const nextSquare of moves
       .map((move) => currSquare + move)
-      .filter((nextSquare) => GridConstants.validMove(currSquare, nextSquare))) {
+      .filter((nextSquare) =>
+        GridConstants.validMove(currSquare, nextSquare)
+      )) {
       // ignore mountains
       if (grid[nextSquare] === GridConstants.WALL_SQ) {
         continue;
@@ -258,7 +267,6 @@ const bfs = (grid) => {
 
   const queue = [start];
   while (queue.length > 0) {
-    console.log('running bfs');
     const currSquare = queue.shift();
     visited.push(currSquare);
     if (currSquare === end) {
@@ -267,7 +275,9 @@ const bfs = (grid) => {
     const moves = [-1, 1, -GridConstants.WIDTH, GridConstants.WIDTH];
     for (const nextSquare of moves
       .map((move) => currSquare + move)
-      .filter((nextSquare) => GridConstants.validMove(currSquare, nextSquare))) {
+      .filter((nextSquare) =>
+        GridConstants.validMove(currSquare, nextSquare)
+      )) {
       // ignore mountains
       if (grid[nextSquare] === GridConstants.WALL_SQ) {
         continue;

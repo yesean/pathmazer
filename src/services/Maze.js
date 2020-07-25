@@ -1,7 +1,6 @@
 import GridConstants from './../services/GridConstants.js';
 
 const generateMaze = async (maze, grid, setGrid, resetGrid, speed) => {
-  console.log('size', GridConstants.SIZE);
   if (!maze) {
     return Promise.resolve({ finished: false, grid: grid });
   }
@@ -56,7 +55,6 @@ const drawCol = (grid, setGrid, tick, delay, col, rowRange) => {
 };
 
 const drawMazeBorder = (grid, setGrid, tick, delay) => {
-  console.log(tick);
   for (let i = 0; i < GridConstants.WIDTH; i++, tick += delay) {
     const topRow = GridConstants.getSq(0, i);
     const bottomRow = GridConstants.getSq(GridConstants.HEIGHT - 1, i);
@@ -134,7 +132,6 @@ const generateStartEndPosition = (
 
 const randomMaze = async (grid, setGrid, tick, delay) => {
   [tick, grid] = drawMazeBorder(grid, setGrid, tick, delay);
-  console.log(tick);
   for (let i = 0; i < grid.length; i++) {
     if (GridConstants.validMazeMove(i, i) && Math.random() < 0.35) {
       grid[i] = GridConstants.WALL_SQ;
