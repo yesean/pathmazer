@@ -4,10 +4,12 @@ import Square from './Square.js';
 import Animations from './../services/Animations.js';
 
 const WIDTH = 67;
-const HEIGHT = 45;
+const HEIGHT = 33;
 const SIZE = WIDTH * HEIGHT;
-const INITIAL_START = 22 * WIDTH + 6;
-const INITIAL_END = 22 * WIDTH + 60;
+const INITIAL_START =
+  Math.floor(HEIGHT / 2 - 1) * WIDTH + Math.floor(WIDTH / 6);
+const INITIAL_END =
+  Math.floor(HEIGHT / 2 - 1) * WIDTH + Math.floor((WIDTH / 6) * 5);
 const DEFAULT_SQ = 'square';
 const START_SQ = 'startSquare';
 const END_SQ = 'endSquare';

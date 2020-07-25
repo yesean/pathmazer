@@ -21,6 +21,16 @@ function App() {
   const [isAnimating, setIsAnimating] = useState(false);
   const [isAnimatingFinished, setIsAnimatingFinished] = useState(false);
 
+  const resetGrid = () => {
+    setGrid(initialGrid);
+    setIsAnimatingFinished(false);
+    setStartIsCovering(Grid.DEFAULT_SQ);
+    setEndIsCovering(Grid.DEFAULT_SQ);
+    setAlgorithm(null);
+    setMaze(null);
+    setSpeed('fast');
+  };
+
   const legends = [
     {
       name: 'Start',
@@ -44,16 +54,6 @@ function App() {
       name: 'Path',
     },
   ];
-
-  const resetGrid = () => {
-    setGrid(initialGrid);
-    setIsAnimatingFinished(false);
-    setStartIsCovering(Grid.DEFAULT_SQ);
-    setEndIsCovering(Grid.DEFAULT_SQ);
-    setAlgorithm(null);
-    setMaze(null);
-    setSpeed('fast');
-  };
 
   return (
     <div className='page'>
