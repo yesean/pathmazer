@@ -21,28 +21,26 @@ const clearAnimate = (grid, setGrid) => {
   return nextGrid;
 };
 
-const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
+const animate = async (algorithm, grid, setGrid, speed) => {
   if (!algorithm || !speed) {
     return Promise.resolve({ isAnimating: false, isAnimatingFinished: false });
   }
 
   let pathDelay = 50;
   let visitedDelay;
-  if (shouldDelay) {
-    switch (speed) {
-      case 'none':
-        break;
-      case 'slow':
-        visitedDelay = 50;
-        break;
-      case 'medium':
-        visitedDelay = 35;
-        break;
-      case 'fast':
-        visitedDelay = 25;
-        break;
-      default:
-    }
+  switch (speed) {
+    case 'none':
+      break;
+    case 'slow':
+      visitedDelay = 50;
+      break;
+    case 'medium':
+      visitedDelay = 35;
+      break;
+    case 'fast':
+      visitedDelay = 25;
+      break;
+    default:
   }
 
   grid = clearAnimate(grid, setGrid);
@@ -75,7 +73,7 @@ const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
   let tick = 0;
   let prevSquare = null;
   for (const square of visited) {
-    if (shouldDelay) {
+    if (speed !== 'none') {
       if (prevSquare) {
         grid = changeSquare(
           grid,
@@ -99,7 +97,7 @@ const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
       grid = changeSquare(grid, setGrid, square, squareType);
     }
   }
-  if (shouldDelay && prevSquare) {
+  if (speed !== 'none' && prevSquare) {
     grid = changeSquare(
       grid,
       setGrid,
@@ -112,7 +110,7 @@ const animate = async (algorithm, grid, setGrid, speed, shouldDelay) => {
   // animate path
   prevSquare = null;
   for (const square of path) {
-    if (shouldDelay) {
+    if (speed !== 'none') {
       if (prevSquare) {
         grid = changeSquare(
           grid,

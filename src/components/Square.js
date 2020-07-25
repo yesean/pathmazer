@@ -11,9 +11,9 @@ const Square = (props) => {
     <div
       id={props.id}
       className={props.className}
+      onMouseEnter={props.onMouseEnter}
       onMouseDown={props.onMouseDown}
       onMouseUp={props.onMouseUp}
-      onMouseOver={props.onMouseOver}
       onKeyDown={props.onKeyDown}
       onKeyUp={props.onKeyUp}
       tabIndex={-1}>

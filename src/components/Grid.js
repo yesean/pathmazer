@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './../styles/Grid.css';
 import Square from './Square.js';
 import Animations from './../services/Animations.js';
@@ -73,50 +73,98 @@ const Grid = ({
   const [isHoldingStart, setIsHoldingStart] = useState(false);
   const [isHoldingEnd, setIsHoldingEnd] = useState(false);
   const [isWDown, setIsWDown] = useState(false);
-  const [mouseOver, setMouseOver] = useState(-1);
 
-  const startSq = grid.findIndex((sq) => sq === START_SQ);
-  const endSq = grid.findIndex((sq) => sq === END_SQ);
+  const updateGridOnMouseDown = (sq) => {
+    const nextGrid = [...grid];
+    if (grid[sq] === START_SQ) {
+      setIsHoldingStart(true);
+    } else if (grid[sq] === END_SQ) {
+      setIsHoldingEnd(true);
+    } else if (grid[sq] === WEIGHT_SQ) {
+      if (isWDown) {
+        nextGrid[sq] = DEFAULT_SQ;
+      } else {
+        nextGrid[sq] = WALL_SQ;
+      }
+    } else if (grid[sq] === WALL_SQ) {
+      if (isWDown) {
+        nextGrid[sq] = WEIGHT_SQ;
+      } else {
+        nextGrid[sq] = DEFAULT_SQ;
+      }
+    } else {
+      if (isWDown) {
+        nextGrid[sq] = WEIGHT_SQ;
+      } else {
+        nextGrid[sq] = WALL_SQ;
+      }
+    }
+    setGrid(nextGrid);
+  };
 
-  useEffect(() => {
-    if (isMouseDown && !isAnimating) {
+  const updateGridOnMouseEnter = (sq) => {
+    const startSq = grid.findIndex((s) => s === START_SQ);
+    const endSq = grid.findIndex((s) => s === END_SQ);
+    console.log(isMouseDown);
+    if (isMouseDown && (sq !== startSq) & (sq !== endSq)) {
       const nextGrid = [...grid];
-      if (
-        isHoldingStart &&
-        mouseOver !== startSq &&
-        grid[mouseOver] !== END_SQ
-      ) {
+      if (isHoldingStart) {
         nextGrid[startSq] = startIsCovering;
-        setStartIsCovering(grid[mouseOver]);
-        nextGrid[mouseOver] = START_SQ;
+        nextGrid[sq] = START_SQ;
+        setStartIsCovering(grid[sq]);
         if (isAnimatingFinished) {
-          Animations.animate(algorithm, nextGrid, setGrid, 'none', false);
+          Animations.animate(algorithm, nextGrid, setGrid, 'none');
           return;
         }
-      } else if (
-        isHoldingEnd &&
-        mouseOver !== endSq &&
-        grid[mouseOver] !== START_SQ
-      ) {
+      } else if (isHoldingEnd) {
         nextGrid[endSq] = endIsCovering;
-        setEndIsCovering(grid[mouseOver]);
-        nextGrid[mouseOver] = END_SQ;
+        nextGrid[sq] = END_SQ;
+        setEndIsCovering(grid[sq]);
         if (isAnimatingFinished) {
-          Animations.animate(algorithm, nextGrid, setGrid, 'none', false);
+          Animations.animate(algorithm, nextGrid, setGrid, 'none');
           return;
         }
-      } else if (isWDown && mouseOver !== startSq && mouseOver !== endSq) {
-        nextGrid[mouseOver] =
-          grid[mouseOver] === WEIGHT_SQ ? DEFAULT_SQ : WEIGHT_SQ;
-      } else if (mouseOver !== startSq && mouseOver !== endSq) {
-        nextGrid[mouseOver] =
-          grid[mouseOver] === WALL_SQ ? DEFAULT_SQ : WALL_SQ;
+      } else {
+        if (grid[sq] === WEIGHT_SQ) {
+          if (isWDown) {
+            nextGrid[sq] = DEFAULT_SQ;
+          } else {
+            nextGrid[sq] = WALL_SQ;
+          }
+        } else if (grid[sq] === WALL_SQ) {
+          if (isWDown) {
+            nextGrid[sq] = WEIGHT_SQ;
+          } else {
+            nextGrid[sq] = DEFAULT_SQ;
+          }
+        } else {
+          if (isWDown) {
+            nextGrid[sq] = WEIGHT_SQ;
+          } else {
+            nextGrid[sq] = WALL_SQ;
+          }
+        }
       }
       setGrid(nextGrid);
     }
-  }, [isMouseDown, mouseOver]);
+  };
 
-  const onMouseUp = (id) => {
+  const onMouseEnter = (sq) => {
+    if (!isAnimating) {
+      updateGridOnMouseEnter(sq);
+    }
+  };
+
+  const onMouseDown = (sq) => {
+    console.log('mouse down');
+    if (!isAnimating) {
+      updateGridOnMouseDown(sq);
+      setIsMouseDown(true);
+    }
+  };
+
+  const onMouseUp = (sq) => {
+    console.log('mouse up');
     if (!isAnimating) {
       if (isHoldingStart) {
         setIsHoldingStart(false);
@@ -124,23 +172,6 @@ const Grid = ({
         setIsHoldingEnd(false);
       }
       setIsMouseDown(false);
-    }
-  };
-
-  const onMouseDown = (id) => {
-    if (!isAnimating) {
-      if (id === startSq) {
-        setIsHoldingStart(true);
-      } else if (id === endSq) {
-        setIsHoldingEnd(true);
-      }
-      setIsMouseDown(true);
-    }
-  };
-
-  const onMouseOver = (id) => {
-    if (!isAnimating) {
-      setMouseOver(id);
     }
   };
 
@@ -160,15 +191,15 @@ const Grid = ({
     }
   };
 
-  const renderSquare = (sq, id) => {
+  const renderSquare = (sqType, sq) => {
     return (
       <Square
-        key={id}
-        id={id}
-        className={sq}
-        onMouseDown={() => onMouseDown(id)}
-        onMouseUp={() => onMouseUp(id)}
-        onMouseOver={() => onMouseOver(id)}
+        key={sq}
+        id={sq}
+        className={sqType}
+        onMouseEnter={() => onMouseEnter(sq)}
+        onMouseDown={() => onMouseDown(sq)}
+        onMouseUp={() => onMouseUp(sq)}
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
       />
@@ -176,7 +207,7 @@ const Grid = ({
   };
 
   const renderGrid = () => {
-    return grid.map((sq, ind) => renderSquare(sq, ind));
+    return grid.map((sqType, sq) => renderSquare(sqType, sq));
   };
 
   return <div className='grid'>{renderGrid()}</div>;

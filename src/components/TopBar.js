@@ -5,35 +5,27 @@ import Animations from './../services/Animations.js';
 import Maze from './../services/Maze.js';
 import Grid from './Grid';
 
-const TopBar = (props) => {
-  const {
-    grid,
-    setGrid,
-    resetGrid,
-    setIsAnimating,
-    setIsAnimatingFinished,
-    algorithm,
-    setAlgorithm,
-    maze,
-    setMaze,
-    speed,
-    setSpeed,
-    isAnimating,
-    setStartSq,
-    setEndSq,
-  } = props;
-
+const TopBar = ({
+  grid,
+  setGrid,
+  resetGrid,
+  setStartIsCovering,
+  setEndIsCovering,
+  isAnimating,
+  setIsAnimating,
+  setIsAnimatingFinished,
+  algorithm,
+  setAlgorithm,
+  maze,
+  setMaze,
+  speed,
+  setSpeed,
+}) => {
   const handleAlgorithmSubmit = async (event) => {
     event.preventDefault();
     if (!isAnimating) {
       setIsAnimating(true);
-      const promise = await Animations.animate(
-        algorithm,
-        grid,
-        setGrid,
-        speed,
-        true
-      );
+      const promise = await Animations.animate(algorithm, grid, setGrid, speed);
       setIsAnimating(promise.isAnimating);
       setIsAnimatingFinished(promise.isAnimatingFinished);
     }
@@ -43,11 +35,9 @@ const TopBar = (props) => {
     if (!isAnimating) {
       setIsAnimating(true);
       const promise = await Maze.generateMaze(maze, grid, setGrid, resetGrid);
+      setStartIsCovering(Grid.DEFAULT_SQ);
+      setEndIsCovering(Grid.DEFAULT_SQ);
       setIsAnimating(promise.finished);
-      const start = promise.grid.findIndex((sq) => sq === Grid.START_SQ);
-      const end = promise.grid.findIndex((sq) => sq === Grid.END_SQ);
-      setStartSq(start);
-      setEndSq(end);
       setIsAnimatingFinished(false);
     }
   };

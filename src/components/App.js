@@ -16,12 +16,10 @@ function App() {
   const [startIsCovering, setStartIsCovering] = useState(Grid.DEFAULT_SQ);
   const [endIsCovering, setEndIsCovering] = useState(Grid.DEFAULT_SQ);
   const [algorithm, setAlgorithm] = useState(null);
-  const [maze, setMaze] = useState(null);
   const [speed, setSpeed] = useState('fast');
+  const [maze, setMaze] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isAnimatingFinished, setIsAnimatingFinished] = useState(false);
-  const [startSq, setStartSq] = useState(Grid.INITIAL_START);
-  const [endSq, setEndSq] = useState(Grid.INITIAL_END);
 
   const legends = [
     {
@@ -48,13 +46,10 @@ function App() {
   ];
 
   const resetGrid = () => {
-    console.log('resetting grid');
     setGrid(initialGrid);
     setIsAnimatingFinished(false);
     setStartIsCovering(Grid.DEFAULT_SQ);
     setEndIsCovering(Grid.DEFAULT_SQ);
-    setStartSq(Grid.INITIAL_START);
-    setEndSq(Grid.INITIAL_END);
     setAlgorithm(null);
     setMaze(null);
     setSpeed('fast');
@@ -66,17 +61,17 @@ function App() {
         grid={grid}
         setGrid={setGrid}
         resetGrid={resetGrid}
+        setStartIsCovering={setStartIsCovering}
+        setEndIsCovering={setEndIsCovering}
+        isAnimating={isAnimating}
         setIsAnimating={setIsAnimating}
         setIsAnimatingFinished={setIsAnimatingFinished}
         algorithm={algorithm}
         setAlgorithm={setAlgorithm}
-        maze={maze}
-        setMaze={setMaze}
         speed={speed}
         setSpeed={setSpeed}
-        isAnimating={isAnimating}
-        setStartSq={setStartSq}
-        setEndSq={setEndSq}
+        maze={maze}
+        setMaze={setMaze}
       />
       <div className='legendsContainer'>
         {legends.map((legend) => (
@@ -86,18 +81,14 @@ function App() {
       <Grid.Grid
         grid={grid}
         setGrid={setGrid}
+        resetGrid={resetGrid}
         startIsCovering={startIsCovering}
         setStartIsCovering={setStartIsCovering}
         endIsCovering={endIsCovering}
         setEndIsCovering={setEndIsCovering}
-        resetGrid={resetGrid}
         isAnimating={isAnimating}
         isAnimatingFinished={isAnimatingFinished}
         algorithm={algorithm}
-        startSq={startSq}
-        endSq={endSq}
-        setStartSq={setStartSq}
-        setEndSq={setEndSq}
       />
     </div>
   );
