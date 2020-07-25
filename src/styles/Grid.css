@@ -1,10 +1,7 @@
 .grid {
-  margin: 0px auto 10px auto;
+  margin: 0px auto 20px auto;
   padding: 0px;
   display: grid;
-  max-width: 98vw;
-  grid-template-columns: repeat(67, minmax(0, 25px));
-  grid-template-rows: repeat(33, 25px);
   border: 1px solid #ddd;
 }
 

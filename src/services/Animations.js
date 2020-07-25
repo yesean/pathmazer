@@ -1,20 +1,20 @@
-import Grid from './../components/Grid';
+import GridConstants from './../services/GridConstants.js';
 import Algorithms from './Algorithms';
 
 const clearAnimate = (grid, setGrid) => {
   const nextGrid = grid.map((sq) => {
-    if (sq === Grid.START_SQ || sq === Grid.END_SQ || sq === Grid.WALL_SQ) {
+    if (sq === GridConstants.START_SQ || sq === GridConstants.END_SQ || sq === GridConstants.WALL_SQ) {
       return sq;
     } else if (
-      sq === Grid.WEIGHT_SQ ||
-      sq === Grid.VISITED_WEIGHT_SQ ||
-      sq === Grid.VISITED_FINISHED_WEIGHT_SQ ||
-      sq === Grid.PATH_WEIGHT_SQ ||
-      sq === Grid.PATH_FINISHED_WEIGHT_SQ
+      sq === GridConstants.WEIGHT_SQ ||
+      sq === GridConstants.VISITED_WEIGHT_SQ ||
+      sq === GridConstants.VISITED_FINISHED_WEIGHT_SQ ||
+      sq === GridConstants.PATH_WEIGHT_SQ ||
+      sq === GridConstants.PATH_FINISHED_WEIGHT_SQ
     ) {
-      return Grid.WEIGHT_SQ;
+      return GridConstants.WEIGHT_SQ;
     } else {
-      return Grid.DEFAULT_SQ;
+      return GridConstants.DEFAULT_SQ;
     }
   });
   setGrid(nextGrid);
@@ -32,10 +32,10 @@ const animate = async (algorithm, grid, setGrid, speed) => {
     case 'none':
       break;
     case 'slow':
-      visitedDelay = 50;
+      visitedDelay = 70;
       break;
     case 'medium':
-      visitedDelay = 35;
+      visitedDelay = 40;
       break;
     case 'fast':
       visitedDelay = 25;
@@ -64,8 +64,8 @@ const animate = async (algorithm, grid, setGrid, speed) => {
     default:
   }
 
-  const start = grid.findIndex((sq) => sq === Grid.START_SQ);
-  const end = grid.findIndex((sq) => sq === Grid.END_SQ);
+  const start = grid.findIndex((sq) => sq === GridConstants.START_SQ);
+  const end = grid.findIndex((sq) => sq === GridConstants.END_SQ);
   visited = visited.filter((square) => square !== start && square !== end);
   path = path.filter((square) => square !== start && square !== end);
 
@@ -84,16 +84,16 @@ const animate = async (algorithm, grid, setGrid, speed) => {
         );
       }
       const squareType =
-        grid[square] === Grid.WEIGHT_SQ
-          ? Grid.VISITED_WEIGHT_SQ
-          : Grid.VISITED_SQ;
-      grid = changeSquare(grid, setGrid, square, Grid.VISITED_HEAD_SQ, tick);
+        grid[square] === GridConstants.WEIGHT_SQ
+          ? GridConstants.VISITED_WEIGHT_SQ
+          : GridConstants.VISITED_SQ;
+      grid = changeSquare(grid, setGrid, square, GridConstants.VISITED_HEAD_SQ, tick);
       prevSquare = { ind: square, squareType: squareType };
     } else {
       const squareType =
-        grid[square] === Grid.WEIGHT_SQ
-          ? Grid.VISITED_FINISHED_WEIGHT_SQ
-          : Grid.VISITED_FINISHED_SQ;
+        grid[square] === GridConstants.WEIGHT_SQ
+          ? GridConstants.VISITED_FINISHED_WEIGHT_SQ
+          : GridConstants.VISITED_FINISHED_SQ;
       grid = changeSquare(grid, setGrid, square, squareType);
     }
   }
@@ -121,10 +121,10 @@ const animate = async (algorithm, grid, setGrid, speed) => {
         );
       }
       const squareType =
-        grid[square] === Grid.VISITED_WEIGHT_SQ
-          ? Grid.PATH_WEIGHT_SQ
-          : Grid.PATH_SQ;
-      grid = changeSquare(grid, setGrid, square, Grid.PATH_HEAD_SQ, tick);
+        grid[square] === GridConstants.VISITED_WEIGHT_SQ
+          ? GridConstants.PATH_WEIGHT_SQ
+          : GridConstants.PATH_SQ;
+      grid = changeSquare(grid, setGrid, square, GridConstants.PATH_HEAD_SQ, tick);
       prevSquare = { ind: square, squareType: squareType };
     } else {
       if (prevSquare) {
@@ -136,10 +136,10 @@ const animate = async (algorithm, grid, setGrid, speed) => {
         );
       }
       const squareType =
-        grid[square] === Grid.VISITED_FINISHED_WEIGHT_SQ
-          ? Grid.PATH_FINISHED_WEIGHT_SQ
-          : Grid.PATH_FINISHED_SQ;
-      grid = changeSquare(grid, setGrid, square, Grid.PATH_HEAD_SQ);
+        grid[square] === GridConstants.VISITED_FINISHED_WEIGHT_SQ
+          ? GridConstants.PATH_FINISHED_WEIGHT_SQ
+          : GridConstants.PATH_FINISHED_SQ;
+      grid = changeSquare(grid, setGrid, square, GridConstants.PATH_HEAD_SQ);
       prevSquare = { ind: square, squareType: squareType };
     }
   }

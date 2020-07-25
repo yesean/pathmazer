@@ -3,7 +3,7 @@ import Select from './Select';
 import './../styles/TopBar.css';
 import Animations from './../services/Animations.js';
 import Maze from './../services/Maze.js';
-import Grid from './Grid';
+import GridConstants from './../services/GridConstants.js';
 
 const TopBar = ({
   grid,
@@ -35,8 +35,9 @@ const TopBar = ({
     if (!isAnimating) {
       setIsAnimating(true);
       const promise = await Maze.generateMaze(maze, grid, setGrid, resetGrid);
-      setStartIsCovering(Grid.DEFAULT_SQ);
-      setEndIsCovering(Grid.DEFAULT_SQ);
+      setMaze(null);
+      setStartIsCovering(GridConstants.DEFAULT_SQ);
+      setEndIsCovering(GridConstants.DEFAULT_SQ);
       setIsAnimating(promise.finished);
       setIsAnimatingFinished(false);
     }
@@ -139,6 +140,5 @@ const TopBar = ({
     </div>
   );
 };
-
 
 export default TopBar;

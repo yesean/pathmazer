@@ -1,12 +1,12 @@
-import Grid from './../components/Grid';
+import GridConstants from './../services/GridConstants.js';
 
 const dijkstra = (grid) => {
-  const start = grid.findIndex((sq) => sq === Grid.START_SQ);
-  const end = grid.findIndex((sq) => sq === Grid.END_SQ);
+  const start = grid.findIndex((sq) => sq === GridConstants.START_SQ);
+  const end = grid.findIndex((sq) => sq === GridConstants.END_SQ);
 
   const prev = {};
   const visited = [];
-  const weights = new Array(Grid.SIZE).fill(Number.MAX_SAFE_INTEGER);
+  const weights = new Array(GridConstants.SIZE).fill(Number.MAX_SAFE_INTEGER);
   weights[start] = 1;
 
   const pq = [start];
@@ -16,15 +16,15 @@ const dijkstra = (grid) => {
     if (currSquare === end) {
       break;
     }
-    const moves = [-1, 1, -Grid.WIDTH, Grid.WIDTH];
+    const moves = [-1, 1, -GridConstants.WIDTH, GridConstants.WIDTH];
     for (const nextSquare of moves
       .map((move) => currSquare + move)
-      .filter((nextSquare) => Grid.validMove(currSquare, nextSquare))) {
+      .filter((nextSquare) => GridConstants.validMove(currSquare, nextSquare))) {
       // ignore mountains and decentivize weights
       let moveWeight = weights[currSquare];
-      if (grid[nextSquare] === Grid.WALL_SQ) {
+      if (grid[nextSquare] === GridConstants.WALL_SQ) {
         continue;
-      } else if (grid[nextSquare] === Grid.WEIGHT_SQ) {
+      } else if (grid[nextSquare] === GridConstants.WEIGHT_SQ) {
         moveWeight += 10;
       } else {
         moveWeight += 1;
@@ -67,18 +67,18 @@ const dijkstra = (grid) => {
 };
 
 const astar = (grid) => {
-  const start = grid.findIndex((sq) => sq === Grid.START_SQ);
-  const end = grid.findIndex((sq) => sq === Grid.END_SQ);
+  const start = grid.findIndex((sq) => sq === GridConstants.START_SQ);
+  const end = grid.findIndex((sq) => sq === GridConstants.END_SQ);
 
   const prev = {};
   const visited = [];
-  const weights = new Array(Grid.SIZE).fill(Number.MAX_SAFE_INTEGER);
+  const weights = new Array(GridConstants.SIZE).fill(Number.MAX_SAFE_INTEGER);
   weights[start] = 1;
 
   const heuristic = (start, end) => {
     return (
-      Math.abs(Math.floor(start / Grid.WIDTH) - Math.floor(end / Grid.WIDTH)) +
-      Math.abs((start % Grid.WIDTH) - (end % Grid.WIDTH))
+      Math.abs(Math.floor(start / GridConstants.WIDTH) - Math.floor(end / GridConstants.WIDTH)) +
+      Math.abs((start % GridConstants.WIDTH) - (end % GridConstants.WIDTH))
     );
   };
 
@@ -89,15 +89,15 @@ const astar = (grid) => {
     if (currSquare === end) {
       break;
     }
-    const moves = [-1, 1, -Grid.WIDTH, Grid.WIDTH];
+    const moves = [-1, 1, -GridConstants.WIDTH, GridConstants.WIDTH];
     for (const nextSquare of moves
       .map((move) => currSquare + move)
-      .filter((nextSquare) => Grid.validMove(currSquare, nextSquare))) {
+      .filter((nextSquare) => GridConstants.validMove(currSquare, nextSquare))) {
       // ignore mountains and decentivize weights
       let moveWeight = weights[currSquare];
-      if (grid[nextSquare] === Grid.WALL_SQ) {
+      if (grid[nextSquare] === GridConstants.WALL_SQ) {
         continue;
-      } else if (grid[nextSquare] === Grid.WEIGHT_SQ) {
+      } else if (grid[nextSquare] === GridConstants.WEIGHT_SQ) {
         moveWeight += 10;
       } else {
         moveWeight += 1;
@@ -144,8 +144,8 @@ const astar = (grid) => {
 };
 
 const greedy = (grid) => {
-  const start = grid.findIndex((sq) => sq === Grid.START_SQ);
-  const end = grid.findIndex((sq) => sq === Grid.END_SQ);
+  const start = grid.findIndex((sq) => sq === GridConstants.START_SQ);
+  const end = grid.findIndex((sq) => sq === GridConstants.END_SQ);
 
   const prev = {};
   const visited = [];
@@ -158,15 +158,15 @@ const greedy = (grid) => {
     if (currSquare === end) {
       break;
     }
-    const moves = [-1, 1, -Grid.WIDTH, Grid.WIDTH];
+    const moves = [-1, 1, -GridConstants.WIDTH, GridConstants.WIDTH];
     for (const nextSquare of moves
       .map((move) => currSquare + move)
-      .filter((nextSquare) => Grid.validMove(currSquare, nextSquare))) {
+      .filter((nextSquare) => GridConstants.validMove(currSquare, nextSquare))) {
       // ignore mountains and decentivize weights
-      let moveWeight = Grid.dist(nextSquare, end);
-      if (grid[nextSquare] === Grid.WALL_SQ) {
+      let moveWeight = GridConstants.dist(nextSquare, end);
+      if (grid[nextSquare] === GridConstants.WALL_SQ) {
         continue;
-      } else if (grid[nextSquare] === Grid.WEIGHT_SQ) {
+      } else if (grid[nextSquare] === GridConstants.WEIGHT_SQ) {
         moveWeight += 10;
       }
 
@@ -194,7 +194,7 @@ const greedy = (grid) => {
   let currSquare = end;
   let count = 0;
   while (currSquare) {
-    if (count++ > Grid.SIZE) {
+    if (count++ > GridConstants.SIZE) {
       break;
     }
     path.unshift(currSquare);
@@ -204,8 +204,8 @@ const greedy = (grid) => {
 };
 
 const dfs = (grid) => {
-  const start = grid.findIndex((sq) => sq === Grid.START_SQ);
-  const end = grid.findIndex((sq) => sq === Grid.END_SQ);
+  const start = grid.findIndex((sq) => sq === GridConstants.START_SQ);
+  const end = grid.findIndex((sq) => sq === GridConstants.END_SQ);
 
   const prev = {};
   const visited = [];
@@ -218,12 +218,12 @@ const dfs = (grid) => {
     if (currSquare === end) {
       break;
     }
-    const moves = [-1, 1, -Grid.WIDTH, Grid.WIDTH];
+    const moves = [-1, 1, -GridConstants.WIDTH, GridConstants.WIDTH];
     for (const nextSquare of moves
       .map((move) => currSquare + move)
-      .filter((nextSquare) => Grid.validMove(currSquare, nextSquare))) {
+      .filter((nextSquare) => GridConstants.validMove(currSquare, nextSquare))) {
       // ignore mountains
-      if (grid[nextSquare] === Grid.WALL_SQ) {
+      if (grid[nextSquare] === GridConstants.WALL_SQ) {
         continue;
       }
 
@@ -240,7 +240,7 @@ const dfs = (grid) => {
   let currSquare = end;
   let count = 0;
   while (currSquare) {
-    if (count++ > Grid.SIZE) {
+    if (count++ > GridConstants.SIZE) {
       break;
     }
     path.unshift(currSquare);
@@ -250,8 +250,8 @@ const dfs = (grid) => {
 };
 
 const bfs = (grid) => {
-  const start = grid.findIndex((sq) => sq === Grid.START_SQ);
-  const end = grid.findIndex((sq) => sq === Grid.END_SQ);
+  const start = grid.findIndex((sq) => sq === GridConstants.START_SQ);
+  const end = grid.findIndex((sq) => sq === GridConstants.END_SQ);
 
   const prev = {};
   const visited = [];
@@ -264,12 +264,12 @@ const bfs = (grid) => {
     if (currSquare === end) {
       break;
     }
-    const moves = [-1, 1, -Grid.WIDTH, Grid.WIDTH];
+    const moves = [-1, 1, -GridConstants.WIDTH, GridConstants.WIDTH];
     for (const nextSquare of moves
       .map((move) => currSquare + move)
-      .filter((nextSquare) => Grid.validMove(currSquare, nextSquare))) {
+      .filter((nextSquare) => GridConstants.validMove(currSquare, nextSquare))) {
       // ignore mountains
-      if (grid[nextSquare] === Grid.WALL_SQ) {
+      if (grid[nextSquare] === GridConstants.WALL_SQ) {
         continue;
       }
 
@@ -286,7 +286,7 @@ const bfs = (grid) => {
   let currSquare = end;
   let count = 0;
   while (currSquare) {
-    if (count++ > Grid.SIZE) {
+    if (count++ > GridConstants.SIZE) {
       break;
     }
     path.unshift(currSquare);

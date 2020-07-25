@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import './../styles/App.css';
+import React, { useState, useEffect } from 'react';
 import Grid from './Grid.js';
 import TopBar from './TopBar.js';
 import Legend from './Legend.js';
+import GridConstants from './../services/GridConstants.js';
+import './../styles/App.css';
+
 import weight from './../images/weight.svg';
 import start from './../images/start.svg';
 import end from './../images/end.svg';
 
 function App() {
-  const initialGrid = new Array(Grid.SIZE).fill(Grid.DEFAULT_SQ);
-  initialGrid[Grid.INITIAL_START] = Grid.START_SQ;
-  initialGrid[Grid.INITIAL_END] = Grid.END_SQ;
-
-  const [grid, setGrid] = useState(initialGrid);
-  const [startIsCovering, setStartIsCovering] = useState(Grid.DEFAULT_SQ);
-  const [endIsCovering, setEndIsCovering] = useState(Grid.DEFAULT_SQ);
+  const [grid, setGrid] = useState(GridConstants.INITIAL_GRID);
+  const [startIsCovering, setStartIsCovering] = useState(
+    GridConstants.DEFAULT_SQ
+  );
+  const [endIsCovering, setEndIsCovering] = useState(GridConstants.DEFAULT_SQ);
   const [algorithm, setAlgorithm] = useState(null);
   const [speed, setSpeed] = useState('fast');
   const [maze, setMaze] = useState(null);
@@ -22,14 +22,28 @@ function App() {
   const [isAnimatingFinished, setIsAnimatingFinished] = useState(false);
 
   const resetGrid = () => {
-    setGrid(initialGrid);
+    setGrid(GridConstants.INITIAL_GRID);
     setIsAnimatingFinished(false);
-    setStartIsCovering(Grid.DEFAULT_SQ);
-    setEndIsCovering(Grid.DEFAULT_SQ);
+    setStartIsCovering(GridConstants.DEFAULT_SQ);
+    setEndIsCovering(GridConstants.DEFAULT_SQ);
     setAlgorithm(null);
     setMaze(null);
     setSpeed('fast');
   };
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (!isAnimating) {
+        GridConstants.update(
+          Math.floor((window.innerWidth - 25) / 25),
+          Math.floor((window.innerHeight - 150) / 25)
+        );
+        resetGrid();
+      }
+    };
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, [isAnimating]);
 
   const legends = [
     {
@@ -55,6 +69,11 @@ function App() {
     },
   ];
 
+  const gridStyle = {
+    gridTemplateColumns: `repeat(${GridConstants.WIDTH}, 25px)`,
+    gridTemplateRows: `repeat(${GridConstants.HEIGHT}, 25px)`,
+  };
+
   return (
     <div className='page'>
       <TopBar
@@ -78,8 +97,9 @@ function App() {
           <Legend key={legend.name} name={legend.name} img={legend.img} />
         ))}
       </div>
-      <Grid.Grid
+      <Grid
         grid={grid}
+        gridStyle={gridStyle}
         setGrid={setGrid}
         resetGrid={resetGrid}
         startIsCovering={startIsCovering}
