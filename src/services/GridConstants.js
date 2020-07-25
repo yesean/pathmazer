@@ -91,7 +91,7 @@ const update = (width, height) => {
 };
 
 update(
-  Math.floor((window.innerWidth - 25) / 25),
+  Math.floor((window.innerWidth - 50) / 25),
   Math.floor((window.innerHeight - 150) / 25)
 );
 

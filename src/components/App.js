@@ -22,6 +22,28 @@ function App() {
   const [isAnimatingFinished, setIsAnimatingFinished] = useState(false);
 
   const resetGrid = () => {
+    const updateDimensions = () => {
+      if (!isAnimating) {
+        const topBarHeight = document.getElementsByClassName('topBar')[0]
+          .offsetHeight;
+        const legendsHeight = document.getElementsByClassName(
+          'legendsContainer'
+        )[0].offsetHeight;
+        const gridVerticalMargin = 20;
+        const gridHorizontalMargin = 30;
+        GridConstants.update(
+          Math.floor((window.innerWidth - gridHorizontalMargin) / 25),
+          Math.floor(
+            (window.innerHeight -
+              topBarHeight -
+              legendsHeight -
+              gridVerticalMargin) /
+              25
+          )
+        );
+      }
+    };
+    updateDimensions();
     setGrid(GridConstants.INITIAL_GRID);
     setIsAnimatingFinished(false);
     setStartIsCovering(GridConstants.DEFAULT_SQ);
@@ -38,11 +60,16 @@ function App() {
       const legendsHeight = document.getElementsByClassName(
         'legendsContainer'
       )[0].offsetHeight;
-      const gridMargin = 20;
+      const gridVerticalMargin = 20;
+      const gridHorizontalMargin = 30;
       GridConstants.update(
-        Math.floor((window.innerWidth - 25) / 25),
+        Math.floor((window.innerWidth - gridHorizontalMargin) / 25),
         Math.floor(
-          (window.innerHeight - topBarHeight - legendsHeight - gridMargin) / 25
+          (window.innerHeight -
+            topBarHeight -
+            legendsHeight -
+            gridVerticalMargin) /
+            25
         )
       );
       resetGrid();
@@ -58,11 +85,15 @@ function App() {
         const legendsHeight = document.getElementsByClassName(
           'legendsContainer'
         )[0].offsetHeight;
-        const gridMargin = 20;
+        const gridVerticalMargin = 20;
+        const gridHorizontalMargin = 30;
         GridConstants.update(
-          Math.floor((window.innerWidth - 25) / 25),
+          Math.floor((window.innerWidth - gridHorizontalMargin) / 25),
           Math.floor(
-            (window.innerHeight - topBarHeight - legendsHeight - gridMargin) /
+            (window.innerHeight -
+              topBarHeight -
+              legendsHeight -
+              gridVerticalMargin) /
               25
           )
         );
