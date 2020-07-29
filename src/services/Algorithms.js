@@ -61,7 +61,7 @@ const dijkstra = (grid) => {
   // retrace path
   const path = [];
   let currSquare = end;
-  while (currSquare) {
+  while (currSquare || currSquare === 0) {
     path.unshift(currSquare);
     currSquare = prev[currSquare];
   }
@@ -141,7 +141,7 @@ const astar = (grid) => {
   // retrace path
   let path = [];
   let currSquare = end;
-  while (currSquare) {
+  while (currSquare || currSquare === 0) {
     path.unshift(currSquare);
     currSquare = prev[currSquare];
   }
@@ -201,7 +201,7 @@ const greedy = (grid) => {
   const path = [];
   let currSquare = end;
   let count = 0;
-  while (currSquare) {
+  while (currSquare || currSquare === 0) {
     if (count++ > GridConstants.SIZE) {
       break;
     }
@@ -248,7 +248,7 @@ const dfs = (grid) => {
   const path = [];
   let currSquare = end;
   let count = 0;
-  while (currSquare) {
+  while (currSquare || currSquare === 0) {
     if (count++ > GridConstants.SIZE) {
       break;
     }
@@ -295,7 +295,7 @@ const bfs = (grid) => {
   const path = [];
   let currSquare = end;
   let count = 0;
-  while (currSquare) {
+  while (currSquare || currSquare === 0) {
     if (count++ > GridConstants.SIZE) {
       break;
     }
