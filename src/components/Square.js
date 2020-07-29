@@ -2,11 +2,12 @@ import React from 'react';
 import GridConstants from './../services/GridConstants.js';
 import './../styles/Square.css';
 
-import weight from './../images/weight.svg';
-import start from './../images/start.svg';
-import end from './../images/end.svg';
+import weight from './../images/weight.png';
+import start from './../images/start.png';
+import end from './../images/end.png';
 
 const Square = (props) => {
+  console.log('rendering');
   return (
     <div
       id={props.id}
@@ -40,4 +41,11 @@ const Square = (props) => {
   );
 };
 
-export default React.memo(Square);
+const areEqual = (prev, next) => {
+  if (prev.className !== next.className)
+    console.log(prev.className, next.className);
+  return prev.className === next.className;
+};
+
+export default React.memo(Square, areEqual);
+// export default React.memo(Square);

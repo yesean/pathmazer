@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Grid from './Grid.js';
 import TopBar from './TopBar.js';
 import Legend from './Legend.js';
@@ -20,10 +20,10 @@ function App() {
   const [maze, setMaze] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isAnimatingFinished, setIsAnimatingFinished] = useState(false);
-
-  const resetGrid = () => {
+  const isAnimatingRef = useRef(isAnimating);
+  const resetGrid = useCallback(() => {
     const updateDimensions = () => {
-      if (!isAnimating) {
+      if (!isAnimatingRef.current) {
         const topBarHeight = document.getElementsByClassName('topBar')[0]
           .offsetHeight;
         const legendsHeight = document.getElementsByClassName(
@@ -31,16 +31,15 @@ function App() {
         )[0].offsetHeight;
         const gridVerticalMargin = 20;
         const gridHorizontalMargin = 30;
-        GridConstants.update(
-          Math.floor((window.innerWidth - gridHorizontalMargin) / 25),
-          Math.floor(
-            (window.innerHeight -
-              topBarHeight -
-              legendsHeight -
-              gridVerticalMargin) /
-              25
-          )
+        let width = Math.floor((window.innerWidth - gridHorizontalMargin) / 25);
+        let height = Math.floor(
+          (window.innerHeight -
+            topBarHeight -
+            legendsHeight -
+            gridVerticalMargin) /
+            25
         );
+        GridConstants.update(width, height);
       }
     };
     updateDimensions();
@@ -51,7 +50,7 @@ function App() {
     setAlgorithm(null);
     setMaze(null);
     setSpeed('fast');
-  };
+  }, []);
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -62,20 +61,19 @@ function App() {
       )[0].offsetHeight;
       const gridVerticalMargin = 20;
       const gridHorizontalMargin = 30;
-      GridConstants.update(
-        Math.floor((window.innerWidth - gridHorizontalMargin) / 25),
-        Math.floor(
-          (window.innerHeight -
-            topBarHeight -
-            legendsHeight -
-            gridVerticalMargin) /
-            25
-        )
+      let width = Math.floor((window.innerWidth - gridHorizontalMargin) / 25);
+      let height = Math.floor(
+        (window.innerHeight -
+          topBarHeight -
+          legendsHeight -
+          gridVerticalMargin) /
+          25
       );
+      GridConstants.update(width, height);
       resetGrid();
     };
     updateDimensions();
-  }, []);
+  }, [resetGrid]);
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -87,22 +85,21 @@ function App() {
         )[0].offsetHeight;
         const gridVerticalMargin = 20;
         const gridHorizontalMargin = 30;
-        GridConstants.update(
-          Math.floor((window.innerWidth - gridHorizontalMargin) / 25),
-          Math.floor(
-            (window.innerHeight -
-              topBarHeight -
-              legendsHeight -
-              gridVerticalMargin) /
-              25
-          )
+        let width = Math.floor((window.innerWidth - gridHorizontalMargin) / 25);
+        let height = Math.floor(
+          (window.innerHeight -
+            topBarHeight -
+            legendsHeight -
+            gridVerticalMargin) /
+            25
         );
+        GridConstants.update(width, height);
         resetGrid();
       }
     };
     window.addEventListener('resize', updateDimensions);
     return () => window.removeEventListener('resize', updateDimensions);
-  }, [isAnimating]);
+  }, [isAnimating, resetGrid]);
 
   const legends = [
     {
