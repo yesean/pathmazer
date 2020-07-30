@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Grid from './Grid.js';
 import TopBar from './TopBar.js';
 import Legend from './Legend.js';
+import Tutorial from './Tutorial.js';
 import GridConstants from './../services/GridConstants.js';
 import './../styles/App.css';
 
@@ -153,6 +154,7 @@ function App() {
           <Legend key={legend.name} name={legend.name} img={legend.img} />
         ))}
       </div>
+      <Tutorial />
       <Grid
         grid={grid}
         gridStyle={gridStyle}

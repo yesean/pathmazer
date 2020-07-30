@@ -19,7 +19,6 @@
   user-select: none;
   box-sizing: border-box;
   display: flex;
-  display: inline-flex;
   justify-content: center;
   align-items: center;
 }
@@ -86,20 +85,14 @@
 }
 
 @keyframes weight {
-  0% {
-    margin: auto;
-  }
   50% {
     transform: scale(1.2);
-    margin: auto;
   }
   99% {
     border: none;
-    margin: auto;
   }
   100% {
     border: 0.1px solid #ddd;
-    margin: auto;
   }
 }
 
@@ -108,7 +101,7 @@
   animation-duration: 0.3s;
   animation-fill-mode: forwards;
   animation-timing-function: ease-out;
-  will-change: transform, border, margin;
+  will-change: transform, border;
 }
 
 @keyframes visited {
@@ -123,23 +116,19 @@
     transform: scale(0.3);
     border: none;
     border-radius: 50%;
-    margin: auto;
   }
   25% {
     background-color: rgb(94, 96, 206);
-    margin: auto;
   }
   50% {
     background-color: rgb(72, 191, 227);
     border-radius: 50%;
-    margin: auto;
   }
   75% {
     transform: scale(1.2);
     background-color: rgb(128, 255, 219);
     border: none;
     border-radius: 0%;
-    margin: auto;
   }
   75.1% {
     border: 1px solid rgb(173, 232, 244);
@@ -148,7 +137,6 @@
     transform: scale(1);
     background-color: rgb(86, 207, 225);
     border: 1px solid rgb(173, 232, 244);
-    margin: auto;
   }
 }
 
@@ -158,7 +146,7 @@
   animation-duration: 1.5s;
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
-  will-change: transform, border, border-radius, margin, background-color;
+  will-change: transform, border, border-radius, background-color;
 }
 
 .visitedFinishedSquare,
@@ -177,13 +165,11 @@
     transform: scale(0.65);
     background-color: rgb(255, 255, 63);
     border-radius: 30%;
-    margin: auto;
   }
   100% {
     transform: scale(1);
     background-color: rgb(255, 255, 63);
     border-radius: 0%;
-    margin: auto;
   }
 }
 
@@ -193,16 +179,14 @@
   animation-duration: 0.3s;
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
-  will-change: transform, border-radius, margin, background-color;
+  will-change: transform, border-radius, background-color;
 }
 
 .pathHeadSquare {
-  /* background-color: rgb(6, 214, 160); */
   background-color: rgb(255, 255, 63);
 }
 
 .pathFinishedSquare,
 .pathFinishedWeightSquare {
   background-color: rgb(255, 255, 63);
-  margin: auto;
 }

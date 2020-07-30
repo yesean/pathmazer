@@ -7,7 +7,6 @@ import start from './../images/start.png';
 import end from './../images/end.png';
 
 const Square = (props) => {
-  console.log('rendering');
   return (
     <div
       id={props.id}
@@ -42,10 +41,7 @@ const Square = (props) => {
 };
 
 const areEqual = (prev, next) => {
-  if (prev.className !== next.className)
-    console.log(prev.className, next.className);
   return prev.className === next.className;
 };
 
 export default React.memo(Square, areEqual);
-// export default React.memo(Square);
