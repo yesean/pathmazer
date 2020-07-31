@@ -16,106 +16,106 @@ const Grid = ({
   isAnimatingFinished,
   algorithm,
 }) => {
-  const [isMouseDown, setIsMouseDown] = useState(false);
+  const [mouseIsDownOn, setMouseIsDownOn] = useState(null);
   const [isHoldingStart, setIsHoldingStart] = useState(false);
   const [isHoldingEnd, setIsHoldingEnd] = useState(false);
   const [isWDown, setIsWDown] = useState(false);
   const [mouseIsOver, setMouseIsOver] = useState(null);
 
   useEffect(() => {
-    const updateGridOnMouseDown = (sq) => {
-      if (!isAnimating && isMouseDown) {
-        const nextGrid = [...grid];
-        if (grid[sq] === GridConstants.START_SQ) {
-          setIsHoldingStart(true);
-        } else if (grid[sq] === GridConstants.END_SQ) {
-          setIsHoldingEnd(true);
-        } else if (grid[sq] === GridConstants.WEIGHT_SQ) {
-          if (isWDown) {
-            nextGrid[sq] = GridConstants.DEFAULT_SQ;
-          } else {
-            nextGrid[sq] = GridConstants.WALL_SQ;
-          }
-        } else if (grid[sq] === GridConstants.WALL_SQ) {
-          if (isWDown) {
-            nextGrid[sq] = GridConstants.WEIGHT_SQ;
-          } else {
-            nextGrid[sq] = GridConstants.DEFAULT_SQ;
-          }
-        } else {
-          if (isWDown) {
-            nextGrid[sq] = GridConstants.WEIGHT_SQ;
-          } else {
-            nextGrid[sq] = GridConstants.WALL_SQ;
-          }
-        }
-        setGrid(nextGrid);
-      }
-    };
-    updateGridOnMouseDown(mouseIsOver);
-  }, [isMouseDown, isAnimating]);
-
-  useEffect(() => {
     const updateGridOnMouseEnter = (sq) => {
-      const startSq = grid.findIndex((s) => s === GridConstants.START_SQ);
-      const endSq = grid.findIndex((s) => s === GridConstants.END_SQ);
-      if (!isAnimating && isMouseDown && (sq !== startSq) & (sq !== endSq)) {
-        const nextGrid = [...grid];
-        if (isHoldingStart) {
-          nextGrid[startSq] = startIsCovering;
-          nextGrid[sq] = GridConstants.START_SQ;
-          setStartIsCovering(grid[sq]);
-          if (isAnimatingFinished) {
-            Animations.animate(algorithm, nextGrid, setGrid, 'none');
-            return;
-          }
-        } else if (isHoldingEnd) {
-          nextGrid[endSq] = endIsCovering;
-          nextGrid[sq] = GridConstants.END_SQ;
-          setEndIsCovering(grid[sq]);
-          if (isAnimatingFinished) {
-            Animations.animate(algorithm, nextGrid, setGrid, 'none');
-            return;
-          }
-        } else {
-          if (grid[sq] === GridConstants.WEIGHT_SQ) {
-            if (isWDown) {
-              nextGrid[sq] = GridConstants.DEFAULT_SQ;
+      console.log(startIsCovering);
+      if (!isAnimating && mouseIsDownOn !== null) {
+        setGrid((oldGrid) => {
+          const nextGrid = [...oldGrid];
+          const startSq = oldGrid.findIndex(
+            (s) => s === GridConstants.START_SQ
+          );
+          const endSq = oldGrid.findIndex((s) => s === GridConstants.END_SQ);
+          if (sq !== startSq && sq !== endSq) {
+            if (isHoldingStart) {
+              nextGrid[startSq] = startIsCovering;
+              nextGrid[sq] = GridConstants.START_SQ;
+              if (oldGrid[sq] !== GridConstants.START_SQ) {
+                setStartIsCovering(oldGrid[sq]);
+              }
+              if (isAnimatingFinished) {
+                Animations.animate(algorithm, nextGrid, setGrid, 'none');
+                return;
+              }
+            } else if (isHoldingEnd) {
+              nextGrid[endSq] = endIsCovering;
+              nextGrid[sq] = GridConstants.END_SQ;
+              if (oldGrid[sq] !== GridConstants.END_SQ) {
+                setEndIsCovering(oldGrid[sq]);
+              }
+              if (isAnimatingFinished) {
+                Animations.animate(algorithm, nextGrid, setGrid, 'none');
+                return;
+              }
+            } else if (oldGrid[sq] === GridConstants.WEIGHT_SQ) {
+              if (isWDown) {
+                nextGrid[sq] = GridConstants.DEFAULT_SQ;
+              } else {
+                nextGrid[sq] = GridConstants.WALL_SQ;
+              }
+            } else if (oldGrid[sq] === GridConstants.WALL_SQ) {
+              if (isWDown) {
+                document.getElementById(sq).className = GridConstants.WEIGHT_SQ;
+                nextGrid[sq] = GridConstants.WEIGHT_SQ;
+              } else {
+                nextGrid[sq] = GridConstants.DEFAULT_SQ;
+              }
             } else {
-              nextGrid[sq] = GridConstants.WALL_SQ;
-            }
-          } else if (grid[sq] === GridConstants.WALL_SQ) {
-            if (isWDown) {
-              nextGrid[sq] = GridConstants.WEIGHT_SQ;
-            } else {
-              nextGrid[sq] = GridConstants.DEFAULT_SQ;
-            }
-          } else {
-            if (isWDown) {
-              nextGrid[sq] = GridConstants.WEIGHT_SQ;
-            } else {
-              nextGrid[sq] = GridConstants.WALL_SQ;
+              if (isWDown) {
+                nextGrid[sq] = GridConstants.WEIGHT_SQ;
+              } else {
+                nextGrid[sq] = GridConstants.WALL_SQ;
+              }
             }
           }
-        }
-        setGrid(nextGrid);
+          return nextGrid;
+        });
       }
     };
     updateGridOnMouseEnter(mouseIsOver);
-  }, [mouseIsOver, isAnimating]);
+  }, [
+    mouseIsOver,
+    mouseIsDownOn,
+    isWDown,
+    isHoldingStart,
+    isHoldingEnd,
+    isAnimating,
+    isAnimatingFinished,
+    algorithm,
+    startIsCovering,
+    endIsCovering,
+    setGrid,
+    setMouseIsOver,
+    setStartIsCovering,
+    setEndIsCovering,
+  ]);
+
+  useEffect(() => {
+    if (grid[mouseIsDownOn] === GridConstants.START_SQ) {
+      setIsHoldingStart(true);
+    } else if (grid[mouseIsDownOn] === GridConstants.END_SQ) {
+      setIsHoldingEnd(true);
+    }
+  }, [mouseIsDownOn, grid, setIsHoldingStart, setIsHoldingEnd]);
 
   const onMouseEnter = useCallback((sq) => {
     setMouseIsOver(sq);
   }, []);
 
   const onMouseDown = useCallback((sq) => {
-    setIsMouseDown(true);
+    setMouseIsDownOn(sq);
   }, []);
 
   const onMouseUp = useCallback((sq) => {
     setIsHoldingStart(false);
     setIsHoldingEnd(false);
-    setIsMouseDown(false);
+    setMouseIsDownOn(null);
   }, []);
 
   const onKeyDown = useCallback((e) => {
