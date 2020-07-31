@@ -56,10 +56,18 @@
 
 .startSquare {
   background-color: rgb(6, 214, 160, 0.9);
+  background-image: url('./../images/start.svg');
+  background-size: 22px 22px;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .endSquare {
   background-color: rgb(255, 107, 107);
+  background-image: url('./../images/end.svg');
+  background-size: 22px 22px;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 @keyframes wall {
@@ -86,7 +94,7 @@
 
 @keyframes weight {
   0% {
-    background-image: url("./../images/weight.svg");
+    background-image: url('./../images/weight.svg');
     background-size: 22px 22px;
     background-repeat: no-repeat;
   }
@@ -97,7 +105,7 @@
     border: none;
   }
   100% {
-    background-image: url("./../images/weight.svg");
+    background-image: url('./../images/weight.svg');
     background-size: 22px 22px;
     background-repeat: no-repeat;
     border: 0.1px solid #ddd;
@@ -113,12 +121,6 @@
 }
 
 @keyframes visited {
-  /* 0% {
-    background-color: rgb(255, 255, 63);
-  }
-  0.9% {
-    background-color: rgb(255, 255, 63);
-  } */
   0% {
     background-color: rgb(116, 0, 184);
     transform: scale(0.3);
@@ -157,10 +159,56 @@
   will-change: transform, border, border-radius, background-color;
 }
 
+@keyframes visitedWeight {
+  0% {
+    background-image: url('./../images/weight.svg');
+    background-size: 22px 22px;
+    background-repeat: no-repeat;
+    background-color: rgb(116, 0, 184);
+    transform: scale(0.3);
+    border: none;
+    border-radius: 50%;
+  }
+  25% {
+    background-color: rgb(94, 96, 206);
+  }
+  50% {
+    background-color: rgb(72, 191, 227);
+    border-radius: 50%;
+  }
+  75% {
+    transform: scale(1.2);
+    background-color: rgb(128, 255, 219);
+    border: none;
+    border-radius: 0%;
+  }
+  75.1% {
+    border: 1px solid rgb(173, 232, 244);
+  }
+  100% {
+    background-image: url('./../images/weight.svg');
+    background-size: 22px 22px;
+    background-repeat: no-repeat;
+    transform: scale(1);
+    background-color: rgb(86, 207, 225);
+    border: 1px solid rgb(173, 232, 244);
+  }
+}
+
+.visitedWeightSquare {
+  animation-name: visitedWeight;
+}
+
 .visitedFinishedSquare,
 .visitedFinishedWeightSquare {
   background-color: rgb(86, 207, 225);
   border: 1px solid rgb(173, 232, 244);
+}
+
+.visitedFinishedWeightSquare {
+  background-image: url('./../images/weight.svg');
+  background-size: 22px 22px;
+  background-repeat: no-repeat;
 }
 
 .visitedHeadSquare {
@@ -190,6 +238,29 @@
   will-change: transform, border-radius, background-color;
 }
 
+@keyframes pathWeight {
+  0% {
+    background-image: url('./../images/weight.svg');
+    background-size: 22px 22px;
+    background-repeat: no-repeat;
+    transform: scale(0.65);
+    background-color: rgb(255, 255, 63);
+    border-radius: 30%;
+  }
+  100% {
+    background-image: url('./../images/weight.svg');
+    background-size: 22px 22px;
+    background-repeat: no-repeat;
+    transform: scale(1);
+    background-color: rgb(255, 255, 63);
+    border-radius: 0%;
+  }
+}
+
+.pathWeightSquare {
+  animation-name: pathWeight;
+}
+
 .pathHeadSquare {
   background-color: rgb(255, 255, 63);
   background-image: url('./../images/start.svg');
@@ -198,4 +269,10 @@
 .pathFinishedSquare,
 .pathFinishedWeightSquare {
   background-color: rgb(255, 255, 63);
+}
+
+.pathFinishedWeightSquare {
+  background-image: url('./../images/weight.svg');
+  background-size: 22px 22px;
+  background-repeat: no-repeat;
 }

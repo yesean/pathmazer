@@ -35,6 +35,7 @@ const Grid = ({
           if (sq !== startSq && sq !== endSq) {
             if (isHoldingStart) {
               nextGrid[startSq] = startIsCovering;
+              document.getElementById(sq).className = GridConstants.START_SQ;
               nextGrid[sq] = GridConstants.START_SQ;
               if (oldGrid[sq] !== GridConstants.START_SQ) {
                 setStartIsCovering(oldGrid[sq]);
@@ -45,6 +46,7 @@ const Grid = ({
               }
             } else if (isHoldingEnd) {
               nextGrid[endSq] = endIsCovering;
+              document.getElementById(sq).className = GridConstants.END_SQ;
               nextGrid[sq] = GridConstants.END_SQ;
               if (oldGrid[sq] !== GridConstants.END_SQ) {
                 setEndIsCovering(oldGrid[sq]);
@@ -55,8 +57,11 @@ const Grid = ({
               }
             } else if (oldGrid[sq] === GridConstants.WEIGHT_SQ) {
               if (isWDown) {
+                document.getElementById(sq).className =
+                  GridConstants.DEFAULT_SQ;
                 nextGrid[sq] = GridConstants.DEFAULT_SQ;
               } else {
+                document.getElementById(sq).className = GridConstants.WALL_SQ;
                 nextGrid[sq] = GridConstants.WALL_SQ;
               }
             } else if (oldGrid[sq] === GridConstants.WALL_SQ) {
@@ -64,12 +69,16 @@ const Grid = ({
                 document.getElementById(sq).className = GridConstants.WEIGHT_SQ;
                 nextGrid[sq] = GridConstants.WEIGHT_SQ;
               } else {
+                document.getElementById(sq).className =
+                  GridConstants.DEFAULT_SQ;
                 nextGrid[sq] = GridConstants.DEFAULT_SQ;
               }
             } else {
               if (isWDown) {
+                document.getElementById(sq).className = GridConstants.WEIGHT_SQ;
                 nextGrid[sq] = GridConstants.WEIGHT_SQ;
               } else {
+                document.getElementById(sq).className = GridConstants.WALL_SQ;
                 nextGrid[sq] = GridConstants.WALL_SQ;
               }
             }

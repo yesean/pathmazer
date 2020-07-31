@@ -36,10 +36,10 @@ const animate = async (algorithm, grid, setGrid, speed) => {
     case 'none':
       break;
     case 'slow':
-      visitedDelay = 70;
+      visitedDelay = 50;
       break;
     case 'medium':
-      visitedDelay = 50;
+      visitedDelay = 30;
       break;
     case 'fast':
       visitedDelay = 10;

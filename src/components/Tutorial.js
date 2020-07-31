@@ -24,7 +24,7 @@ const Tutorial = () => {
         'for speed.',
     ],
     [
-      'This site allows you to visualize and play around with how these ' +
+      'You can play around with and visualize how these ' +
         'algorithms work.',
     ],
   ];

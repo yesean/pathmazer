@@ -7,20 +7,28 @@ const generateMaze = async (maze, grid, setGrid, resetGrid, speed) => {
   grid = new Array(GridConstants.SIZE).fill(GridConstants.DEFAULT_SQ);
   setGrid(grid);
 
-  let delay = 10;
+  let delay = 5;
+  let promise;
   switch (maze) {
     case 'random':
-      return await randomMaze(grid, setGrid, 0, delay);
+      promise = await randomMaze(grid, setGrid, 0, delay);
+      break;
     case 'dfs':
-      return await dfs(grid, setGrid, 0, delay);
+      promise = await dfs(grid, setGrid, 0, delay);
+      break;
     case 'recursiveDivision':
-      return await recursiveDivision(grid, setGrid, 0, delay);
+      promise = await recursiveDivision(grid, setGrid, 0, delay);
+      break;
     case 'kruskal':
-      return await kruskal(grid, setGrid, 0, delay);
+      promise =  await kruskal(grid, setGrid, 0, delay);
+      break;
     case 'prim':
-      return await prim(grid, setGrid, 0, delay);
+      promise =  await prim(grid, setGrid, 0, delay);
+      break;
     default:
   }
+  setGrid(promise.grid);
+  return promise;
 };
 
 const changeSquare = (grid, setGrid, square, squareType, delay) => {
@@ -28,7 +36,8 @@ const changeSquare = (grid, setGrid, square, squareType, delay) => {
   nextGrid[square] = squareType;
   if (delay) {
     setTimeout(() => {
-      setGrid(nextGrid);
+      document.getElementById(square).className = squareType;
+      // setGrid(nextGrid);
     }, delay);
   } else {
     setGrid(nextGrid);
