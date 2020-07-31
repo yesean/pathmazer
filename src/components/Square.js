@@ -17,7 +17,7 @@ const Square = (props) => {
       onKeyDown={props.onKeyDown}
       onKeyUp={props.onKeyUp}
       tabIndex={-1}>
-      {(props.className === GridConstants.WEIGHT_SQ ||
+      {(//props.className === GridConstants.WEIGHT_SQ ||
         props.className === GridConstants.VISITED_WEIGHT_SQ ||
         props.className === GridConstants.VISITED_FINISHED_WEIGHT_SQ ||
         props.className === GridConstants.PATH_WEIGHT_SQ ||
@@ -29,8 +29,8 @@ const Square = (props) => {
           alt='weight'
         />
       )}
-      {(props.className === GridConstants.START_SQ ||
-        props.className === GridConstants.PATH_HEAD_SQ) && (
+      {(props.className === GridConstants.START_SQ &&//||
+        // props.className === GridConstants.PATH_HEAD_SQ) && (
         <img src={start} className='startImg' draggable='false' alt='start' />
       )}
       {props.className === GridConstants.END_SQ && (

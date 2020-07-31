@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500&display=swap');
 
 .tutorialPage {
   position: fixed;
@@ -31,7 +30,7 @@
   color: rgb(38, 70, 83);
   font-family: 'Roboto', sans-serif;
   font-size: 2.5vmin;
-  font-weight: 350;
+  font-weight: 400;
   margin: 1vh 1vw;
 }
 
@@ -94,11 +93,10 @@
 }
 
 .algorithmList {
-  list-style-type: none;
   color: rgb(38, 70, 83);
   font-family: 'Roboto', sans-serif;
   font-size: 1.5vmin;
-  font-weight: 350;
+  font-weight: 300;
   white-space: pre;
   margin: 2vh auto;
 }
@@ -107,8 +105,34 @@
   padding: 2px 7px;
 }
 
-.algorithmListContainer {
+.algorithmListContainer,
+.siteOptionsListContainer {
   overflow-x: auto;
   margin: auto;
-  width: 55vw;
+  width: 52vw;
+}
+
+.siteOptionsList {
+  list-style-type: none;
+  color: rgb(38, 70, 83);
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5vmin;
+  font-weight: 300;
+  margin: 2vh auto;
+  padding: 0px;
+}
+
+.siteOptionsList > li {
+  margin: 2vh auto;
+}
+
+@media (max-width: 500px) {
+  .tutorialText {
+    font-size: 4vmin;
+  }
+
+  .algorithmList,
+  .siteOptionsList {
+    font-size: 3vmin;
+  }
 }

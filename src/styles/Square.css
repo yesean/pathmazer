@@ -85,6 +85,11 @@
 }
 
 @keyframes weight {
+  0% {
+    background-image: url("./../images/weight.svg");
+    background-size: 22px 22px;
+    background-repeat: no-repeat;
+  }
   50% {
     transform: scale(1.2);
   }
@@ -92,6 +97,9 @@
     border: none;
   }
   100% {
+    background-image: url("./../images/weight.svg");
+    background-size: 22px 22px;
+    background-repeat: no-repeat;
     border: 0.1px solid #ddd;
   }
 }
@@ -105,13 +113,13 @@
 }
 
 @keyframes visited {
-  0% {
+  /* 0% {
     background-color: rgb(255, 255, 63);
   }
   0.9% {
     background-color: rgb(255, 255, 63);
-  }
-  1% {
+  } */
+  0% {
     background-color: rgb(116, 0, 184);
     transform: scale(0.3);
     border: none;
@@ -143,7 +151,7 @@
 .visitedSquare,
 .visitedWeightSquare {
   animation-name: visited;
-  animation-duration: 1.5s;
+  animation-duration: 1500ms;
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
   will-change: transform, border, border-radius, background-color;
@@ -176,7 +184,7 @@
 .pathSquare,
 .pathWeightSquare {
   animation-name: path;
-  animation-duration: 0.3s;
+  animation-duration: 100ms;
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
   will-change: transform, border-radius, background-color;
@@ -184,6 +192,7 @@
 
 .pathHeadSquare {
   background-color: rgb(255, 255, 63);
+  background-image: url('./../images/start.svg');
 }
 
 .pathFinishedSquare,
