@@ -90,10 +90,6 @@ const update = (width, height) => {
   GridConstants.update = update;
 };
 
-update(
-  // Math.floor((window.innerWidth - 50) / 25),
-  // Math.floor((window.innerHeight - 150) / 25)
-  0, 0
-);
+update(0, 0);
 
 export default GridConstants;

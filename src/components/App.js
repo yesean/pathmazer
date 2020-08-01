@@ -59,6 +59,9 @@ function App() {
       (window.innerHeight - topBarHeight - legendsHeight - gridVerticalMargin) /
         25
     );
+    // minimum width and height
+    if (width < 10) width = 10;
+    if (height < 5) height = 5;
     GridConstants.update(width, height);
   };
 
