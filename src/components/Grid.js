@@ -127,6 +127,7 @@ const Grid = ({
   const onMouseDown = useCallback(
     (sq) => {
       if (!isTutorialShowing) {
+        setMouseIsOver(sq);
         setMouseIsDownOn(sq);
       }
     },
