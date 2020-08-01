@@ -145,17 +145,6 @@
   margin: 20px auto;
 }
 
-@media (max-width: 700px) {
-  .tutorialText {
-    font-size: 1rem;
-  }
-
-  .algorithmList,
-  .siteOptionsList {
-    font-size: 0.8rem;
-  }
-}
-
 .mapLogo,
 .algorithmLogo {
   width: 25%;
@@ -167,4 +156,72 @@
   width: 20%;
   height: 20%;
   margin: 10px auto;
+}
+
+@media (max-width: 800), (max-height: 1050px) {
+  .tutorialText {
+    font-size: 1.5rem;
+  }
+
+  .algorithmList,
+  .siteOptionsList {
+    font-size: 1rem;
+  }
+
+  .tutorialPageContainer {
+    width: 75vw;
+    height: 75vh;
+  }
+}
+
+@media (max-width: 650px), (max-height: 850px) {
+  .tutorialText {
+    font-size: 1.3rem;
+    margin: 10px;
+  }
+
+  .tutorialTextContainer {
+    margin: 10px;
+  }
+
+  .algorithmList,
+  .siteOptionsList {
+    font-size: 1rem;
+  }
+
+  .siteOptionsList > li {
+    margin: 10px;
+  }
+
+  .tutorialPageContainer {
+    width: 80vw;
+    height: 80vh;
+  }
+
+  .mapLogo,
+  .algorithmLogo {
+    width: 25%;
+    height: auto;
+    margin: 5px auto;
+  }
+
+  .creativityLogo {
+    width: 20%;
+    height: auto;
+    margin: 5px auto;
+  }
+}
+
+@media (max-width: 400px), (max-height: 600px) {
+  .tutorialText {
+    font-size: 1rem;
+  }
+
+  .algorithmList, .siteOptionsList {
+    font-size: 0.8rem;
+  }
+  .tutorialPageContainer {
+    width: 85vw;
+    height: 85vh;
+  }
 }
