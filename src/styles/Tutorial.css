@@ -46,7 +46,7 @@
   font-family: 'Roboto', sans-serif;
   font-size: 1.5rem;
   font-weight: 400;
-  margin: auto;
+  margin: 20px;
   padding: 20px auto;
   width: 95%;
   height: auto;
@@ -127,7 +127,6 @@
 .siteOptionsListContainer {
   overflow-x: auto;
   overflow-y: visible;
-  margin: auto;
   width: 95%;
   text-align: center;
 }
@@ -138,12 +137,12 @@
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   font-weight: 300;
-  margin: 2vh auto;
-  padding: 0px;
+  padding: 0;
+  margin: 0;
 }
 
 .siteOptionsList > li {
-  margin: 2vh auto;
+  margin: 20px auto;
 }
 
 @media (max-width: 500px) {
@@ -161,11 +160,11 @@
 .algorithmLogo {
   width: 25%;
   height: 25%;
-  margin: auto;
+  margin: 10px auto;
 }
 
 .creativityLogo {
   width: 20%;
   height: 20%;
-  margin: auto;
+  margin: 10px auto;
 }
