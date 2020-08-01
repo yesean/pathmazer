@@ -41,9 +41,9 @@ const update = (width, height) => {
     HEIGHT--;
   }
   SIZE = WIDTH * HEIGHT;
-  INITIAL_START = (Math.floor(HEIGHT / 2) - 1) * WIDTH + Math.floor(WIDTH / 6);
+  INITIAL_START = (Math.floor(HEIGHT / 2)) * WIDTH + Math.floor(WIDTH / 6);
   INITIAL_END =
-    (Math.floor(HEIGHT / 2) - 1) * WIDTH + Math.floor((WIDTH * 5) / 6);
+    (Math.floor(HEIGHT / 2)) * WIDTH + Math.floor((WIDTH * 5) / 6);
   INITIAL_GRID = new Array(SIZE).fill(GridConstants.DEFAULT_SQ);
   INITIAL_GRID[INITIAL_START] = GridConstants.START_SQ;
   INITIAL_GRID[INITIAL_END] = GridConstants.END_SQ;
