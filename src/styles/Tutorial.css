@@ -199,15 +199,8 @@
   }
 
   .mapLogo,
-  .algorithmLogo {
-    width: 25%;
-    height: auto;
-    margin: 5px auto;
-  }
-
+  .algorithmLogo,
   .creativityLogo {
-    width: 20%;
-    height: auto;
     margin: 5px auto;
   }
 }
@@ -217,7 +210,8 @@
     font-size: 1rem;
   }
 
-  .algorithmList, .siteOptionsList {
+  .algorithmList,
+  .siteOptionsList {
     font-size: 0.8rem;
   }
   .tutorialPageContainer {
