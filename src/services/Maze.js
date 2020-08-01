@@ -37,7 +37,6 @@ const changeSquare = (grid, setGrid, square, squareType, delay) => {
   if (delay) {
     setTimeout(() => {
       document.getElementById(square).className = squareType;
-      // setGrid(nextGrid);
     }, delay);
   } else {
     setGrid(nextGrid);

@@ -30,7 +30,7 @@ const animate = async (algorithm, grid, setGrid, speed) => {
     return Promise.resolve({ isAnimating: false, isAnimatingFinished: false });
   }
 
-  let pathDelay = 50;
+  let pathDelay = 30;
   let visitedDelay;
   switch (speed) {
     case 'none':
@@ -95,8 +95,6 @@ const animate = async (algorithm, grid, setGrid, speed) => {
         grid,
         setGrid,
         square,
-        // squareType,
-        // (tick += visitedDelay)
         GridConstants.VISITED_HEAD_SQ,
         tick
       );
@@ -130,7 +128,6 @@ const animate = async (algorithm, grid, setGrid, speed) => {
           prevSquare.ind,
           prevSquare.squareType,
           (tick += pathDelay)
-          // true
         );
       }
       const squareType =
@@ -143,7 +140,6 @@ const animate = async (algorithm, grid, setGrid, speed) => {
         square,
         GridConstants.PATH_HEAD_SQ,
         tick
-        // true
       );
       prevSquare = { ind: square, squareType: squareType };
     } else {
@@ -178,17 +174,12 @@ const changeSquare = (
   square,
   squareType,
   delay,
-  useSetGrid = false
 ) => {
   const nextGrid = [...grid];
   nextGrid[square] = squareType;
   if (delay) {
     setTimeout(() => {
-      // if (useSetGrid) {
-      //   setGrid(nextGrid);
-      // } else {
       document.getElementById(square).className = squareType;
-      // }
     }, delay);
   }
   return nextGrid;

@@ -15,6 +15,7 @@ const Grid = ({
   isAnimating,
   isAnimatingFinished,
   algorithm,
+  isTutorialShowing,
 }) => {
   const [mouseIsDownOn, setMouseIsDownOn] = useState(null);
   const [isHoldingStart, setIsHoldingStart] = useState(false);
@@ -24,7 +25,6 @@ const Grid = ({
 
   useEffect(() => {
     const updateGridOnMouseEnter = (sq) => {
-      console.log(startIsCovering);
       if (!isAnimating && mouseIsDownOn !== null) {
         setGrid((oldGrid) => {
           const nextGrid = [...oldGrid];
@@ -34,8 +34,9 @@ const Grid = ({
           const endSq = oldGrid.findIndex((s) => s === GridConstants.END_SQ);
           if (sq !== startSq && sq !== endSq) {
             if (isHoldingStart) {
-              nextGrid[startSq] = startIsCovering;
+              document.getElementById(startSq).className = startIsCovering;
               document.getElementById(sq).className = GridConstants.START_SQ;
+              nextGrid[startSq] = startIsCovering;
               nextGrid[sq] = GridConstants.START_SQ;
               if (oldGrid[sq] !== GridConstants.START_SQ) {
                 setStartIsCovering(oldGrid[sq]);
@@ -45,8 +46,9 @@ const Grid = ({
                 return;
               }
             } else if (isHoldingEnd) {
-              nextGrid[endSq] = endIsCovering;
+              document.getElementById(endSq).className = endIsCovering;
               document.getElementById(sq).className = GridConstants.END_SQ;
+              nextGrid[endSq] = endIsCovering;
               nextGrid[sq] = GridConstants.END_SQ;
               if (oldGrid[sq] !== GridConstants.END_SQ) {
                 setEndIsCovering(oldGrid[sq]);
@@ -113,31 +115,52 @@ const Grid = ({
     }
   }, [mouseIsDownOn, grid, setIsHoldingStart, setIsHoldingEnd]);
 
-  const onMouseEnter = useCallback((sq) => {
-    setMouseIsOver(sq);
-  }, []);
+  const onMouseEnter = useCallback(
+    (sq) => {
+      if (!isTutorialShowing) {
+        setMouseIsOver(sq);
+      }
+    },
+    [isTutorialShowing]
+  );
 
-  const onMouseDown = useCallback((sq) => {
-    setMouseIsDownOn(sq);
-  }, []);
+  const onMouseDown = useCallback(
+    (sq) => {
+      if (!isTutorialShowing) {
+        setMouseIsDownOn(sq);
+      }
+    },
+    [isTutorialShowing]
+  );
 
-  const onMouseUp = useCallback((sq) => {
-    setIsHoldingStart(false);
-    setIsHoldingEnd(false);
-    setMouseIsDownOn(null);
-  }, []);
+  const onMouseUp = useCallback(
+    (sq) => {
+      if (!isTutorialShowing) {
+        setIsHoldingStart(false);
+        setIsHoldingEnd(false);
+        setMouseIsDownOn(null);
+      }
+    },
+    [isTutorialShowing]
+  );
 
-  const onKeyDown = useCallback((e) => {
-    if (e.key === 'w') {
-      setIsWDown(true);
-    }
-  }, []);
+  const onKeyDown = useCallback(
+    (e) => {
+      if (e.key === 'w' && !isTutorialShowing) {
+        setIsWDown(true);
+      }
+    },
+    [isTutorialShowing]
+  );
 
-  const onKeyUp = useCallback((e) => {
-    if (e.key === 'w') {
-      setIsWDown(false);
-    }
-  }, []);
+  const onKeyUp = useCallback(
+    (e) => {
+      if (e.key === 'w' && !isTutorialShowing) {
+        setIsWDown(false);
+      }
+    },
+    [isTutorialShowing]
+  );
 
   const renderSquare = (sq) => {
     return (
@@ -145,9 +168,9 @@ const Grid = ({
         id={sq}
         key={sq}
         className={grid[sq]}
-        onMouseEnter={() => onMouseEnter(sq)}
-        onMouseDown={() => onMouseDown(sq)}
-        onMouseUp={() => onMouseUp(sq)}
+        onMouseEnter={onMouseEnter}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
       />

@@ -20,10 +20,11 @@ const TopBar = ({
   setMaze,
   speed,
   setSpeed,
+  isTutorialShowing,
 }) => {
   const handleAlgorithmSubmit = async (event) => {
     event.preventDefault();
-    if (!isAnimating) {
+    if (!isAnimating && !isTutorialShowing) {
       setIsAnimating(true);
       const promise = await Animations.animate(algorithm, grid, setGrid, speed);
       setIsAnimating(promise.isAnimating);
@@ -32,7 +33,7 @@ const TopBar = ({
   };
 
   const handleMazeSubmit = async (maze) => {
-    if (!isAnimating) {
+    if (!isAnimating && !isTutorialShowing) {
       setIsAnimating(true);
       const promise = await Maze.generateMaze(maze, grid, setGrid, resetGrid);
       setMaze(null);
@@ -57,7 +58,7 @@ const TopBar = ({
   };
 
   const handleResetClick = (e) => {
-    if (!isAnimating) {
+    if (!isAnimating && !isTutorialShowing) {
       e.preventDefault();
       resetGrid();
     }
@@ -124,7 +125,8 @@ const TopBar = ({
             className={
               isAnimating ? 'topBarButtonWhileAnimating' : 'topBarButton'
             }
-            onClick={handleAlgorithmSubmit}>
+            onClick={handleAlgorithmSubmit}
+          >
             Visualize
           </button>
           <button
@@ -132,7 +134,8 @@ const TopBar = ({
               (isAnimating ? 'topBarButtonWhileAnimating' : 'topBarButton') +
               ' resetButton'
             }
-            onClick={handleResetClick}>
+            onClick={handleResetClick}
+          >
             Reset
           </button>
         </div>

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import './../styles/Tutorial.css';
 
-const Tutorial = () => {
+const Tutorial = (props) => {
   const [textIndex, setTextIndex] = useState(0);
   const [prevButtonStyle, setPrevButtonStyle] = useState({
     backgroundColor: '#94caec',
   });
   const [nextButtonStyle, setNextButtonStyle] = useState({});
-  const [shouldShowTutorialPage, setShouldShowTutorialPage] = useState(true);
   const [shouldShowAlgorithms, setShouldShowAlgorithms] = useState(false);
   const [shouldShowSiteOptions, setShouldShowSiteOptions] = useState(false);
 
@@ -23,10 +22,7 @@ const Tutorial = () => {
         'designed to guarantee the shortest path, while others trade optimality ' +
         'for speed.',
     ],
-    [
-      'You can play around with and visualize how these ' +
-        'algorithms work.',
-    ],
+    ['You can play around with and visualize how these algorithms work.'],
   ];
   const algorithmsIndex = 1;
   const siteOptionsIndex = 2;
@@ -52,7 +48,7 @@ const Tutorial = () => {
   ];
 
   const onSkip = () => {
-    setShouldShowTutorialPage(false);
+    props.setShouldShow(false);
   };
   const onPrev = () => {
     if (textIndex > 0) {
@@ -95,7 +91,7 @@ const Tutorial = () => {
   };
 
   return (
-    shouldShowTutorialPage && (
+    props.shouldShow && (
       <div className='tutorialPage'>
         <div className='tutorialTextContainer'>
           {texts[textIndex].map((text) => (
@@ -132,13 +128,15 @@ const Tutorial = () => {
           <button
             className='prevButton'
             onClick={onPrev}
-            style={prevButtonStyle}>
+            style={prevButtonStyle}
+          >
             {String.fromCharCode(8592)}
           </button>
           <button
             className='nextButton'
             onClick={onNext}
-            style={nextButtonStyle}>
+            style={nextButtonStyle}
+          >
             {String.fromCharCode(8594)}
           </button>
         </div>
