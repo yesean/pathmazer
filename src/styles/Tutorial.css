@@ -31,7 +31,7 @@
 }
 
 .tutorialTextContainer {
-  height: 70%;
+  min-height: 70%;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
@@ -46,7 +46,7 @@
   font-family: 'Roboto', sans-serif;
   font-size: 1.5rem;
   font-weight: 400;
-  margin: 20px;
+  margin: 20px auto;
   padding: 20px auto;
   width: 95%;
   height: auto;
@@ -145,14 +145,14 @@
   margin: 20px auto;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 700px) {
   .tutorialText {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 
   .algorithmList,
   .siteOptionsList {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 }
 
