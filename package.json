@@ -1,40 +1,22 @@
 {
-  "homepage": "http://seanye24.github.io/path-visualizer",
   "name": "path-visualizer",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "react-select": "^3.1.0"
-  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy": "gh-pages -d build"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf build && cd path-visualizer-dev && npm run build --prod && cp -r build ./../",
+    "deploy": "git push heroku master",
+    "deploy:full": "npm run build:ui && git add . && git ci -m uibuild && npm run deploy"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seanye24/path-visualizer.git"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seanye24/path-visualizer/issues"
   },
-  "devDependencies": {
-    "gh-pages": "^3.1.0"
-  }
+  "homepage": "https://github.com/seanye24/path-visualizer#readme"
 }
