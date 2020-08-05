@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/seanye24/path-visualizer/issues"
   },
-  "homepage": "https://github.com/seanye24/path-visualizer#readme"
+  "homepage": "https://github.com/seanye24/path-visualizer#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
