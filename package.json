@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf build && cd path-visualizer-dev && npm run build --prod && cp -r build ./../",
     "deploy": "git push heroku master",
@@ -22,5 +23,8 @@
   "homepage": "https://github.com/seanye24/path-visualizer#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
