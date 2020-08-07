@@ -17,7 +17,7 @@ function App() {
   );
   const [endIsCovering, setEndIsCovering] = useState(GridConstants.DEFAULT_SQ);
   const [isTutorialShowing, setIsTutorialShowing] = useState(true);
-  const [algorithm, setAlgorithm] = useState(null);
+  const [algorithm, setAlgorithm] = useState('dijkstra');
   const [speed, setSpeed] = useState('fast');
   const [maze, setMaze] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -29,7 +29,7 @@ function App() {
     setIsAnimatingFinished(false);
     setStartIsCovering(GridConstants.DEFAULT_SQ);
     setEndIsCovering(GridConstants.DEFAULT_SQ);
-    setAlgorithm(null);
+    setAlgorithm('dijkstra');
     setMaze(null);
     setSpeed('fast');
   }, []);
