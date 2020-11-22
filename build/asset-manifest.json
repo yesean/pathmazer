@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.b51d9e4b.chunk.css",
-    "main.js": "/static/js/main.0607778c.chunk.js",
-    "main.js.map": "/static/js/main.0607778c.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.3a3e0e65.js",
-    "runtime-main.js.map": "/static/js/runtime-main.3a3e0e65.js.map",
-    "static/js/2.c61cbd8d.chunk.js": "/static/js/2.c61cbd8d.chunk.js",
-    "static/js/2.c61cbd8d.chunk.js.map": "/static/js/2.c61cbd8d.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.c04c7fd1bee4538720e4f78d7325df1b.js": "/precache-manifest.c04c7fd1bee4538720e4f78d7325df1b.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.b51d9e4b.chunk.css.map": "/static/css/main.b51d9e4b.chunk.css.map",
-    "static/js/2.c61cbd8d.chunk.js.LICENSE.txt": "/static/js/2.c61cbd8d.chunk.js.LICENSE.txt",
-    "static/media/algorithm.svg": "/static/media/algorithm.6820b192.svg",
-    "static/media/creativity.svg": "/static/media/creativity.5a071791.svg",
-    "static/media/Square.css": "/static/media/weight.17d008f4.png",
-    "static/media/map.svg": "/static/media/map.197c485d.svg",
-    "static/media/weight.svg": "/static/media/weight.f8a5f7dd.svg"
+    "main.css": "/pathmaze-visualizer/static/css/main.c2129161.chunk.css",
+    "main.js": "/pathmaze-visualizer/static/js/main.e70f368e.chunk.js",
+    "main.js.map": "/pathmaze-visualizer/static/js/main.e70f368e.chunk.js.map",
+    "runtime-main.js": "/pathmaze-visualizer/static/js/runtime-main.12e8121d.js",
+    "runtime-main.js.map": "/pathmaze-visualizer/static/js/runtime-main.12e8121d.js.map",
+    "static/js/2.c5b2c274.chunk.js": "/pathmaze-visualizer/static/js/2.c5b2c274.chunk.js",
+    "static/js/2.c5b2c274.chunk.js.map": "/pathmaze-visualizer/static/js/2.c5b2c274.chunk.js.map",
+    "index.html": "/pathmaze-visualizer/index.html",
+    "precache-manifest.035a9a0db57d0f938111aa000b0e5047.js": "/pathmaze-visualizer/precache-manifest.035a9a0db57d0f938111aa000b0e5047.js",
+    "service-worker.js": "/pathmaze-visualizer/service-worker.js",
+    "static/css/main.c2129161.chunk.css.map": "/pathmaze-visualizer/static/css/main.c2129161.chunk.css.map",
+    "static/js/2.c5b2c274.chunk.js.LICENSE.txt": "/pathmaze-visualizer/static/js/2.c5b2c274.chunk.js.LICENSE.txt",
+    "static/media/algorithm.svg": "/pathmaze-visualizer/static/media/algorithm.6820b192.svg",
+    "static/media/creativity.svg": "/pathmaze-visualizer/static/media/creativity.5a071791.svg",
+    "static/media/Square.css": "/pathmaze-visualizer/static/media/weight.17d008f4.png",
+    "static/media/map.svg": "/pathmaze-visualizer/static/media/map.197c485d.svg",
+    "static/media/weight.svg": "/pathmaze-visualizer/static/media/weight.f8a5f7dd.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.3a3e0e65.js",
-    "static/js/2.c61cbd8d.chunk.js",
-    "static/css/main.b51d9e4b.chunk.css",
-    "static/js/main.0607778c.chunk.js"
+    "static/js/runtime-main.12e8121d.js",
+    "static/js/2.c5b2c274.chunk.js",
+    "static/css/main.c2129161.chunk.css",
+    "static/js/main.e70f368e.chunk.js"
   ]
 }
