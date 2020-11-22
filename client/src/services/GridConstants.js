@@ -41,12 +41,13 @@ const update = (width, height) => {
     HEIGHT--;
   }
   SIZE = WIDTH * HEIGHT;
-  INITIAL_START = (Math.floor(HEIGHT / 2)) * WIDTH + Math.floor(WIDTH / 6);
-  INITIAL_END =
-    (Math.floor(HEIGHT / 2)) * WIDTH + Math.floor((WIDTH * 5) / 6);
-  INITIAL_GRID = new Array(SIZE).fill(GridConstants.DEFAULT_SQ);
-  INITIAL_GRID[INITIAL_START] = GridConstants.START_SQ;
-  INITIAL_GRID[INITIAL_END] = GridConstants.END_SQ;
+  INITIAL_START = Math.floor(HEIGHT / 2) * WIDTH + Math.floor(WIDTH / 6);
+  INITIAL_END = Math.floor(HEIGHT / 2) * WIDTH + Math.floor((WIDTH * 5) / 6);
+  INITIAL_GRID = new Array(SIZE)
+    .fill(null)
+    .map(() => ({ initialClassName: GridConstants.DEFAULT_SQ }));
+  INITIAL_GRID[INITIAL_START].initialClassName = GridConstants.START_SQ;
+  INITIAL_GRID[INITIAL_END].initialClassName = GridConstants.END_SQ;
 
   getRow = (sq) => Math.floor(sq / WIDTH);
 
@@ -90,6 +91,6 @@ const update = (width, height) => {
   GridConstants.update = update;
 };
 
-update(0, 0);
+update(-1, -1);
 
 export default GridConstants;

@@ -26,7 +26,7 @@ const TopBar = ({
     event.preventDefault();
     if (!isAnimating && !isTutorialShowing) {
       setIsAnimating(true);
-      const promise = await Animations.animate(algorithm, grid, setGrid, speed);
+      const promise = await Animations.animate(algorithm, grid, speed);
       setIsAnimating(promise.isAnimating);
       setIsAnimatingFinished(promise.isAnimatingFinished);
     }
@@ -35,7 +35,7 @@ const TopBar = ({
   const handleMazeSubmit = async (maze) => {
     if (!isAnimating && !isTutorialShowing) {
       setIsAnimating(true);
-      const promise = await Maze.generateMaze(maze, grid, setGrid, resetGrid);
+      const promise = await Maze.generateMaze(maze, grid, resetGrid);
       setMaze(null);
       setStartIsCovering(GridConstants.DEFAULT_SQ);
       setEndIsCovering(GridConstants.DEFAULT_SQ);
@@ -90,10 +90,10 @@ const TopBar = ({
   const speedPlaceholder = 'Speed';
 
   return (
-    <div className='topBar'>
-      <h1 className='title'>Path Visualizer</h1>
-      <div className='optionsContainer'>
-        <div className='topBarItemContainer'>
+    <div className="topBar">
+      <h1 className="title">Path Visualizer</h1>
+      <div className="optionsContainer">
+        <div className="topBarItemContainer">
           <Select
             option={algorithm}
             onChange={onAlgorithmChange}
@@ -102,7 +102,7 @@ const TopBar = ({
             placeholder={algorithmsPlaceholder}
           />
         </div>
-        <div className='topBarItemContainer'>
+        <div className="topBarItemContainer">
           <Select
             option={speed}
             onChange={onSpeedChange}
@@ -111,7 +111,7 @@ const TopBar = ({
             placeholder={speedPlaceholder}
           />
         </div>
-        <div className='topBarItemContainer'>
+        <div className="topBarItemContainer">
           <Select
             option={maze}
             onChange={onMazeChange}
@@ -120,7 +120,7 @@ const TopBar = ({
             placeholder={mazePlaceholder}
           />
         </div>
-        <div className='topBarItemContainer'>
+        <div className="topBarItemContainer">
           <button
             className={
               isAnimating ? 'topBarButtonWhileAnimating' : 'topBarButton'

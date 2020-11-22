@@ -1,19 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Grid from './Grid.js';
-import TopBar from './TopBar.js';
-import Legend from './Legend.js';
-import Tutorial from './Tutorial.js';
-import GridConstants from './../services/GridConstants.js';
-import './../styles/App.css';
+import Grid from './Grid.jsx';
+import TopBar from './TopBar.jsx';
+import Tutorial from './Tutorial.jsx';
+import Legends from './Legends.jsx';
+import GridConstants from '../services/GridConstants';
+import '../styles/App.css';
 
 import github from '../images/github.png';
 import linkedin from '../images/linkedin.png';
-import weight from './../images/weight.svg';
-import start from './../images/start.svg';
-import end from './../images/end.svg';
 
 function App() {
-  const [grid, setGrid] = useState(GridConstants.INITIAL_GRID);
+  const [grid, setGrid] = useState(null);
   const [startIsCovering, setStartIsCovering] = useState(
     GridConstants.DEFAULT_SQ
   );
@@ -26,8 +23,8 @@ function App() {
   const [isAnimatingFinished, setIsAnimatingFinished] = useState(false);
 
   const resetGrid = useCallback(() => {
-    updateDimensions();
-    setGrid(GridConstants.INITIAL_GRID);
+    setGrid(null);
+    setGrid([...GridConstants.INITIAL_GRID]);
     setIsAnimatingFinished(false);
     setStartIsCovering(GridConstants.DEFAULT_SQ);
     setEndIsCovering(GridConstants.DEFAULT_SQ);
@@ -38,14 +35,19 @@ function App() {
 
   // initialize window
   useEffect(() => {
+    updateDimensions();
     resetGrid();
   }, [resetGrid]);
 
   // update grid on resize
   useEffect(() => {
+    const resizeAndReset = () => {
+      updateDimensions();
+      resetGrid();
+    };
     if (!isAnimating) {
-      window.addEventListener('resize', resetGrid);
-      return () => window.removeEventListener('resize', resetGrid);
+      window.addEventListener('resize', resizeAndReset);
+      return () => window.removeEventListener('resize', resizeAndReset);
     }
   }, [isAnimating, resetGrid]);
 
@@ -73,30 +75,6 @@ function App() {
     GridConstants.update(width, height);
   };
 
-  const legends = [
-    {
-      name: 'Start',
-      img: start,
-    },
-    {
-      name: 'End',
-      img: end,
-    },
-    {
-      name: 'Weight',
-      img: weight,
-    },
-    {
-      name: 'Wall',
-    },
-    {
-      name: 'Visited',
-    },
-    {
-      name: 'Path',
-    },
-  ];
-
   const gridStyle = {
     gridTemplateColumns: `repeat(${GridConstants.WIDTH}, 25px)`,
     gridTemplateRows: `repeat(${GridConstants.HEIGHT}, 25px)`,
@@ -121,29 +99,27 @@ function App() {
         setMaze={setMaze}
         isTutorialShowing={isTutorialShowing}
       />
-      <div className="legendsContainer">
-        {legends.map((legend) => (
-          <Legend key={legend.name} name={legend.name} img={legend.img} />
-        ))}
-      </div>
+      <Legends />
+      {grid && (
+        <Grid
+          grid={grid}
+          gridStyle={gridStyle}
+          setGrid={setGrid}
+          startIsCovering={startIsCovering}
+          setStartIsCovering={setStartIsCovering}
+          endIsCovering={endIsCovering}
+          setEndIsCovering={setEndIsCovering}
+          isAnimating={isAnimating}
+          isAnimatingFinished={isAnimatingFinished}
+          algorithm={algorithm}
+          isTutorialShowing={isTutorialShowing}
+        />
+      )}
+      <Footer />
       <Tutorial
         shouldShow={isTutorialShowing}
         setShouldShow={setIsTutorialShowing}
       />
-      <Grid
-        grid={grid}
-        gridStyle={gridStyle}
-        setGrid={setGrid}
-        startIsCovering={startIsCovering}
-        setStartIsCovering={setStartIsCovering}
-        endIsCovering={endIsCovering}
-        setEndIsCovering={setEndIsCovering}
-        isAnimating={isAnimating}
-        isAnimatingFinished={isAnimatingFinished}
-        algorithm={algorithm}
-        isTutorialShowing={isTutorialShowing}
-      />
-      <Footer />
     </div>
   );
 }
