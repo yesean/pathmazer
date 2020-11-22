@@ -6,6 +6,8 @@ import Tutorial from './Tutorial.js';
 import GridConstants from './../services/GridConstants.js';
 import './../styles/App.css';
 
+import github from '../images/github.png';
+import linkedin from '../images/linkedin.png';
 import weight from './../images/weight.svg';
 import start from './../images/start.svg';
 import end from './../images/end.svg';
@@ -52,11 +54,17 @@ function App() {
       .offsetHeight;
     const legendsHeight = document.getElementsByClassName('legendsContainer')[0]
       .offsetHeight;
+    const footerHeight = document.getElementsByClassName('footer')[0]
+      .offsetHeight;
     const gridVerticalMargin = 20;
     const gridHorizontalMargin = 30;
     let width = Math.floor((window.innerWidth - gridHorizontalMargin) / 25);
     let height = Math.floor(
-      (window.innerHeight - topBarHeight - legendsHeight - gridVerticalMargin) /
+      (window.innerHeight -
+        topBarHeight -
+        legendsHeight -
+        footerHeight -
+        gridVerticalMargin) /
         25
     );
     // minimum width and height
@@ -95,7 +103,7 @@ function App() {
   };
 
   return (
-    <div className='page'>
+    <div className="page">
       <TopBar
         grid={grid}
         setGrid={setGrid}
@@ -113,7 +121,7 @@ function App() {
         setMaze={setMaze}
         isTutorialShowing={isTutorialShowing}
       />
-      <div className='legendsContainer'>
+      <div className="legendsContainer">
         {legends.map((legend) => (
           <Legend key={legend.name} name={legend.name} img={legend.img} />
         ))}
@@ -135,8 +143,29 @@ function App() {
         algorithm={algorithm}
         isTutorialShowing={isTutorialShowing}
       />
+      <Footer />
     </div>
   );
 }
+
+const Footer = () => {
+  return (
+    <footer className="footer">
+      &copy; 2020 Sean Ye{'  '}
+      <a
+        className="footerAnchor"
+        href="https://github.com/seanye24/pathmaze-visualizer"
+      >
+        <img className="footerIcon" src={github} alt="github" />
+      </a>{' '}
+      <a
+        className="footerAnchor"
+        href="https://www.linkedin.com/in/sean-y-265766122/"
+      >
+        <img className="footerIcon" src={linkedin} alt="linkedin" />
+      </a>
+    </footer>
+  );
+};
 
 export default App;

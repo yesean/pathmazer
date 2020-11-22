@@ -7,13 +7,15 @@ body {
 
 .page {
   margin: auto;
-  height: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  /* min-height: 95vh; */
   font-family: Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
+  padding-bottom: 1em;
+  box-sizing: border-box;
 }
 
 .legendsContainer {
@@ -22,9 +24,22 @@ body {
   flex-wrap: wrap;
   justify-content: space-evenly;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   color: rgb(38, 70, 83);
   font-family: 'Mulish', sans-serif;
   font-weight: 300;
   font-size: 20px;
+}
+
+.footer {
+  font-family: 'Mulish', sans-serif;
+  font-size: 1em;
+}
+
+.footerAnchor {
+  vertical-align: middle;
+}
+
+.footerIcon {
+  height: 1em; 
 }
