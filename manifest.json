@@ -1,6 +1,6 @@
 {
   "short_name": "Path Visualizer",
-  "name": "React Path Visualizer App",
+  "name": "Pathfinding-Maze Visualizer App",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
