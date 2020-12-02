@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ac6f8162b8efb2b0f39307ecaca8e45b",
+    "revision": "e3f686fc2bdbdaa32656e36a31bdbb3d",
     "url": "/pathmaze-visualizer/index.html"
   },
   {
-    "revision": "b240b780b9edc006018a",
-    "url": "/pathmaze-visualizer/static/css/main.c2129161.chunk.css"
+    "revision": "a67a7eeae0effbccef1b",
+    "url": "/pathmaze-visualizer/static/css/main.87b6aac4.chunk.css"
   },
   {
     "revision": "9a3830cda2febc5d20e0",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/pathmaze-visualizer/static/js/2.c5b2c274.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "b240b780b9edc006018a",
-    "url": "/pathmaze-visualizer/static/js/main.e70f368e.chunk.js"
+    "revision": "a67a7eeae0effbccef1b",
+    "url": "/pathmaze-visualizer/static/js/main.4a604585.chunk.js"
   },
   {
     "revision": "da62bd53d00da93e0468",
