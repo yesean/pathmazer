@@ -60,12 +60,14 @@ function App() {
       .offsetHeight;
     const gridVerticalMargin = 20;
     const gridHorizontalMargin = 30;
+    const footerBottomMargin = 16;
     let width = Math.floor((window.innerWidth - gridHorizontalMargin) / 25);
     let height = Math.floor(
       (window.innerHeight -
         topBarHeight -
         legendsHeight -
         footerHeight -
+        footerBottomMargin -
         gridVerticalMargin) /
         25
     );
