@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/pathmaze-visualizer/precache-manifest.df8518af2e17d416c98038c77f4f6e07.js"
+  "/pathmaze-visualizer/precache-manifest.399bad140ead67a8b52bb3eedd4c3ca6.js"
 );
 
 self.addEventListener('message', (event) => {

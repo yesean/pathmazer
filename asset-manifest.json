@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/pathmaze-visualizer/static/css/main.87b6aac4.chunk.css",
-    "main.js": "/pathmaze-visualizer/static/js/main.4a604585.chunk.js",
-    "main.js.map": "/pathmaze-visualizer/static/js/main.4a604585.chunk.js.map",
+    "main.css": "/pathmaze-visualizer/static/css/main.5d7fea91.chunk.css",
+    "main.js": "/pathmaze-visualizer/static/js/main.cd164451.chunk.js",
+    "main.js.map": "/pathmaze-visualizer/static/js/main.cd164451.chunk.js.map",
     "runtime-main.js": "/pathmaze-visualizer/static/js/runtime-main.12e8121d.js",
     "runtime-main.js.map": "/pathmaze-visualizer/static/js/runtime-main.12e8121d.js.map",
     "static/js/2.c5b2c274.chunk.js": "/pathmaze-visualizer/static/js/2.c5b2c274.chunk.js",
     "static/js/2.c5b2c274.chunk.js.map": "/pathmaze-visualizer/static/js/2.c5b2c274.chunk.js.map",
     "index.html": "/pathmaze-visualizer/index.html",
-    "precache-manifest.df8518af2e17d416c98038c77f4f6e07.js": "/pathmaze-visualizer/precache-manifest.df8518af2e17d416c98038c77f4f6e07.js",
+    "precache-manifest.399bad140ead67a8b52bb3eedd4c3ca6.js": "/pathmaze-visualizer/precache-manifest.399bad140ead67a8b52bb3eedd4c3ca6.js",
     "service-worker.js": "/pathmaze-visualizer/service-worker.js",
-    "static/css/main.87b6aac4.chunk.css.map": "/pathmaze-visualizer/static/css/main.87b6aac4.chunk.css.map",
+    "static/css/main.5d7fea91.chunk.css.map": "/pathmaze-visualizer/static/css/main.5d7fea91.chunk.css.map",
     "static/js/2.c5b2c274.chunk.js.LICENSE.txt": "/pathmaze-visualizer/static/js/2.c5b2c274.chunk.js.LICENSE.txt",
     "static/media/algorithm.svg": "/pathmaze-visualizer/static/media/algorithm.6820b192.svg",
     "static/media/creativity.svg": "/pathmaze-visualizer/static/media/creativity.5a071791.svg",
@@ -21,7 +21,7 @@
   "entrypoints": [
     "static/js/runtime-main.12e8121d.js",
     "static/js/2.c5b2c274.chunk.js",
-    "static/css/main.87b6aac4.chunk.css",
-    "static/js/main.4a604585.chunk.js"
+    "static/css/main.5d7fea91.chunk.css",
+    "static/js/main.cd164451.chunk.js"
   ]
 }
