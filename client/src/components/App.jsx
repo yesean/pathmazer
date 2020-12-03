@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Grid from './Grid.jsx';
-import TopBar from './TopBar.jsx';
-import Tutorial from './Tutorial.jsx';
-import Legends from './Legends.jsx';
+import Grid from './Grid';
+import TopBar from './TopBar';
+import Tutorial from './Tutorial';
+import Legends from './Legends';
+import HelpPopup from './HelpPopup';
 import GridConstants from '../services/GridConstants';
 import '../styles/App.css';
 
@@ -21,6 +22,7 @@ function App() {
   const [maze, setMaze] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isAnimatingFinished, setIsAnimatingFinished] = useState(false);
+  const [shouldShowHelpPopup, setShouldShowHelpPopup] = useState(true);
 
   const resetGrid = useCallback(() => {
     setGrid(null);
@@ -32,6 +34,11 @@ function App() {
     setMaze(null);
     setSpeed('fast');
   }, []);
+
+  // show help popup when tutorial is finished
+  useEffect(() => {
+    if (!isTutorialShowing) setShouldShowHelpPopup(true);
+  }, [isTutorialShowing]);
 
   // initialize window
   useEffect(() => {
@@ -122,6 +129,12 @@ function App() {
         shouldShow={isTutorialShowing}
         setShouldShow={setIsTutorialShowing}
       />
+      {!isTutorialShowing && (
+        <HelpPopup
+          shouldShowHelpPopup={shouldShowHelpPopup}
+          setShouldShowHelpPopup={setShouldShowHelpPopup}
+        />
+      )}
     </div>
   );
 }
